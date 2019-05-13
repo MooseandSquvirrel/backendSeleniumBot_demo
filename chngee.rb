@@ -12,7 +12,14 @@ puts "After:"
 puts Dir.pwd
 =end
 
-def appleSubsidiary(bandNum)
+require 'date'
+
+dateToday = DateTime.now
+dateToday.strftime("%d/%m/%Y")
+puts "Date:"
+puts dateToday
+
+def appleSubsidiary()
     puts "\n"
     puts "+++++++++++++++++++++++++++++"
     puts "Before:"
@@ -44,8 +51,26 @@ def pearSubsidiary(bandNum)
     end
 end
 
+def lemonSubsidiary(bandNum, dateToday)
+    puts"\n"
+    puts "+++++++++++++++++++++++++++++"
+    Dir.chdir("#{bandNum}")
+    puts "Directory is now:"
+    puts Dir.pwd
+    puts "Checking #{bandNum} for #{dateToday} subdirectory..."
+    if Dir.exist?("#{dateToday}") == false
+        puts "Creating #{dateToday} subdirectory..."
+        Dir.mkdir("#{dateToday}")
+    else
+        puts "#{dateToday} subdirectory exists."
+    end
+end
+
 # EXECUTE 
-appleSubsidiary(bandNum)
+appleSubsidiary()
 
 # EXECUTE
 pearSubsidiary(bandNum)
+
+# EXECUTE
+lemonSubsidiary(bandNum, dateToday)
