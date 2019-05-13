@@ -115,10 +115,13 @@ sleep(1)
 
 
 def appleSubsidiary()
-    Dir.chdir("/Desktop")
+    puts "Before:"
+    puts Dir.pwd
+    Dir.chdir(Dir.pwd + "../../")
     puts "Directory is now:"
     puts Dir.pwd
     puts "Checking Desktop for CAMP_DATA..."
+
 end
 appleSubsidiary()
 
