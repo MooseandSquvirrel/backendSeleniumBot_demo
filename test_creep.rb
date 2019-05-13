@@ -85,47 +85,24 @@ dropdown = browser.find_element(id: 'templateNo')
     select_list.select_by(:value, '45')
     puts "Dropdown option selected:"
     puts selected_option = select_list.selected_options[0].text
-    puts ""
     sleep(2)
 
-
+# (:xpath, "//*[@id='input']")
 # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
 form = wait.until {
-    if element = browser.find_element(:xpath, "//*[@id='input']")
+    if element = browser.find_element(:tag_name, "textarea")
         puts "Inputing BAND name into data field."
-        element = browser.find_element(:name, "//*[@id='input']")
+        element = browser.find_element(:tag_name, "textarea")
     else
         puts "BAND data not entered into text field."
     end
-
     element if element.displayed?
 }
+form.send_keys("#{bandNum}")
 sleep(1)
-form.send_keys("75037032")
-sleep(1)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+"THE NEXT STEP HERE WOULD BE TO ENTER SUBMIT BUT I NEED TO TRY TO WAIT ON THAT LONG AS I CAN
+TO AVOID SPAMMING THE BACKEND LIST OF REPORTS SO I DON'T HURT WORKFLOW FOR OTHERS"
 
 
 
