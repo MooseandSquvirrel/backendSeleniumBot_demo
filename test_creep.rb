@@ -12,10 +12,10 @@ require 'io/console'
 
 puts "Enter BAND Number:"
 bandNum = gets.chomp
-puts "Enter Naver Username:"
-naverUser = gets.chomp
-puts "Enter Naver Password:"
-naverPwd = STDIN.noecho(&:gets).chomp
+#### puts "Enter Naver Username:"
+#### naverUser = gets.chomp
+#### puts "Enter Naver Password:"
+#### naverPwd = STDIN.noecho(&:gets).chomp
 
 browser = Selenium::WebDriver.for :chrome
 browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
