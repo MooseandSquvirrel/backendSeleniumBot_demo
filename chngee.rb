@@ -1,5 +1,6 @@
 #!/usr/env/bin ruby
 
+bandNum = 340598345
 
 =begin
 puts "Before:"
@@ -11,7 +12,7 @@ puts "After:"
 puts Dir.pwd
 =end
 
-def appleSubsidiary()
+def appleSubsidiary(bandNum)
     puts "\n"
     puts "+++++++++++++++++++++++++++++"
     puts "Before:"
@@ -20,12 +21,31 @@ def appleSubsidiary()
     puts "Directory is now:"
     puts Dir.pwd
     puts "Checking Desktop for CAMP_DATA..."
-    puts Dir.glob("CAMP_DATA")
-    if Dir.glob("CAMP_DATA") == false
-        puts "Creating CAMP_DATA Directory..."
+    if Dir.exist?("CAMP_DATA") == false
+        puts "Creating CAMP_DATA directory..."
         Dir.mkdir("CAMP_DATA")
     else
         puts "CAMP_DATA Directory exists."
     end
 end
-appleSubsidiary()
+
+def pearSubsidiary(bandNum)
+    puts"\n"
+    puts "+++++++++++++++++++++++++++++"
+    Dir.chdir("CAMP_DATA")
+    puts "Directory is now:"
+    puts Dir.pwd
+    puts "Checking CAMP_DATA for #{bandNum} BAND subdirectory..."
+    if Dir.exist?("#{bandNum}") == false
+        puts "Creating #{bandNum} subdirectory..."
+        Dir.mkdir("#{bandNum}")
+    else
+        puts "#{bandNum} subdirectory exists."
+    end
+end
+
+# EXECUTE 
+appleSubsidiary(bandNum)
+
+# EXECUTE
+pearSubsidiary(bandNum)
