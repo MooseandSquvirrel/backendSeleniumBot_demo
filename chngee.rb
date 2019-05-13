@@ -2,16 +2,6 @@
 
 bandNum = 340598345
 
-=begin
-puts "Before:"
-puts Dir.pwd
-
-Dir.chdir(Dir.pwd + "/Desktop")
-
-puts "After:"
-puts Dir.pwd
-=end
-
 require 'date'
 
 dateToday = DateTime.now
@@ -19,12 +9,26 @@ dateToday.strftime("%d/%m/%Y")
 puts "Date:"
 puts dateToday
 
-def appleSubsidiary()
+def tempSubsidiary()
     puts "\n"
     puts "+++++++++++++++++++++++++++++"
     puts "Before:"
     puts Dir.pwd
     Dir.chdir("../../Desktop")  # GOING TO HAVE TO RESOLVE PATH FOR OTHERS SYSTEMS LATER (either manual or fix this)
+    puts "Directory is now:"
+    puts Dir.pwd
+    puts "Checking Desktop for TEMP_DATA..."
+    if Dir.exist?("TEMP_DATA") == false
+        puts "Creating TEMP_DATA directory..."
+        Dir.mkdir("TEMP_DATA")
+    else
+        puts "TEMP_DATA Directory exists."
+    end
+end
+
+def appleSubsidiary()
+    puts "\n"
+    puts "+++++++++++++++++++++++++++++"
     puts "Directory is now:"
     puts Dir.pwd
     puts "Checking Desktop for CAMP_DATA..."
@@ -65,6 +69,9 @@ def lemonSubsidiary(bandNum, dateToday)
         puts "#{dateToday} subdirectory exists."
     end
 end
+
+# EXECUTE
+tempSubsidiary()
 
 # EXECUTE 
 appleSubsidiary()
