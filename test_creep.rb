@@ -3,6 +3,8 @@ require 'selenium-webdriver'
 require 'pp'
 require 'rspec/expectations'
 
+
+
 puts "Enter BAND Number:"
 bandNum = gets.chomp
 
@@ -11,7 +13,7 @@ browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.c
  
 wait = Selenium::WebDriver::Wait.new(:timeout => 15)
  
-# Add text to a text box
+# USR DATA ENTRY
 form = wait.until {
     element = browser.find_element(:name, "user")
     element if element.displayed?
@@ -19,7 +21,7 @@ form = wait.until {
 sleep(1)
 form.send_keys("CAZ0412")
  
-# Add text to a text box
+# PW DATA ENTRY
 form = wait.until {
     element = browser.find_element(:name, "password")
     element if element.displayed?
@@ -37,7 +39,6 @@ else
 end
 
 # FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
-# if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li/a]");
 if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
     puts "Card link found.\n"
     card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
@@ -62,12 +63,11 @@ else
     puts "Statistcs link not found."
 end
 
-
+# FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
 browser.switch_to.frame("svc-iframe")
 
-
 # STORING ALL FUNCTION OPTIONS AND SELECTING B7
-#### Interact with the drop down box
+# INTERACTING WITH DROPDOWN BOX
 select_list = wait.until {
     if element = browser.find_element(:xpath, "//*[@id='templateNo']")
         element = browser.find_element(:xpath, "//*[@id='templateNo']")
@@ -76,10 +76,10 @@ select_list = wait.until {
 puts "select_list"
 pp select_list
  
-#### Extract all options from the select box
+# EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
 options=select_list.find_elements(:tag_name => "option")
 
-# Reference URL http://elementalselenium.com/tips/5-select-from-a-dropdown
+# REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
 dropdown = browser.find_element(id: 'templateNo')
     select_list = Selenium::WebDriver::Support::Select.new(dropdown)
     select_list.select_by(:value, '45')
@@ -87,7 +87,6 @@ dropdown = browser.find_element(id: 'templateNo')
     puts selected_option = select_list.selected_options[0].text
     sleep(2)
 
-# (:xpath, "//*[@id='input']")
 # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
 form = wait.until {
     if element = browser.find_element(:tag_name, "textarea")
@@ -108,16 +107,5 @@ TO AVOID SPAMMING THE BACKEND LIST OF REPORTS SO I DON'T HURT WORKFLOW FOR OTHER
 
 
 
-
-
-
-#form.find_element(:name, "login-btn").submit()
-# input = wait.until{
-#    element = browser.find_element(:id, "login-btn")
-# }
-#browser.find_element(:id, "login-btn")
-#puts "Test Passed: Form input found" if input.displayed?
- 
-# Click the button based the form it is in (you can also call 'submit' method)
 
 #browser.quit
