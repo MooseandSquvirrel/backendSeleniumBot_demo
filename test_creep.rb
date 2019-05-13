@@ -44,6 +44,18 @@ else
     puts "Card link not found for clickable 'square' card before Main Menu screen."
 end
 
+sleep(1)
+if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
+    puts "Card link found.\n"
+    card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
+    sleep(3)
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    puts "Statistics menu of BAND backend reached.\n"
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+else
+    puts "Statistcs link not found."
+end
+
 
 
 
