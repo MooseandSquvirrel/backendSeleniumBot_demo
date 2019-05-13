@@ -2,11 +2,20 @@ require 'rubygems'
 require 'selenium-webdriver'
 require 'pp'
 require 'rspec/expectations'
+require 'io/console'
 
+
+"TEST BAND #"
+"Warmhammer BAND"
+"75037032"
 
 
 puts "Enter BAND Number:"
 bandNum = gets.chomp
+puts "Enter Naver Username:"
+naverUser = gets.chomp
+puts "Enter Naver Password:"
+naverPwd = STDIN.noecho(&:gets).chomp
 
 browser = Selenium::WebDriver.for :chrome
 browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
@@ -20,6 +29,7 @@ form = wait.until {
 }
 sleep(1)
 form.send_keys("CAZ0412")
+#### form.send_keys("#{naverUser}")
  
 # PW DATA ENTRY
 form = wait.until {
@@ -28,14 +38,16 @@ form = wait.until {
 }
 sleep(1)
 form.send_keys("Ihavethepower1!")
+#### form.send_keys("#{naverPwd}")
+
 
 # FINDS THE FORM BUTTON WITH XPATH AND THEN USES .execute_script (A JAVASCRIPT ACTION I BELIEVE)
 if button = browser.find_element(:xpath, "//*[@id='login-btn']")
-    puts "Found *******"
+    puts "Found form 'Submit' 'login-btn'."
     button = browser.find_element(:xpath, "//*[@id='login-btn']").click
     sleep(1)
 else
-    puts "Nope ____"
+    puts "No form 'Submit' login-btn found."
 end
 
 # FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
@@ -53,7 +65,7 @@ end
 # FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
 sleep(3)
 if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
-    puts "Card link found.\n"
+    puts "Statistics link found.\n"
     card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
     sleep(1)
     puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
@@ -73,7 +85,7 @@ select_list = wait.until {
         element = browser.find_element(:xpath, "//*[@id='templateNo']")
     end
 }
-puts "select_list"
+puts "Function collected from dropdown function options. (into select_list):"
 pp select_list
  
 # EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
@@ -101,8 +113,19 @@ form.send_keys("#{bandNum}")
 sleep(1)
 
 
+
+def appleSubsidiary()
+    Dir.chdir("/Desktop")
+    puts "Directory is now:"
+    puts Dir.pwd
+    puts "Checking Desktop for CAMP_DATA..."
+end
+appleSubsidiary()
+
+
+
 "TO DO:"
-=================================================================================================
+"================================================================================================="
 "THE NEXT STEP HERE WOULD BE TO CLICK SUBMIT BUT I NEED TO TRY TO WAIT ON THAT LONG AS I CAN
 TO AVOID SPAMMING THE BACKEND LIST OF REPORTS SO I DON'T HURT WORKFLOW FOR OTHERS. THE STEP AFTER
 THAT WOULD ALSO BE TO REPEAT THIS OPERATION FOR B3 AND THEN CLICK SUBMIT (AND HANDLE BELOW ALERT
@@ -114,7 +137,7 @@ FOR BOTH)."
 "NEXT: CHECKING IF B-7 RESULT IS TRUE OR FALSE OR DOWNLOADABLE FILE/FILE OR NOT.
 AND CHECKING IF B-3 IS DONE AS WELL. IF NOT, RELOAD PAGE, CHECK EVERY 30 SECS OR 1 MINUTE"
 
-"NEXT: IF NEW MAIN DIRECTORY WITH NAME "CAMP_DATA" DOESN'T EXIST --ALREADY-- ON THE DESKTOP, THEN
+"NEXT: IF NEW MAIN DIRECTORY WITH NAME 'CAMP_DATA' DOESN'T EXIST --ALREADY-- ON THE DESKTOP, THEN
 CREATE IT ON THE DESKTOP"
 
 "NEXT: IF NEW TEMP_DATA DIRECTORY DOESN'T EXIT ON DESKTOP --ALREADY--, THEN CREATE IT ON DESKTOP"
