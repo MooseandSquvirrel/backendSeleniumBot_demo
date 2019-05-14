@@ -92,7 +92,7 @@ pp select_list
 options=select_list.find_elements(:tag_name => "option")
 
 # REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
-dropdown = browser.find_element(id: 'templateNo')
+dropdown = browser.find_element(id: 'templateNo') #### Comma needed between id: and 'templateNo' ?
     select_list = Selenium::WebDriver::Support::Select.new(dropdown)
     select_list.select_by(:value, '45')
     puts "Dropdown option selected:"
@@ -114,16 +114,38 @@ sleep(1)
 
 
 
-def appleSubsidiary()
-    puts "Before:"
-    puts Dir.pwd
-    Dir.chdir(Dir.pwd + "../../")
-    puts "Directory is now:"
-    puts Dir.pwd
-    puts "Checking Desktop for CAMP_DATA..."
 
+
+
+"submit"
+
+
+
+
+
+
+
+# FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
+if card = browser.find_element(:xpath, "/html/body/div/table/tbody/tr[1]/td[7]/a")
+    puts "Download file found.\n"
+    card = browser.find_element(:xpath, "/html/body/div/table/tbody/tr[1]/td[7]/a").click
+    sleep(1)
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    print "File Downloading"
+    puts "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+    sleep(1)
+    print "."
+    sleep(1)
+    print "."
+    sleep(1)
+    print "."
+else
+    puts "Card link not found for clickable 'square' card before Main Menu screen."
 end
-appleSubsidiary()
+
+/html/body/div/table/tbody/tr[1]/td[7]/a
+
+
 
 
 
@@ -140,17 +162,16 @@ FOR BOTH)."
 "NEXT: CHECKING IF B-7 RESULT IS TRUE OR FALSE OR DOWNLOADABLE FILE/FILE OR NOT.
 AND CHECKING IF B-3 IS DONE AS WELL. IF NOT, RELOAD PAGE, CHECK EVERY 30 SECS OR 1 MINUTE"
 
-"NEXT: IF NEW MAIN DIRECTORY WITH NAME 'CAMP_DATA' DOESN'T EXIST --ALREADY-- ON THE DESKTOP, THEN
-CREATE IT ON THE DESKTOP"
+# "NEXT: IF NEW MAIN DIRECTORY WITH NAME 'CAMP_DATA' DOESN'T EXIST --ALREADY-- ON THE DESKTOP, THEN
+# CREATE IT ON THE DESKTOP"
 
-"NEXT: IF NEW TEMP_DATA DIRECTORY DOESN'T EXIT ON DESKTOP --ALREADY--, THEN CREATE IT ON DESKTOP"
+# "NEXT: IF NEW TEMP_DATA DIRECTORY DOESN'T EXIT ON DESKTOP --ALREADY--, THEN CREATE IT ON DESKTOP"
 
-"NEXT: OPEN/CHECK CAMP_DATA DIRECTORY, IF SUBDIRECTORY OF TODAYS DATE DOESN'T EXIST ALREADY, CREATE SUBDIRECTORY
-WITH TODAYS DATE (FIND RUBY OR SYSTEM DATE CALL AS VARIABLE)"
+# "NEXT: OPEN/CHECK CAMP_DATA DIRECTORY, IF SUBDIRECTORY OF TODAYS DATE DOESN'T EXIST ALREADY, CREATE SUBDIRECTORY
+# WITH TODAYS DATE (FIND RUBY OR SYSTEM DATE CALL AS VARIABLE)"
 
-"NEXT: OPEN/CHECK TODAY'S DATE DIRECTORY, IF SUBDIRECTORY OF BANDNUMBER == TO 'bandNum' ENTERED AT BEGINNING,
-CREATE DIRECTORY WITH THAT BAND NUMBER AS NAME (EVERYDAY WILL NEED TO CHANGE THESE MANUALLY IF DON'T IMPLEMENT 
-AUTOMATION NAME CHANGE)"
+# "NEXT: OPEN/CHECK TODAY'S DATE DIRECTORY, IF SUBDIRECTORY OF BANDNUMBER == TO 'bandNum' ENTERED AT BEGINNING,
+# CREATE DIRECTORY WITH THAT BAND NUMBER AS NAME"
 
 "NEXT: DOWNLOAD EXCEL SHEET FOR B-7 AND B-3 TO TEMP_DATA SUBDIRECTORY.
 THIS ACTION MIGHT NEED TO WAIT/CHECK FOR BOTH TO BE READY TO DOWNLOAD,
