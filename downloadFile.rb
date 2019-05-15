@@ -3,10 +3,13 @@ require 'selenium-webdriver'
 require 'pp'
 require 'rspec/expectations'
 require 'io/console'
+require 'watir'
 
 "-----------------------------------------------------------------------------------------------"
 "--------------- BELOW THIS IS OLD DELETABLE CODE FOR USE IN TESTING MODULE ONLY ---------------"
 "-----------------------------------------------------------------------------------------------"
+
+bandNum = "75037032"
 
 browser = Selenium::WebDriver.for :chrome
 browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
@@ -79,36 +82,54 @@ table = wait.until {
     element = browser.find_element(:tag_name, "table")
     element if element.displayed?
 }
+
 # SHOULD PRINT ALL TABLE ELEMENTS
 # puts "BAND Table found" if table
- 
+
+"========="
 # Print full table contents
-puts "Table with :tag_name=:\n" + table.text
- 
+# puts "Table with :tag_name=:\n" + table.text
+ "========="
+
 =begin
 # Iterate through all cells of the table
 table.find_elements(:tag_name, "td").each do |r|
     puts "Cell Value: " + r.text
 end
 =end
-
+sleep(3)
 # Iterate through all cells of the table
-table.find_elements(:tag_name, "td").each do |r|  "MAKE ANDY a gets.chomp variable at beginning of program (First and last name)"
+table.find_elements(:tag_name, "tr").each do |r|  "MAKE ANDY a gets.chomp variable at beginning of program (First and last name)"
     # PRINTS ALL CELL VALUES (1 CELL PER LINE)
     # puts "Cell Value: " + r.text
-    if r.text.include? "CAZ0412"
-        puts "**************************************"
-        puts "\t Empl. # cell found."
-        puts "**************************************"
-        puts "Cell text:"
+    if r.text.include? "CAZ0412" && "#{bandNum}"   # Use {bandNum} interpolation in place of my BAND empl. # 
+        puts "*******************************************"
+        puts "\t Empl. # cell found in table."
+        puts "*******************************************"
+        puts "Row text:"
         puts r.text
+        r.find_elements(:tag_name, "td").each do |c|
+            puts "c.text:"
+            puts c.text
+            if c.text.include? "Excel"
+                c = c.find_element(:tag_name, "a")
+                c.click
+            end
+
+            #if c.text.include? "Excel"
+             #   c = c.find_element(:link_text, "Excel")
+              #  puts "*********** CLICKING EXCEL ***********"
+               # puts "\t\tClick."
+                #print c.click
+                #puts "**************************************"
+            #else
+             #   "RELOAD PAGE EVERY 10 - 30 seconds (sleep 10 - 30 seconds, then Reload/refresh page function)"
+            #end
+        end        
     end
-   
-        
-    
-    #if r.text.include? "#{usrNum}"  "CHECK TO MAKE SURE USRNUM FROM BEGIN OF PROGR CORRECT VARIABLE NAME" 
 end
 
+=begin
 #### Print the value from the 1'st column of the 2'nd row of the table
 puts "Value from the 1'st column of the 2'nd row of the table: " + browser.find_elements(:xpath => "//table[@id='booktable']/tbody/tr")[1].text.split(' ')[0]
  
@@ -116,6 +137,6 @@ puts "Value from the 1'st column of the 2'nd row of the table: " + browser.find_
 puts "Value from the 2'nd column of the 1'st row of the table: " + browser.find_elements(:xpath => "//table[@id='booktable']/tbody/tr")[0].text.split(' ')[1]
  
 puts form
-
+=end
 
 
