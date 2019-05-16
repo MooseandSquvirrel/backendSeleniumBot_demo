@@ -56,7 +56,7 @@ else
 end
 
 # FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
-sleep(3)
+sleep(4)
 if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
     puts "Statistics link found.\n"
     card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
@@ -70,6 +70,7 @@ end
 
 sleep(1)
 # FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
+browser.switch_to.default_content
 browser.switch_to.frame("svc-iframe")
 sleep(1)
 
@@ -99,6 +100,9 @@ end
 =end
 sleep(3)
 # Iterate through all cells of the table
+# table.find_element(:xpath, "//tr/td[contains(text(),'#{bandNum}')]/../td/a[contains(text(),'Excel')]").click
+files_href = []
+
 table.find_elements(:tag_name, "tr").each do |r|  "MAKE ANDY a gets.chomp variable at beginning of program (First and last name)"
     # PRINTS ALL CELL VALUES (1 CELL PER LINE)
     # puts "Cell Value: " + r.text
@@ -109,26 +113,15 @@ table.find_elements(:tag_name, "tr").each do |r|  "MAKE ANDY a gets.chomp variab
         puts "Row text:"
         puts r.text
         r.find_elements(:tag_name, "td").each do |c|
-            puts "c.text:"
-            puts c.text
-            if c.text.include? "Excel"
-                c = c.find_element(:tag_name, "a")
-                c.click
+            next if c.text != "Excel"
+            c.find_elements(:tag_name, "a").each do |n|
+                files_href << n.attribute("href")
             end
-
-            #if c.text.include? "Excel"
-             #   c = c.find_element(:link_text, "Excel")
-              #  puts "*********** CLICKING EXCEL ***********"
-               # puts "\t\tClick."
-                #print c.click
-                #puts "**************************************"
-            #else
-             #   "RELOAD PAGE EVERY 10 - 30 seconds (sleep 10 - 30 seconds, then Reload/refresh page function)"
-            #end
         end        
     end
 end
 
+p files_href
 =begin
 #### Print the value from the 1'st column of the 2'nd row of the table
 puts "Value from the 1'st column of the 2'nd row of the table: " + browser.find_elements(:xpath => "//table[@id='booktable']/tbody/tr")[1].text.split(' ')[0]
