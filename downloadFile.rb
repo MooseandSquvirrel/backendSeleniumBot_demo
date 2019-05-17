@@ -15,7 +15,7 @@ require 'open-uri'
 "--------------- BELOW THIS IS OLD DELETABLE CODE FOR USE IN TESTING MODULE ONLY ---------------"
 "-----------------------------------------------------------------------------------------------"
 
-bandNum = "72783488"
+bandNum = "75131431"
 
 browser = Selenium::WebDriver.for :chrome
 browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
@@ -148,9 +148,11 @@ table = wait.until {
             i = 0
             r.find_elements(:tag_name, "td").each do |cell|
                 i += 1
+                puts "Cell #{i}:"
                 puts cell.text
+                puts "__________"
                 if i == 2 # THIS REACHES THE DOWNLOAD LINK CELL IN THE TABLE
-                    while cell.text != 'SUCCEED'
+                    while cell.text == 'RUNNING'
                         puts "STILL RUNNING..."
                         sleep(10) # change this to 30 or 60
                         redo
