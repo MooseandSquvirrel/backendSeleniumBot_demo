@@ -155,6 +155,7 @@ table = wait.until {
                     while cell.text == 'RUNNING'
                         puts "STILL RUNNING..."
                         sleep(10) # change this to 30 or 60
+                        reloadButton = browser.find_element(:id, "refresh").click
                         redo
                     end
                     if cell.text == 'SUCCEED'
