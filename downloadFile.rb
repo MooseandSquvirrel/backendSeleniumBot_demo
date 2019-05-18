@@ -6,6 +6,7 @@ require 'io/console'
 require 'httparty'
 require 'rest-client'
 require 'open-uri'
+require 'pp'
 
 "=="
 # IF THIS WORKS MAKE downloadResult equal to the bandNum variable from beginning of program or whatever file is created with the band number from chngee i think
@@ -107,6 +108,11 @@ sleep(1)
 "-----------------------------------------------------------------------------------------------"
 "--------------- ABOVE THIS IS OLD DELETABLE CODE FOR USE IN TESTING MODULE ONLY ---------------"
 "-----------------------------------------------------------------------------------------------"
+
+$cellReturnText = ""
+files_href = []
+
+"GOING TO NEED TO INTERPOLATE EMPLOYEE ID BELOW IN 'IF'"
 # FUNCTION TO ITERATE BACK TO CELL WITH "RUNNING/SUCEED" TEXT IN ORDER TO BREAK WHILE LOOP OF 'STILL RUNNING'
 def iterate_to_cell(table, bandNum)
     table.find_elements(:tag_name, "tr").each do |r|  
@@ -118,6 +124,28 @@ def iterate_to_cell(table, bandNum)
                     if i == 2
                         puts "Inside iterate_to_cell, cell.text == #{cell.text}"
                         return cell.text
+                    end
+                end
+            end
+        end
+    end
+end
+
+"GOING TO NEED TO INTERPOLATE EMPLOYEE ID BELOW IN 'IF'"
+# FUNCTION TO ITERATE TO CELL WITH HREF DOWNLOAD LINK
+def iterate_to_hrefCell(table, bandNum, files_href)
+    table.find_elements(:tag_name, "tr").each do |r|  
+        if r.text.include? "CAZ0412"
+            if r.text.include? "#{bandNum}"
+                i = 0
+                r.find_elements(:tag_name, "td").each do |cell|
+                    i += 1
+                    if i == 7
+                        puts "Inside iterate_to_hrefCell"
+                        cell.find_elements(:tag_name, "a").each do |n|
+                            puts "n.attribute(\"href\") storing into array files_href" 
+                            files_href << n.attribute("href")
+                        end
                     end
                 end
             end
@@ -151,8 +179,6 @@ table = wait.until {
 
 sleep(3)
 # ITERATE THROUGH TABLE ROWS, THEN TABLE CELLS THEN STORE HREF LINKS OF DOWNLOAD LINK INTO ARRAY files_href
-$cellReturnText = ""
-files_href = []
 table.find_elements(:tag_name, "tr").each do |r|  
     if r.text.include? "CAZ0412"
         if r.text.include? "#{bandNum}"
@@ -173,7 +199,7 @@ table.find_elements(:tag_name, "tr").each do |r|
                         $cellReturnText = iterate_to_cell(table, bandNum)
                         puts "$cellReturnText: #{$cellReturnText}"
                         if $cellReturnText == 'SUCCEED'
-                           break
+                           return $cellReturnText
                         end
                         #"elapsedTime = Figure out timer ++++++ "
                         puts "STILL RUNNING..."
@@ -191,23 +217,28 @@ table.find_elements(:tag_name, "tr").each do |r|
                     end
                 end
             end
-                puts "above if"
-                puts "$cellReturnText == #{$cellReturnText}"
-                if $cellReturnText == 'SUCCEED'
-                    puts "in if"
-                    cell.find_elements(:tag_name, "a").each do |n|
-                        puts "n.attribute(\"href\") storing into array files_href" 
-                        files_href << n.attribute("href")
-                    end
-                end
-            end
-        
+        end
     end
- end
+end
 
+$cellReturnText = iterate_to_cell(table, bandNum)
+puts "above if"
+puts "$cellReturnText == #{$cellReturnText}"
+if $cellReturnText == 'SUCCEED'
+    puts "in if"
+    iterate_to_hrefCell(table, bandNum, files_href)
+end
 
- p files_href
+puts "Download links from files_href array:"
+pp files_href
 
+"LINKS READY TO DOWNLOAD, BUT I ALSO NEED TO FIGURE OUT FLOW. AFTER B7 INPUT, IT SHOULD PUT IN B3 RIGHT AWAY 
+(OR ELSE DOUBLE WAIT TIME. MIGHT NOT BE POSSIBLE BUT TRY). THEN SHOULD WAIT FOR --BOTH--, THEN DOWNLOAD, FIXEM, 
+THEN USE DATA FOR FINAL B7" "SO AFTER SUBMITTING BOTH B3 AND B7, THEN INSIDE THE 'STILL RUNNING' CHECK, NEED TO 
+FIND A WAY TO CHECK ALL ROWS OF TABLE FOR bandNum and Empl# AGAIN TO CHECK CELL 2 OF OTHER FUNCTION CALL (EITHER B3 OR B7
+DEPENDING WHICH WAS CALLED FIRST)"
+
+"BELOW IS DOWNLOAD AND NAVIGATION TO GET NEXT DOWNLOAD."
 #files_href.each do |i|
  #   browser.navigate().to("#{i}")
     # might need the the brower.switch_to.frame("svc-iframe") here to make it work with each link to get back to main page.
