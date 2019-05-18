@@ -232,6 +232,24 @@ end
 puts "Download links from files_href array:"
 pp files_href
 
+
+#"NAVIGATE GOES TO URI WHICH DOWNLOADS EXCEL FILE"
+downloadFileee = browser.navigate().to("http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=18617&filetype=xlsx")
+
+
+#"SWITCH BACK TO FRAME TO CONTINUE SEARCHING TABLE"
+##browser.switch_to.frame("svc-iframe")
+
+
+
+
+
+
+
+
+
+
+
 "LINKS READY TO DOWNLOAD, BUT I ALSO NEED TO FIGURE OUT FLOW. AFTER B7 INPUT, IT SHOULD PUT IN B3 RIGHT AWAY 
 (OR ELSE DOUBLE WAIT TIME. MIGHT NOT BE POSSIBLE BUT TRY). THEN SHOULD WAIT FOR --BOTH--, THEN DOWNLOAD, FIXEM, 
 THEN USE DATA FOR FINAL B7" "SO AFTER SUBMITTING BOTH B3 AND B7, THEN INSIDE THE 'STILL RUNNING' CHECK, NEED TO 
@@ -244,10 +262,10 @@ DEPENDING WHICH WAS CALLED FIRST)"
     # might need the the brower.switch_to.frame("svc-iframe") here to make it work with each link to get back to main page.
 #end
 #"NAVIGATE GOES TO URI WHICH DOWNLOADS EXCEL FILE"
-##browser.navigate().to("http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=18617&filetype=xlsx")
+#browser.navigate().to("http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=18617&filetype=xlsx")
 #"SWITCH BACK TO FRAME TO CONTINUE SEARCHING TABLE"
 ##browser.switch_to.frame("svc-iframe")
-    
+
 
 
 
