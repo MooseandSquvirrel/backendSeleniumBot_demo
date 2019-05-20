@@ -235,7 +235,7 @@ pp files_href
 
 #"NAVIGATE GOES TO URI WHICH DOWNLOADS EXCEL FILE"
 downloadFileee = browser.navigate().to("http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=18617&filetype=xlsx")
-
+open
 
 #"SWITCH BACK TO FRAME TO CONTINUE SEARCHING TABLE"
 ##browser.switch_to.frame("svc-iframe")
