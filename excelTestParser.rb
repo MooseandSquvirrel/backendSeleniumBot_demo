@@ -16,19 +16,184 @@ print "\n\nThis program will continue until 'exit' is entered on the command lin
 until gets.strip() == "exit"
     puts "\n"
     stringsHash = Hash.new
-    stringsHash = {:event_name => "Enter Event Name.", 
-        :start_date => "\nEnter starting date of event with Day first and Month second, followed by year.\n(ex: for June 21, 2019 enter: 21/6/2019)\n",
-        :total_days => "\nEnter number of days for the event. (ex: 4)", :band_num => "\nEnter BAND number:"}
+    stringsHash = {:event_name => "Enter Event Name:", 
+        :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 6/21/2019)\n",
+        :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:"}
 
-    puts stringsHash[:event_name]
-    stringsHash[:event_name] = gets.strip
-    puts stringsHash[:start_date]
-    stringsHash[:start_date] = gets.strip
-    puts stringsHash[:total_days]
-    stringsHash[:total_days] = gets.strip
-    puts stringsHash[:band_num]
-    stringsHash[:band_num] = gets.strip
+    # OLD CODE FOR REFERENCE ONLY
+    # puts stringsHash[:total_days]
+    # stringsHash[:total_days] = gets.strip
+
+    # COUNTER TO IGNORE THE 'puts stringsHash[:event_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    counter = 0
+    event_name_check = ""
+    while event_name_check != 'y' || event_name_check != "exit"
+        if counter == 0
+            puts stringsHash[:event_name]
+        end
+        counter += 1
+        stringsHash[:event_name] = gets.strip
+        if stringsHash[:event_name] == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Is '#{stringsHash[:event_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        event_name_check = gets.strip
+        if event_name_check == "exit"
+            return
+        end
+        if event_name_check == 'y'
+            break
+        end
+        if event_name_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the Event Name and press 'Enter':"
+            redo
+        end
+        if event_name_check != 'y' || event_name_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            redo
+        end
+    end
+            
+
+    # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    counter = 0
+    start_date_check = ""
+    while start_date_check != 'y' || start_date_check != "exit"
+        if counter == 0
+            puts stringsHash[:start_date]
+        end
+        counter += 1
+        stringsHash[:start_date] = gets.strip
+        if stringsHash[:start_date] == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Is '#{stringsHash[:start_date]}' the correct start date? -----> ex. (??/??/????)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        start_date_check = gets.strip
+        if start_date_check == 'exit'
+            return
+        end
+        if start_date_check == 'y'
+            break
+        end
+        if start_date_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the Start Date of '#{stringsHash[:event_name]}' and press 'Enter':"
+            redo
+        end
+        if start_date_check != 'y' || start_date_check != 'n'
+            puts "\n"
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+        redo
+        end
+    end
+
+        # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    counter = 0
+    total_days_check = ""
+    while total_days_check != 'y' || total_days_check != "exit"
+        if counter == 0
+            puts stringsHash[:total_days]
+        end
+        counter += 1
+        stringsHash[:total_days] = gets.strip
+        if stringsHash[:total_days] == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Is '#{stringsHash[:total_days]}' the correct amount of days of #{stringsHash[:event_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        total_days_check = gets.strip
+        if event_name_check == "exit"
+            return
+        end
+        if total_days_check == 'y'
+            break
+        end
+        if total_days_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the correct amount of days for '#{stringsHash[:event_name]}' and press 'Enter':"
+            redo
+        end
+        if total_days_check != 'y' || total_days_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            redo
+        end
+    end
+
+    # COUNTER TO IGNORE THE 'puts stringsHash[:band_num]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    counter = 0
+    band_num_check = ""
+    while band_num_check != 'y' || band_num_check != "exit"
+        if counter == 0
+            puts stringsHash[:band_num]
+        end
+        counter += 1
+        stringsHash[:band_num] = gets.strip
+        if stringsHash[:band_num] == "exit"
+            return
+        end
+        puts "\n"
+        puts "Is '#{stringsHash[:band_num]}' the correct BAND number for #{stringsHash[:event_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        band_num_check = gets.strip
+        if event_name_check == "exit"
+            return
+        end
+        if band_num_check == 'y'
+            break
+        end
+        if band_num_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the correct amount of days for '#{stringsHash[:event_name]}' and press 'Enter':"
+            redo
+        end
+        if band_num_check != 'y' || band_num_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            redo
+        end
+    end
+
+    puts "\n"
+    print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
+    sleep(1)
+    print '.'
+    sleep(1)
+    print '.'
+    sleep(1)
+    print '.'
+    sleep(1)
+    print '.'
     
+    puts "stringHash[:start_date]"
+    puts stringsHash[:start_date]
+    daysParsed = Date.parse(stringsHash[:start_date])
+    datesArray = []
+    i = 0
+    while i < stringsHash[:total_days].to_i
+        if stringsHash[:total_days] == 1
+            datesArray << daysParsed
+            break
+        else
+            datesArray << daysParsed
+            daysParsed += 1
+            puts "Dates Array:"
+            puts "========"
+            puts datesArray
+            puts "\n"
+            i += 1
+        end
+    end
+
+
 
     "Creeper/Download file codes here"
 
@@ -65,11 +230,34 @@ until gets.strip() == "exit"
         end
     end
 
-    
     newCount = index
     puts "NewCount = :#{newCount}"
+
+    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+    index = 0
+    while index < worksheet.sheet_data.rows.size
+        p "#{worksheet.sheet_data.rows.size} -- #{index}"
+        cellDate = worksheet.sheet_data[index][3].value
+        p "cellDate = #{cellDate}"
+        if !datesArray.include("#{cellDate}")
+            puts "cellDate: #{cellDate}"
+            worksheet.delete_row(index)
+            puts "Not new user. Row #a#{i} Deleted."
+        else
+            index += 1
+        end
+    end
     
+    finalRowCount = index
+
+    puts "=============================="
+    puts "Results of first B7:"
+    nru = rowCount - finalRowCount
+    puts "nru: #{nru}"
+    nruPercentage = (finalRowCount % rowCount) * 100
     
+
+
 
 
             
