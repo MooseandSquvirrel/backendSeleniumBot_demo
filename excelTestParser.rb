@@ -17,12 +17,13 @@ until gets.strip() == "exit"
     puts "\n"
     stringsHash = Hash.new
     stringsHash = {:event_name => "Enter Event Name:", 
-        :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 6/21/2019)\n",
+        :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
         :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:"}
 
     # OLD CODE FOR REFERENCE ONLY
     # puts stringsHash[:total_days]
     # stringsHash[:total_days] = gets.strip
+
 
     # COUNTER TO IGNORE THE 'puts stringsHash[:event_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     counter = 0
@@ -54,6 +55,8 @@ until gets.strip() == "exit"
         if event_name_check != 'y' || event_name_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
             redo
         end
     end
@@ -90,9 +93,12 @@ until gets.strip() == "exit"
             puts "\n"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the start date of '#{stringsHash[:event_name]}' and hit 'Enter'. ****"
         redo
         end
     end
+
 
         # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     counter = 0
@@ -124,9 +130,12 @@ until gets.strip() == "exit"
         if total_days_check != 'y' || total_days_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the amount of days for '#{stringsHash[:event_name]}' and hit 'Enter'. ****"
             redo
         end
     end
+
 
     # COUNTER TO IGNORE THE 'puts stringsHash[:band_num]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     counter = 0
@@ -152,15 +161,18 @@ until gets.strip() == "exit"
         if band_num_check == 'n'
             puts "\n"
             puts "-------------------------------------------------------"
-            puts "Re-Enter the correct amount of days for '#{stringsHash[:event_name]}' and press 'Enter':"
+            puts "Re-Enter the correct BAND number for '#{stringsHash[:event_name]}' and press 'Enter':"
             redo
         end
         if band_num_check != 'y' || band_num_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the BAND number for #{} 'Enter'. ****"
             redo
         end
     end
+
 
     puts "\n"
     print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
@@ -173,6 +185,7 @@ until gets.strip() == "exit"
     sleep(1)
     print '.'
     
+
     puts "stringHash[:start_date]"
     puts stringsHash[:start_date]
     daysParsed = Date.parse(stringsHash[:start_date])
@@ -194,13 +207,12 @@ until gets.strip() == "exit"
     end
 
 
-
     "Creeper/Download file codes here"
 
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbook = RubyXL::Parser.parse("18579.xlsx")
+    workbook = RubyXL::Parser.parse("t.xlsx")
     puts workbook.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbook[0]
@@ -215,7 +227,7 @@ until gets.strip() == "exit"
 #    pp worksheet
 
 #  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
-    index = 0
+    index = 1
     while index < worksheet.sheet_data.rows.size
         p "#{worksheet.sheet_data.rows.size} - #{index}"
         firstCell = worksheet.sheet_data[index][0].value
@@ -230,24 +242,30 @@ until gets.strip() == "exit"
         end
     end
 
+    workbook.write("firstScan.xlsx")
+
     newCount = index
     puts "NewCount = :#{newCount}"
 
     # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
-    index = 0
+    index = 1
     while index < worksheet.sheet_data.rows.size
         p "#{worksheet.sheet_data.rows.size} -- #{index}"
         cellDate = worksheet.sheet_data[index][3].value
         p "cellDate = #{cellDate}"
-        if !datesArray.include("#{cellDate}")
-            puts "cellDate: #{cellDate}"
-            worksheet.delete_row(index)
-            puts "Not new user. Row #a#{i} Deleted."
-        else
-            index += 1
+        datesArray.each do |element|
+            puts "Date: #{element}"
         end
+        if !datesArray.include?("#{cellDate}")
+            puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}."
+            worksheet.delete_row(index)
+            puts "Not new user. Row #{index} Deleted."
+        end
+        index += 1
     end
-    
+
+    puts "NewCount = :#{newCount}"
+    puts "finalRowCount: #{index}"
     finalRowCount = index
 
     puts "=============================="
@@ -255,13 +273,38 @@ until gets.strip() == "exit"
     nru = rowCount - finalRowCount
     puts "nru: #{nru}"
     nruPercentage = (finalRowCount % rowCount) * 100
-    
+
+    workbook.write("secondScan.xlsx")
+
+    puts "----------------------------------------------------------------------------------------------------------------"
+    puts "Press 'Enter' To Begin Another B7 Download and Analysis:"
 
 
 
 
-            
-    workbook.write("new.xlsx")
+
+    # THIS COPY OF CODE BELOW IS FROM CODE ABOVE AND CAN BE DELETED ONCE THIS 
+    # MODULE IS COMPLETE (ONLY FOR DEBUGGING)
+    puts "\n\n"
+    puts "stringsHash[:start_date]"
+    puts stringsHash[:start_date]
+    daysParsed = Date.parse(stringsHash[:start_date])
+    datesArray = []
+    i = 0
+    while i < stringsHash[:total_days].to_i
+        if stringsHash[:total_days] == 1
+            datesArray << daysParsed
+            break
+        else
+            datesArray << daysParsed
+            daysParsed += 1
+            puts "Dates Array:"
+            puts "========"
+            puts datesArray
+            puts "\n"
+            i += 1
+        end
+    end
 
 
 end
