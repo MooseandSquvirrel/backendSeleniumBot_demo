@@ -13,6 +13,8 @@ print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\nHit 'Enter' key to begin.\n"
 
+stringsHashBandsArray = Array.new
+
 until gets.strip() == "exit"
     puts "\n"
     stringsHash = Hash.new
@@ -173,6 +175,20 @@ until gets.strip() == "exit"
         end
     end
 
+    stringsHashBandsArray << stringsHash
+    p stringsHashBandsArray
+
+    puts "\n"
+    puts "----------------------------------------------------------------------------------"
+    puts "If no more BANDs to enter info for, type 'go' and hit 'Enter'."
+    puts "Otherwise hit 'Enter' to begin another Summer Camp BAND's information file."
+    if (orders = gets.strip) == "go"
+        break
+    else
+        redo
+    end
+end 
+"THE ABOVE 'end' IS WHERE THE BEGINNING 'UNTIL' end HAS BEEN MOVED TO TO TRY TO LOOP B7 (AND EVENTUALLY B3) INFORMATION. ++++  ++++  ++++  ++++ "
 
     puts "\n"
     print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
@@ -278,9 +294,35 @@ until gets.strip() == "exit"
 
     workbook.write("secondScan.xlsx")
 
+
     puts "----------------------------------------------------------------------------------------------------------------"
     puts "Press 'Enter' To Begin Another B7 Download and Analysis:"
+    puts "or"
+    puts "For B3, enter 'next' and hit 'Enter'."
+    
+
+    # B3 DOWNLOAD AND PARSE LOOP
+    if (user_input = gets.strip) == "next"
+        until user_input == "exit" || user_input == "next"
+            if user_input == "exit"
+                return
+            end
+            ""
 
 
 
-end
+
+            
+            if (user_input_end = gets.strip) == "next"
+                puts "inside continue"
+                continue 
+            end
+            if user_input_end == "exit"
+                return
+            end
+            "MAKE SURE TO HAVE B3 REPEAT"
+        end
+    end
+
+    puts "next steps reached"
+
