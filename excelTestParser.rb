@@ -13,7 +13,7 @@ print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\nHit 'Enter' key to begin.\n"
 
-stringsHashBandsArray = Array.new
+bandsArray = Array.new
 
 until gets.strip() == "exit"
     puts "\n"
@@ -175,13 +175,14 @@ until gets.strip() == "exit"
         end
     end
 
-    stringsHashBandsArray << stringsHash
-    p stringsHashBandsArray
+    
+    bandsArray << stringsHash
+    p bandsArray
 
     puts "\n"
     puts "----------------------------------------------------------------------------------"
     puts "If no more BANDs to enter info for, type 'go' and hit 'Enter'."
-    puts "Otherwise hit 'Enter' to begin another Summer Camp BAND's information file."
+    puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
     if (orders = gets.strip) == "go"
         break
     else
@@ -295,34 +296,10 @@ end
     workbook.write("secondScan.xlsx")
 
 
-    puts "----------------------------------------------------------------------------------------------------------------"
-    puts "Press 'Enter' To Begin Another B7 Download and Analysis:"
-    puts "or"
-    puts "For B3, enter 'next' and hit 'Enter'."
+    # B3 PARSE LOOP
     
 
-    # B3 DOWNLOAD AND PARSE LOOP
-    if (user_input = gets.strip) == "next"
-        until user_input == "exit" || user_input == "next"
-            if user_input == "exit"
-                return
-            end
-            ""
-
-
-
-
-            
-            if (user_input_end = gets.strip) == "next"
-                puts "inside continue"
-                continue 
-            end
-            if user_input_end == "exit"
-                return
-            end
-            "MAKE SURE TO HAVE B3 REPEAT"
-        end
-    end
+   
 
     puts "next steps reached"
 
