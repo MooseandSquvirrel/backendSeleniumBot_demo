@@ -192,11 +192,10 @@ until gets.strip() == "exit"
     datesArray = []
     i = 0
     while i < stringsHash[:total_days].to_i
+        datesArray << daysParsed.to_s
         if stringsHash[:total_days] == 1
-            datesArray << daysParsed
             break
         else
-            datesArray << daysParsed
             daysParsed += 1
             puts "Dates Array:"
             puts "========"
@@ -212,7 +211,7 @@ until gets.strip() == "exit"
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbook = RubyXL::Parser.parse("t.xlsx")
+    workbook = RubyXL::Parser.parse("funky.xlsx")
     puts workbook.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbook[0]
@@ -224,7 +223,7 @@ until gets.strip() == "exit"
     puts "rowCount: #{rowCount}"
     p worksheet.sheet_data[1][0].value
     p worksheet.sheet_data[1][7].value
-#    pp worksheet
+#   pp worksheet
 
 #  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
     index = 1
@@ -244,67 +243,44 @@ until gets.strip() == "exit"
 
     workbook.write("firstScan.xlsx")
 
-    newCount = index
-    puts "NewCount = :#{newCount}"
+    firstScanRowCount = index - 1
+    puts "firstScanRowCount = :#{firstScanRowCount}"
 
     # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
     index = 1
     while index < worksheet.sheet_data.rows.size
-        p "#{worksheet.sheet_data.rows.size} -- #{index}"
+        puts "-------------------------------------------------------------------------------------------------------------"
+        p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
         cellDate = worksheet.sheet_data[index][3].value
         p "cellDate = #{cellDate}"
-        datesArray.each do |element|
-            puts "Date: #{element}"
-        end
-        if !datesArray.include?("#{cellDate}")
+        p datesArray
+        if not datesArray.include?("#{cellDate}")
             puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}."
             worksheet.delete_row(index)
             puts "Not new user. Row #{index} Deleted."
+            puts "----------------------------------------------------------------------------------------------------------"
+        else
+            index += 1
         end
-        index += 1
     end
 
-    puts "NewCount = :#{newCount}"
-    puts "finalRowCount: #{index}"
-    finalRowCount = index
+    puts "firstScanRowCount: #{firstScanRowCount}"
+    puts "finalScanRowCount: #{index}"
+    finalScanRowCount = index - 1
 
     puts "=============================="
-    puts "Results of first B7:"
-    nru = rowCount - finalRowCount
-    puts "nru: #{nru}"
-    nruPercentage = (finalRowCount % rowCount) * 100
+    puts "Results of first B7 (#{stringsHash[:event_name]}):"
+    # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
+    nru = finalScanRowCount.to_f
+    puts "NRUs: #{nru}"
+    nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
+    puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
 
     workbook.write("secondScan.xlsx")
 
     puts "----------------------------------------------------------------------------------------------------------------"
     puts "Press 'Enter' To Begin Another B7 Download and Analysis:"
 
-
-
-
-
-    # THIS COPY OF CODE BELOW IS FROM CODE ABOVE AND CAN BE DELETED ONCE THIS 
-    # MODULE IS COMPLETE (ONLY FOR DEBUGGING)
-    puts "\n\n"
-    puts "stringsHash[:start_date]"
-    puts stringsHash[:start_date]
-    daysParsed = Date.parse(stringsHash[:start_date])
-    datesArray = []
-    i = 0
-    while i < stringsHash[:total_days].to_i
-        if stringsHash[:total_days] == 1
-            datesArray << daysParsed
-            break
-        else
-            datesArray << daysParsed
-            daysParsed += 1
-            puts "Dates Array:"
-            puts "========"
-            puts datesArray
-            puts "\n"
-            i += 1
-        end
-    end
 
 
 end
