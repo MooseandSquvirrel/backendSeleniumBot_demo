@@ -24,12 +24,3 @@ while i < days
     i += 1
 end
 
-
-
-
-
-=begin
-(Date.new(2012, 01, 01)..Date.new(2012, 01, 30)).each do |date|
-    puts date
-end
-=end

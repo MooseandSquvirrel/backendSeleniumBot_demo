@@ -222,16 +222,16 @@ end
         end
     end
 
-
+=begin
     "Creeper/Download file codes here"
 
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbook = RubyXL::Parser.parse("funky.xlsx")
-    puts workbook.worksheets[0] # Returns first worksheet
+    workbookB7first = RubyXL::Parser.parse("funky.xlsx")
+    puts workbookB7first.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
-    worksheet = workbook[0]
+    worksheet = workbookB7first[0]
   
     # i = 1 TO SKIP TOP ROW OF TITLES IN SPREADSHEET
     i = 1
@@ -258,7 +258,7 @@ end
         end
     end
 
-    workbook.write("firstScan.xlsx")
+    workbookB7first.write("firstScan.xlsx")
 
     firstScanRowCount = index - 1
     puts "firstScanRowCount = :#{firstScanRowCount}"
@@ -293,13 +293,177 @@ end
     nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
     puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
 
-    workbook.write("secondScan.xlsx")
+    workbookB7first.write("secondScan.xlsx")
 
+=end
+
+    "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    "                                            B3 Loop                                     "
+    "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
     # B3 PARSE LOOP
+    "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
+    # LOCATE FILE TO PARSE, OPEN AND READ
+    "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
+    workbookB3 = RubyXL::Parser.parse("thisguy.xlsx")
+    puts workbookB3.worksheets[0] # Returns first worksheet
+    # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
+    worksheet = workbookB3[0]
+  
+ 
+    # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS - NEW COUNT
+    rowCount = worksheet.sheet_data.rows.size
+    puts "rowCount: #{rowCount}"
+    p worksheet.sheet_data[1][0].value
     
+"uuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooo"
+    #firstScanRowCount = index - 1
+    #puts "firstScanRowCount = :#{firstScanRowCount}"
 
-   
+
+=begin
+    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+    index = 1
+    while index < worksheet.sheet_data.rows.size
+        if worksheet.sheet_data[index][10].nil?
+            worksheet.delete_row(index)
+            puts "NIL cell/row deleted at index -- #{index}."
+            redo
+        elsif not worksheet.sheet_data[index][10].nil?
+            puts "-------------------------------------------------------------------------------------------------------------"
+            p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
+            cellDateCreated = worksheet.sheet_data[index][10].value
+            p "cellDateCreated = #{cellDateCreated}"
+            p datesArray
+            puts "\n"
+            if not datesArray.include?("#{cellDateCreated}")
+                puts "cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
+                worksheet.delete_row(index)
+                puts "Not new user. Row #{index} Deleted."
+                puts "----------------------------------------------------------------------------------------------------------"
+            else
+                puts "\n"
+                puts "***** index +1 *****"
+                index += 1
+            end
+        end
+    end
+=end
+rowCount -= 1
+
+newLeaderTotalCount = 0
+newGBLCount = 0
+
+cellDateCreated = ""
+newBandsArray = Array.new
+"TESTING THE -1 index to try to account for shifting rows"
+    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+    index = 1
+    while index < rowCount
+        # puts "index: #{index}  --  rowCount: #{rowCount}"
+        if worksheet.sheet_data[index][10].nil?
+            puts "NIL row skipped at index #{index}."
+            index += 1
+        elsif not worksheet.sheet_data[index][10].nil?
+            puts "-------------------------------------------------------------------------------------------------------------"
+            p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
+            cellDateCreated = worksheet.sheet_data[index][10].value
+            cell = worksheet.sheet_data[index][10].value
+            p "cellDateCreated = #{cellDateCreated}"
+            p datesArray
+            puts "\n"
+            if not datesArray.include?("#{cellDateCreated}")
+                puts "cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
+                index += 1
+                puts "Not new user. Row #{index} skipped."
+                puts "----------------------------------------------------------------------------------------------------------"
+            if not worksheet.sheet_data[index][14] >= 1
+                puts "worksheet.sheet_data[index][14] = #{worksheet.sheet_data[index][14]} -- Skipping."
+                
+                index += 1
+            else
+                newBandsArray << worksheet.sheet_data[index][7]
+                puts "newBandsArray Band: #{worksheet.sheet_data[index][7]}"
+                newLeaderTotalCount += 1
+                puts "newLeaderTotalCount: #{newLeaderTotalCount}"
+
+                puts "***** index +1 *****"
+                index += 1
+            end
+        end
+    end
+
+    p newBandsArray
+
+    newRowCount = worksheet.sheet_data.rows.size
+    #   GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderTotalCount
+    while worksheet
+
+
+
+
+
+
+
+=begin
+ # STORES EMPTY SPACES INTO ARRAY
+ index = 1
+ indexArray = Array.new
+ while index < rowCount
+     if worksheet.sheet_data[index][10].nil?
+         indexArray << index
+         puts "rowCount = #{rowCount} index = #{index}"
+         puts "cell = #{worksheet.sheet_data[index][10]}"
+         index +=1
+     else
+        index += 1
+        puts "index += 1 : #{index}"
+     end
+ end
+
+
+ index = 0
+ len = indexArray.length
+ while i < len
+    worksheet.delete_row(indexArray[index])
+    index += 1
+    puts "index = #{index}"
+    indexArray[index] = index - (index - 1)
+    puts "indexArray[index] = #{indexArray[index]}"
+    i += 1
+ end
+ =end
+
+=begin
+index = 0
+len = indexArray.length
+while index < len
+   worksheet.delete_row(indexArray[index])
+   indexArray.each do |index|
+       puts "BEFORE indexArray #{indexArray[index]}"
+       index += 1
+       puts "AFTER indexArray #{indexArray[index]}"
+   end
+   index += 1
+end
+=end
+
+
+ # p indexArray
+ #ap newSheetRowsArray
+    
+workbookWhat = RubyXL::Workbook.new
+worksheetWhat = workbookWhat[0]
+
+"TRY INSERT METHOD IF THIS DOESN'T WORK"
+newSheetRowsArray.each do |i|
+    workbookWhat.worksheets[i] = i
+end
+
+workbookWhat.write("what.xlsx")
+workbookB3.write("b3write.xlsx")
+
+puts "rowCount #{rowCount}"
 
     puts "next steps reached"
 
