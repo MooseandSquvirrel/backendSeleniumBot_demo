@@ -305,7 +305,7 @@ end
     "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbookB3 = RubyXL::Parser.parse("thisguy.xlsx")
+    workbookB3 = RubyXL::Parser.parse("workit.xlsx")
     puts workbookB3.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB3[0]
@@ -316,8 +316,36 @@ end
     puts "rowCount: #{rowCount}"
     p worksheet.sheet_data[1][0].value
     
-totalLeaderCount = 0
-newLeaderTotalCount = 0
+
+    newRowCount = worksheet.sheet_data.rows.size
+    newLeaderArray = Array.new
+    finalLeaderArray = Array.new
+    cell = ""
+    index = 1
+    #   GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderGBLCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
+    while index < newRowCount
+        if not worksheet.sheet_data[index][10].nil?
+            newLeaderArray << worksheet.sheet_data[index][5].value
+            puts "worksheet.sheet_data[index][5]: #{worksheet.sheet_data[index][5]}"
+        end
+        index += 1
+    end
+    puts "\n\n\n count before uniq: #{newLeaderArray.length}"
+    finalLeaderArray = newLeaderArray.uniq
+    puts "\n\nfinalLeaderArray"
+    ap finalLeaderArray
+    puts "\n\n\n count after uniq: #{finalLeaderArray.length}"
+    totalLeaderCount = finalLeaderArray.length 
+
+    puts "************\n*************\n**************\n"
+    puts "************\n*************\n**************\n"
+    puts "************\n*************\n**************\n"
+    puts "************\n*************\n**************\n"
+    puts "************\n*************\n**************\n"
+    puts "************\n*************\n**************\n"
+
+
+newLeaderGBLCount = 0
 newGBLCount = 0
 cellDateCreated = ""
 newLeaderArray = Array.new
@@ -350,12 +378,21 @@ while index < rowCount
             newLeaderArray << worksheet.sheet_data[index][5].value
             puts "newBandsArray Band: #{worksheet.sheet_data[index][7].value}"
             puts "newLeaderArray: #{worksheet.sheet_data[index][5].value}"
-            newLeaderTotalCount += 1
-            puts "newLeaderTotalCount: #{newLeaderTotalCount}"
+            newLeaderGBLCount += 1
+            puts "newLeaderGBLCount: #{newLeaderGBLCount}"
             index += 1
         end
     end
 end
+
+puts "\n"
+
+#   GRAB ORIGINAL BAND COUNT FOR DIVISION WITH NEW B
+originalBandMemberCount = worksheet.sheet_data[1][2].value.to_f
+puts "originalBandMemberCount"
+puts originalBandMemberCount
+
+newLeaderCount = newLeaderArray.length.to_f
 
 puts "B3 Results:"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
@@ -365,8 +402,12 @@ puts "newLeaderArray:"
 p newLeaderArray
 puts "totalLeaderCount:"
 p totalLeaderCount
-puts "newLeaderTotalCount:"
-p newLeaderTotalCount
+puts "newLeaderCount:"
+p newLeaderCount
+puts "newLeaderGBLCount:"
+p newLeaderGBLCount
+puts "New Leader Avg:"
+p newLeaderAvg = (newLeaderCount/originalBandMemberCount) * 100
 
 
 workbookB3.write("b3write.xlsx")
