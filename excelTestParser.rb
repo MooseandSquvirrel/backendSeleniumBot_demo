@@ -316,154 +316,62 @@ end
     puts "rowCount: #{rowCount}"
     p worksheet.sheet_data[1][0].value
     
-"uuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooouuunnnndoooooooo"
-    #firstScanRowCount = index - 1
-    #puts "firstScanRowCount = :#{firstScanRowCount}"
-
-
-=begin
-    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
-    index = 1
-    while index < worksheet.sheet_data.rows.size
-        if worksheet.sheet_data[index][10].nil?
-            worksheet.delete_row(index)
-            puts "NIL cell/row deleted at index -- #{index}."
-            redo
-        elsif not worksheet.sheet_data[index][10].nil?
-            puts "-------------------------------------------------------------------------------------------------------------"
-            p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
-            cellDateCreated = worksheet.sheet_data[index][10].value
-            p "cellDateCreated = #{cellDateCreated}"
-            p datesArray
-            puts "\n"
-            if not datesArray.include?("#{cellDateCreated}")
-                puts "cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
-                worksheet.delete_row(index)
-                puts "Not new user. Row #{index} Deleted."
-                puts "----------------------------------------------------------------------------------------------------------"
-            else
-                puts "\n"
-                puts "***** index +1 *****"
-                index += 1
-            end
-        end
-    end
-=end
-rowCount -= 1
-
+totalLeaderCount = 0
 newLeaderTotalCount = 0
 newGBLCount = 0
-
 cellDateCreated = ""
+newLeaderArray = Array.new
 newBandsArray = Array.new
-"TESTING THE -1 index to try to account for shifting rows"
-    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
-    index = 1
-    while index < rowCount
-        # puts "index: #{index}  --  rowCount: #{rowCount}"
-        if worksheet.sheet_data[index][10].nil?
-            puts "NIL row skipped at index #{index}."
+index = 1
+while index < rowCount
+    # puts "index: #{index}  --  rowCount: #{rowCount}"
+    if worksheet.sheet_data[index][10].nil?
+        puts "EMPTY CELL: SKIPPED NIL row skipped at index #{index}."
+        index += 1
+    elsif not worksheet.sheet_data[index][10].nil?
+        puts "-------------------------------------------------------------------------------------------------------------"
+        # p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
+        cellDateCreated = worksheet.sheet_data[index][10].value
+        cellMemberSize = worksheet.sheet_data[index][14].value.to_i
+        p "cellDateCreated = #{cellDateCreated}"
+        p "cellMembersize = #{cellMemberSize}"
+        p datesArray
+        puts "\n"
+        if not datesArray.include?("#{cellDateCreated}")
+            puts "SKIPPED : WRONG CELL DATE cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
             index += 1
-        elsif not worksheet.sheet_data[index][10].nil?
-            puts "-------------------------------------------------------------------------------------------------------------"
-            p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
-            cellDateCreated = worksheet.sheet_data[index][10].value
-            cell = worksheet.sheet_data[index][10].value
-            p "cellDateCreated = #{cellDateCreated}"
-            p datesArray
-            puts "\n"
-            if not datesArray.include?("#{cellDateCreated}")
-                puts "cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
-                index += 1
-                puts "Not new user. Row #{index} skipped."
-                puts "----------------------------------------------------------------------------------------------------------"
-            if not worksheet.sheet_data[index][14] >= 1
-                puts "worksheet.sheet_data[index][14] = #{worksheet.sheet_data[index][14]} -- Skipping."
-                
-                index += 1
-            else
-                newBandsArray << worksheet.sheet_data[index][7]
-                puts "newBandsArray Band: #{worksheet.sheet_data[index][7]}"
-                newLeaderTotalCount += 1
-                puts "newLeaderTotalCount: #{newLeaderTotalCount}"
-
-                puts "***** index +1 *****"
-                index += 1
-            end
+            # puts "Not new user. Row #{index} skipped."
+            puts "----------------------------------------------------------------------------------------------------------"
+        elsif not cellMemberSize >= 1
+            puts "SKIPPED : worksheet.sheet_data[index][14] = #{worksheet.sheet_data[index][14]}."
+            index += 1
+        else
+            newBandsArray << worksheet.sheet_data[index][7].value
+            newLeaderArray << worksheet.sheet_data[index][5].value
+            puts "newBandsArray Band: #{worksheet.sheet_data[index][7].value}"
+            puts "newLeaderArray: #{worksheet.sheet_data[index][5].value}"
+            newLeaderTotalCount += 1
+            puts "newLeaderTotalCount: #{newLeaderTotalCount}"
+            index += 1
         end
     end
-
-    p newBandsArray
-
-    newRowCount = worksheet.sheet_data.rows.size
-    #   GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderTotalCount
-    while worksheet
-
-
-
-
-
-
-
-=begin
- # STORES EMPTY SPACES INTO ARRAY
- index = 1
- indexArray = Array.new
- while index < rowCount
-     if worksheet.sheet_data[index][10].nil?
-         indexArray << index
-         puts "rowCount = #{rowCount} index = #{index}"
-         puts "cell = #{worksheet.sheet_data[index][10]}"
-         index +=1
-     else
-        index += 1
-        puts "index += 1 : #{index}"
-     end
- end
-
-
- index = 0
- len = indexArray.length
- while i < len
-    worksheet.delete_row(indexArray[index])
-    index += 1
-    puts "index = #{index}"
-    indexArray[index] = index - (index - 1)
-    puts "indexArray[index] = #{indexArray[index]}"
-    i += 1
- end
- =end
-
-=begin
-index = 0
-len = indexArray.length
-while index < len
-   worksheet.delete_row(indexArray[index])
-   indexArray.each do |index|
-       puts "BEFORE indexArray #{indexArray[index]}"
-       index += 1
-       puts "AFTER indexArray #{indexArray[index]}"
-   end
-   index += 1
-end
-=end
-
-
- # p indexArray
- #ap newSheetRowsArray
-    
-workbookWhat = RubyXL::Workbook.new
-worksheetWhat = workbookWhat[0]
-
-"TRY INSERT METHOD IF THIS DOESN'T WORK"
-newSheetRowsArray.each do |i|
-    workbookWhat.worksheets[i] = i
 end
 
-workbookWhat.write("what.xlsx")
+puts "B3 Results:"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "newBandsArray:"
+p newBandsArray
+puts "newLeaderArray:"
+p newLeaderArray
+puts "totalLeaderCount:"
+p totalLeaderCount
+puts "newLeaderTotalCount:"
+p newLeaderTotalCount
+
+
 workbookB3.write("b3write.xlsx")
 
 puts "rowCount #{rowCount}"
 
-    puts "next steps reached"
+puts "next steps reached"
 
