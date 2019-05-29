@@ -23,9 +23,14 @@ i = 1
 while i < 14
     worksheet.add_cell(0, i, 'Title')
     worksheet.change_column_width(i, 20)
-   # worksheet[i][0].change_contents("DOGG")
-    worksheet[0][1].change_font_bold(true)
-    worksheet.change_column_font_name(i, 'Courier')
+    worksheet[0][i].change_font_bold(true)
+    worksheet.change_column_font_name(i, 'Calibri')
+    worksheet.change_column_font_size(i, 20)
+    worksheet.sheet_data[0][i].change_horizontal_alignment('center')
+    worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
+    worksheet.change_row_border_color(0, :bottom, '0ba53d')
+
+
     i += 1
 end
 
