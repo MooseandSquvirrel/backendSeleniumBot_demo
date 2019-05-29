@@ -237,13 +237,18 @@ end
     p datesArray
 
 
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                            1st B7 Loop                                     "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+
     "Creeper/Download file codes here"
 
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
     workbookB7first = RubyXL::Parser.parse("b71.xlsx")
-    puts workbookB7first.worksheets[0] # Returns first worksheet
+
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB7first[0]
   
@@ -252,9 +257,6 @@ end
     # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0]
     rowCount = worksheet.sheet_data.rows.size - 1
     puts "Initial row count (rowCount) of sheet before filtering: #{rowCount}"
-    p worksheet.sheet_data[1][0].value
-    p worksheet.sheet_data[1][7].value
-#   pp worksheet
 
 #  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
     index = 1
@@ -330,13 +332,12 @@ end
     workbookB3 = RubyXL::Parser.parse("b3.xlsx")
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB3[0]
+
   
- 
     # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS - NEW COUNT
     rowCount = worksheet.sheet_data.rows.size
     puts "rowCount: #{rowCount}"
-    p worksheet.sheet_data[1][0].value
-    
+
 
     newRowCount = worksheet.sheet_data.rows.size
     newLeaderArray = Array.new
@@ -357,16 +358,16 @@ end
     
     # DELETES MULTIPLES OF LEADERS
     finalLeaderArray = newLeaderArray.uniq
-    puts "\n\nfinalLeaderArray"
-    ap finalLeaderArray
     puts "\nnewLeaderArray.length (count) -- after .uniq: #{finalLeaderArray.length}"
+    puts "\nfinalLeaderArray"
+    ap finalLeaderArray
     
     # TOTAL LEADERS
     totalLeaderCount = finalLeaderArray.length 
 
 # FILTERING CELLS FOR B3 AND STORING NEW LEADERS AND THEIR NEW BANDS IN ARRAYS, AND FINDING TOTAL LEADER COUNT (newLeaderCount)
 newLeaderCount = 0
-newGBLCount = 0
+new_GBL_LeaderCount = 0
 cellDateCreated = ""
 newLeaderArray = Array.new
 newBandsArray = Array.new
@@ -401,8 +402,8 @@ while index < rowCount
             #### puts "\n\n\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n"
             #### puts "newBandsArray Band: #{worksheet.sheet_data[index][7].value}"
             #### puts "newLeaderArray: #{worksheet.sheet_data[index][5].value}"
-            newLeaderCount += 1
-            #### puts "newLeaderCount: #{newLeaderCount}"
+            new_GBL_LeaderCount += 1
+            #### puts "new_GBL_LeaderCount: #{new_GBL_LeaderCount}"
             #### puts "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n\n"
             index += 1
         end
@@ -421,16 +422,16 @@ newLeaderCount = newLeaderArray.length.to_f
 
 puts "B3 Results (and Total Members):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
-puts "newBandsArray:"
-p newBandsArray
-puts "newLeaderArray:"
-p newLeaderArray
 puts "Total Leaders (totalLeaderCount):"
 p totalLeaderCount
 puts "New Leaders (newLeaderCount):"
 p newLeaderCount
-puts "GBLs (newLeaderCount):"
-p newLeaderCount
+puts "newBandsArray:"
+p newBandsArray
+puts "newLeaderArray:"
+p newLeaderArray
+puts "GBLs (new_GBL_LeaderCount):"
+p new_GBL_LeaderCount
 puts "New Leader Avg (newLeaderAvg):"
 p newLeaderAvg = (newLeaderCount/totalMembers) * 100
 puts "Total Members:"
@@ -442,7 +443,7 @@ p "STILL NEED TO GET A:2 AND PARSE"
 puts "NRU's:"
 p "#{nruCount}"
 puts "New Member Avg:"
-p (nru/totalMembers)
+p (nruCount/totalMembers)
 
 puts "\n\nfinalLeaderArray"
 ap finalLeaderArray
@@ -471,7 +472,7 @@ puts "next steps reached"
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbookB7second = RubyXL::Parser.parse("secondb7.xlsx")
+    workbookB7second = RubyXL::Parser.parse("b72.xlsx")
     puts workbookB7second.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB7second[0]
@@ -540,3 +541,67 @@ puts "next steps reached"
 
    
     p datesArray
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                            A2? Activity Loop                                     "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+
+
+
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                        Final Results to be Written                                    "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+
+puts "Results of first B7 for (#{stringsHash[:event_name]}):"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+# to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
+nruCount = nruCount.to_f
+puts "NRUs: #{nruCount}"
+nruPercentage = ((nruCount / rowCount.to_f) * 100).round(2)
+puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+
+
+puts "B3 Results (and Total Members) for (#{stringsHash[:event_name]}):"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "Total Leaders (totalLeaderCount):"
+p totalLeaderCount
+puts "New Leaders (newLeaderCount):"
+p newLeaderCount
+puts "newBandsArray:"
+p newBandsArray
+puts "newLeaderArray:"
+p newLeaderArray
+puts "GBLs (new_GBL_LeaderCount):"
+p new_GBL_LeaderCount
+puts "New Leader Avg (newLeaderAvg):"
+p newLeaderAvg = (newLeaderCount/totalMembers) * 100
+puts "Total Members:"
+puts totalMembers
+puts "Camp Date:"
+p "ADD FORMULA USING :start_date AND :total_days TO GET STARTING DATE AND ENDING DATE FOR THIS CELL"
+puts "Activity Sum:"
+p "STILL NEED TO GET A:2 AND PARSE"
+puts "NRU's:"
+p "#{nruCount}"
+puts "New Member Avg:"
+p (nruCount/totalMembers)
+
+
+puts "Results of second B7 for (#{stringsHash[:event_name]}):"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "Results of Second B7 (#{stringsHash[:event_name]}):"
+# to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
+nru = finalScanRowCount.to_f
+puts "Second B7 NRUs: #{nru}"
+nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
+puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+
+
+puts "Results of A2 Activity for (#{stringsHash[:event_name]}):"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "_____TBD_____"
