@@ -584,8 +584,6 @@ puts "Total Members:"
 puts totalMembers
 puts "Camp Date:"
 p "ADD FORMULA USING :start_date AND :total_days TO GET STARTING DATE AND ENDING DATE FOR THIS CELL"
-puts "Activity Sum:"
-p "STILL NEED TO GET A:2 AND PARSE"
 puts "NRU's:"
 p "#{nruCount}"
 puts "New Member Avg:"
@@ -604,4 +602,30 @@ puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercenta
 
 puts "Results of A2 Activity for (#{stringsHash[:event_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "Activity Sum:"
+p "STILL NEED TO GET A:2 AND PARSE"
 puts "_____TBD_____"
+
+
+
+
+
+
+
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                               Writter                                                  "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+workbookFinal = RubyXL::Workbook.new
+worksheet = workbookFinal[0]
+
+i = 0
+while i < 14
+    worksheet.sheet_data[0][index].change_font_bold(true)
+    worksheet.change_column_font_name(index, 'Courier')
+    worksheet[0][index] = "Title"
+end
+
+write.workbookFinal("workbookFinal.xlsx")
