@@ -175,7 +175,7 @@ until gets.strip() == "exit"
         end
     end
 
-    
+    puts "bandsArray << stringsHash (Before hitting 'go')"
     bandsArray << stringsHash
     p bandsArray
 
@@ -202,13 +202,14 @@ end
     sleep(1)
     print '.'
     
-
+    # COVER THE DATES OF THE :starting_date UNTIL 3 DAYS AFTER
     puts "stringHash[:start_date]"
     puts stringsHash[:start_date]
     daysParsed = Date.parse(stringsHash[:start_date])
     datesArray = []
     i = 0
-    while i < stringsHash[:total_days].to_i
+    # EVENT DATE RANGE PLUS 3 DAYS AFTER
+    while i < ((stringsHash[:total_days].to_i) + 3)
         datesArray << daysParsed.to_s
         if stringsHash[:total_days] == 1
             break
@@ -222,22 +223,35 @@ end
         end
     end
 
-=begin
+    # COVERS THE DATES LEADING UP TO THE EVENT'S :start_date (7 DAYS BEFORE :start_date)
+    daysParsed = Date.parse(stringsHash[:start_date])
+    i = 0
+    earlyDaysParsed = daysParsed - 7
+    while i < 7
+        datesArray << earlyDaysParsed.to_s
+        earlyDaysParsed += 1
+        i += 1
+    end
+    
+    datesArray = datesArray.sort
+    p datesArray
+
+
     "Creeper/Download file codes here"
 
 "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbookB7first = RubyXL::Parser.parse("funky.xlsx")
+    workbookB7first = RubyXL::Parser.parse("b71.xlsx")
     puts workbookB7first.worksheets[0] # Returns first worksheet
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB7first[0]
   
     # i = 1 TO SKIP TOP ROW OF TITLES IN SPREADSHEET
     i = 1
-    # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS - NEW COUNT
-    rowCount = worksheet.sheet_data.rows.size
-    puts "rowCount: #{rowCount}"
+    # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0]
+    rowCount = worksheet.sheet_data.rows.size - 1
+    puts "Initial row count (rowCount) of sheet before filtering: #{rowCount}"
     p worksheet.sheet_data[1][0].value
     p worksheet.sheet_data[1][7].value
 #   pp worksheet
@@ -245,12 +259,12 @@ end
 #  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
     index = 1
     while index < worksheet.sheet_data.rows.size
-        p "#{worksheet.sheet_data.rows.size} - #{index}"
+        #### p "#{worksheet.sheet_data.rows.size} - #{index}" ####
         firstCell = worksheet.sheet_data[index][0].value
         lastCell = worksheet.sheet_data[index][7].value
-        p "firstCell = #{firstCell} lastCell = #{lastCell}"
+       #### p "firstCell = #{firstCell} lastCell = #{lastCell}" ####
         if firstCell != lastCell
-            p "DELETE"
+       ####    p "DELETE" ####
             worksheet.delete_row(index)
             # puts "Not new user. Row #a#{i} Deleted."
         else
@@ -258,44 +272,52 @@ end
         end
     end
 
+    
+    finalScanRowCount = index - 1
+    puts "FIRST B7 While loop. CLEAN USERS THAT DIDN'T JOIN FROM THIS EVENT (joined in earlier BAND). (finalScanRowCount): #{finalScanRowCount}"
+
     workbookB7first.write("firstScan.xlsx")
 
-    firstScanRowCount = index - 1
-    puts "firstScanRowCount = :#{firstScanRowCount}"
+
+    puts "worksheet.sheet_data.rows.size BEFORE second loop: #{worksheet.sheet_data.rows.size}"
 
     # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
     index = 1
+    puts "cellDate = worksheet.sheet_data[1][3] = #{worksheet.sheet_data[index][3].value}"
     while index < worksheet.sheet_data.rows.size
-        puts "-------------------------------------------------------------------------------------------------------------"
-        p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
+       #### puts "-------------------------------------------------------------------------------------------------------------" ####
+       #### p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}" ####
         cellDate = worksheet.sheet_data[index][3].value
-        p "cellDate = #{cellDate}"
-        p datesArray
+       #### p "cellDate = #{cellDate}" ####
+       #### p datesArray ####
         if not datesArray.include?("#{cellDate}")
-            puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}."
+           #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}." ####
+           puts "cellDate: #{cellDate}"
             worksheet.delete_row(index)
-            puts "Not new user. Row #{index} Deleted."
-            puts "----------------------------------------------------------------------------------------------------------"
+           puts "Not new user. Row #{index} Deleted." ####
+           #### puts "----------------------------------------------------------------------------------------------------------" ####
         else
             index += 1
+            puts "cellDate #{cellDate} is good!\n(index += 1)"
         end
     end
 
-    puts "firstScanRowCount: #{firstScanRowCount}"
-    puts "finalScanRowCount: #{index}"
-    finalScanRowCount = index - 1
+    nruCount = worksheet.sheet_data.rows.size - 1
+    puts "nruCout: #{nruCount}"
+
 
     puts "=============================="
     puts "Results of first B7 (#{stringsHash[:event_name]}):"
     # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
-    nru = finalScanRowCount.to_f
-    puts "NRUs: #{nru}"
-    nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
+    nruCount = nruCount.to_f
+    puts "NRUs: #{nruCount}"
+    nruPercentage = ((nruCount / rowCount.to_f) * 100).round(2)
     puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+    puts "=============================="
 
     workbookB7first.write("secondScan.xlsx")
 
-=end
+
 
     "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     "                                            B3 Loop                                     "
@@ -305,8 +327,7 @@ end
     "REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
     # LOCATE FILE TO PARSE, OPEN AND READ
     "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
-    workbookB3 = RubyXL::Parser.parse("workit.xlsx")
-    puts workbookB3.worksheets[0] # Returns first worksheet
+    workbookB3 = RubyXL::Parser.parse("b3.xlsx")
     # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
     worksheet = workbookB3[0]
   
@@ -322,30 +343,29 @@ end
     finalLeaderArray = Array.new
     cell = ""
     index = 1
-    #   GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderGBLCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
+    #   GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
     while index < newRowCount
         if not worksheet.sheet_data[index][10].nil?
+            #  STORING ALL LEADER NAMES (MULTIPLES INCLUDED)
             newLeaderArray << worksheet.sheet_data[index][5].value
-            puts "worksheet.sheet_data[index][5]: #{worksheet.sheet_data[index][5]}"
+           #### puts "worksheet.sheet_data[index][5]: #{worksheet.sheet_data[index][5]}"
         end
         index += 1
     end
-    puts "\n\n\n count before uniq: #{newLeaderArray.length}"
+    
+    puts "\nnewLeaderArray.length (count) -- before .uniq: #{newLeaderArray.length}"
+    
+    # DELETES MULTIPLES OF LEADERS
     finalLeaderArray = newLeaderArray.uniq
     puts "\n\nfinalLeaderArray"
     ap finalLeaderArray
-    puts "\n\n\n count after uniq: #{finalLeaderArray.length}"
+    puts "\nnewLeaderArray.length (count) -- after .uniq: #{finalLeaderArray.length}"
+    
+    # TOTAL LEADERS
     totalLeaderCount = finalLeaderArray.length 
 
-    puts "************\n*************\n**************\n"
-    puts "************\n*************\n**************\n"
-    puts "************\n*************\n**************\n"
-    puts "************\n*************\n**************\n"
-    puts "************\n*************\n**************\n"
-    puts "************\n*************\n**************\n"
-
-
-newLeaderGBLCount = 0
+# FILTERING CELLS FOR B3 AND STORING NEW LEADERS AND THEIR NEW BANDS IN ARRAYS, AND FINDING TOTAL LEADER COUNT (newLeaderCount)
+newLeaderCount = 0
 newGBLCount = 0
 cellDateCreated = ""
 newLeaderArray = Array.new
@@ -353,33 +373,37 @@ newBandsArray = Array.new
 index = 1
 while index < rowCount
     # puts "index: #{index}  --  rowCount: #{rowCount}"
+    #### puts "ROW COUNT: #{rowCount} -- INDEX: #{index}"
     if worksheet.sheet_data[index][10].nil?
-        puts "EMPTY CELL: SKIPPED NIL row skipped at index #{index}."
+        #### puts "EMPTY CELL: SKIPPED NIL row skipped at index #{index}."
         index += 1
     elsif not worksheet.sheet_data[index][10].nil?
-        puts "-------------------------------------------------------------------------------------------------------------"
+        #### puts "-------------------------------------------------------------------------------------------------------------"
         # p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
         cellDateCreated = worksheet.sheet_data[index][10].value
         cellMemberSize = worksheet.sheet_data[index][14].value.to_i
-        p "cellDateCreated = #{cellDateCreated}"
-        p "cellMembersize = #{cellMemberSize}"
-        p datesArray
-        puts "\n"
+        #### puts "Row: #{index}"
+        #### p "cellDateCreated = #{cellDateCreated}"
+        #### p "cellMembersize = #{cellMemberSize}"
+        #### p datesArray
+        #### puts "\n"
         if not datesArray.include?("#{cellDateCreated}")
-            puts "SKIPPED : WRONG CELL DATE cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
+            #### puts "SKIPPED : WRONG CELL DATE cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
             index += 1
-            # puts "Not new user. Row #{index} skipped."
-            puts "----------------------------------------------------------------------------------------------------------"
-        elsif not cellMemberSize >= 1
-            puts "SKIPPED : worksheet.sheet_data[index][14] = #{worksheet.sheet_data[index][14]}."
+            #### puts "----------------------------------------------------------------------------------------------------------"
+        elsif not cellMemberSize > 1
+            #### puts "SKIPPED : worksheet.sheet_data[index][14] = #{worksheet.sheet_data[index][14].value}."
+            newLeaderCount += 1
             index += 1
         else
             newBandsArray << worksheet.sheet_data[index][7].value
             newLeaderArray << worksheet.sheet_data[index][5].value
-            puts "newBandsArray Band: #{worksheet.sheet_data[index][7].value}"
-            puts "newLeaderArray: #{worksheet.sheet_data[index][5].value}"
-            newLeaderGBLCount += 1
-            puts "newLeaderGBLCount: #{newLeaderGBLCount}"
+            #### puts "\n\n\n\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n"
+            #### puts "newBandsArray Band: #{worksheet.sheet_data[index][7].value}"
+            #### puts "newLeaderArray: #{worksheet.sheet_data[index][5].value}"
+            newLeaderCount += 1
+            #### puts "newLeaderCount: #{newLeaderCount}"
+            #### puts "\n$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$\n\n\n\n"
             index += 1
         end
     end
@@ -388,27 +412,40 @@ end
 puts "\n"
 
 #   GRAB ORIGINAL BAND COUNT FOR DIVISION WITH NEW B
-originalBandMemberCount = worksheet.sheet_data[1][2].value.to_f
-puts "originalBandMemberCount"
-puts originalBandMemberCount
-
+totalMembers = worksheet.sheet_data[1][2].value.to_f
+puts "Total Members:"
+puts totalMembers
+puts "\n"
 newLeaderCount = newLeaderArray.length.to_f
 
-puts "B3 Results:"
+
+puts "B3 Results (and Total Members):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
 puts "newBandsArray:"
 p newBandsArray
 puts "newLeaderArray:"
 p newLeaderArray
-puts "totalLeaderCount:"
+puts "Total Leaders (totalLeaderCount):"
 p totalLeaderCount
-puts "newLeaderCount:"
+puts "New Leaders (newLeaderCount):"
 p newLeaderCount
-puts "newLeaderGBLCount:"
-p newLeaderGBLCount
-puts "New Leader Avg:"
-p newLeaderAvg = (newLeaderCount/originalBandMemberCount) * 100
+puts "GBLs (newLeaderCount):"
+p newLeaderCount
+puts "New Leader Avg (newLeaderAvg):"
+p newLeaderAvg = (newLeaderCount/totalMembers) * 100
+puts "Total Members:"
+puts totalMembers
+puts "Camp Date:"
+p "ADD FORMULA USING :start_date AND :total_days TO GET STARTING DATE AND ENDING DATE FOR THIS CELL"
+puts "Activity Sum:"
+p "STILL NEED TO GET A:2 AND PARSE"
+puts "NRU's:"
+p "#{nruCount}"
+puts "New Member Avg:"
+p (nru/totalMembers)
 
+puts "\n\nfinalLeaderArray"
+ap finalLeaderArray
 
 workbookB3.write("b3write.xlsx")
 
@@ -416,3 +453,90 @@ puts "rowCount #{rowCount}"
 
 puts "next steps reached"
 
+
+
+
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                            2nd B7 Loop                                     "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+" USE THE newBandsArray TO ENTER ALL THE NEW GBLs INTO THE TEXT BOX WITH THE DRIVER "
+
+
+
+    "Creeper/Download file codes here"
+
+"REMEMBER TO GRAB DOWNLOAD FILE NAME FOR INTERPOLATION BELOW IN THE END OF THE PATH STRING BELOW SO FINDING FILE WILL BE POSSIBLE"
+    # LOCATE FILE TO PARSE, OPEN AND READ
+    "PATH OUTSIDE OF CURRENT DIRECTORY OF BACKENDSELENIUM ISN'T WORKING, FIGURE OUT HOW TO GET PATH FROM DESKTOP WHERE TEMP_DATA IS"
+    workbookB7second = RubyXL::Parser.parse("secondb7.xlsx")
+    puts workbookB7second.worksheets[0] # Returns first worksheet
+    # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
+    worksheet = workbookB7second[0]
+  
+    # i = 1 TO SKIP TOP ROW OF TITLES IN SPREADSHEET
+    i = 1
+    # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS - NEW COUNT
+    rowCount = worksheet.sheet_data.rows.size
+    puts "rowCount: #{rowCount}"
+    p worksheet.sheet_data[1][0].value
+    p worksheet.sheet_data[1][7].value
+#   pp worksheet
+
+#  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
+    index = 1
+    while index < worksheet.sheet_data.rows.size
+        #### p "#{worksheet.sheet_data.rows.size} - #{index}"
+        firstCell = worksheet.sheet_data[index][0].value
+        lastCell = worksheet.sheet_data[index][7].value
+        #### p "firstCell = #{firstCell} lastCell = #{lastCell}"
+        if firstCell != lastCell
+            #### p "DELETE"
+            worksheet.delete_row(index)
+            # puts "Not new user. Row #a#{i} Deleted."
+        else
+            index += 1
+        end
+    end
+
+    workbookB7second.write("firstScan.xlsx")
+
+    firstScanRowCount = index - 1
+    puts "firstScanRowCount = :#{firstScanRowCount}"
+
+    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+    index = 1
+    while index < worksheet.sheet_data.rows.size
+        #### puts "-------------------------------------------------------------------------------------------------------------"
+        #### p "worksheet.sheet_data.rows.size: #{worksheet.sheet_data.rows.size} -- index: #{index}"
+        cellDate = worksheet.sheet_data[index][3].value
+        #### p "cellDate = #{cellDate}"
+        #### p datesArray
+        if not datesArray.include?("#{cellDate}")
+            #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}."
+            worksheet.delete_row(index)
+            #### puts "Not new user. Row #{index} Deleted."
+            #### puts "----------------------------------------------------------------------------------------------------------"
+        else
+            index += 1
+        end
+    end
+
+    puts "firstScanRowCount: #{firstScanRowCount}"
+    puts "finalScanRowCount: #{index}"
+    finalScanRowCount = index - 1
+
+    puts "=============================="
+    puts "Results of Second B7 (#{stringsHash[:event_name]}):"
+    # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
+    nru = finalScanRowCount.to_f
+    puts "Second B7 NRUs: #{nru}"
+    nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
+    puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+
+    workbookB7second.write("secondScan.xlsx")
+
+   
+    p datesArray
