@@ -32,7 +32,7 @@ titlesArray = ["Band Name", "Band Number", "Brand", "Camp Date", "Total Members"
 
 k = 0
 j = 0
-i = 1
+i = 0
 while i < 15
     worksheet.add_cell(0, i, "#{titlesArray[i]}")
     worksheet.change_column_width(i, 25)
