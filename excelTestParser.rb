@@ -5,6 +5,7 @@ require 'rubyXL'
 require 'rubyXL/convenience_methods'
 require 'rubygems'
 require 'awesome_print'
+require 'date'
 
 puts "\n\n"
 print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
@@ -18,29 +19,28 @@ bandsArray = Array.new
 until gets.strip() == "exit"
     puts "\n"
     stringsHash = Hash.new
-    stringsHash = {:event_name => "Enter Event Name:", 
+    stringsHash = {:band_name => "Enter Event Name:", 
         :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
-        :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:"}
+        :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:", :brand_name => "\nEnter bRand Name (ex. UCA):"}
 
     # OLD CODE FOR REFERENCE ONLY
     # puts stringsHash[:total_days]
     # stringsHash[:total_days] = gets.strip
 
-
-    # COUNTER TO IGNORE THE 'puts stringsHash[:event_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     counter = 0
     event_name_check = ""
     while event_name_check != 'y' || event_name_check != "exit"
         if counter == 0
-            puts stringsHash[:event_name]
+            puts stringsHash[:band_name]
         end
         counter += 1
-        stringsHash[:event_name] = gets.strip
-        if stringsHash[:event_name] == 'exit'
+        stringsHash[:band_name] = gets.strip
+        if stringsHash[:band_name] == 'exit'
             return
         end
         puts "\n"
-        puts "Is '#{stringsHash[:event_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "Is '#{stringsHash[:band_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         event_name_check = gets.strip
         if event_name_check == "exit"
             return
@@ -62,6 +62,44 @@ until gets.strip() == "exit"
             redo
         end
     end
+
+
+    # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+    counter = 0
+    brand_name_check = ""
+    while brand_name_check != 'y' || brand_name_check != "exit"
+        if counter == 0
+            puts stringsHash[:brand_name]
+        end
+        counter += 1
+        stringsHash[:brand_name] = gets.strip
+        if stringsHash[:brand_name] == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Is '#{stringsHash[:brand_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        brand_name_check = gets.strip
+        if brand_name_check == "exit"
+            return
+        end
+        if brand_name_check == 'y'
+            break
+        end
+        if brand_name_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the bRand Name and press 'Enter':"
+            redo
+        end
+        if brand_name_check != 'y' || brand_name_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
+            redo
+        end
+    end
+     
             
 
     # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
@@ -88,7 +126,7 @@ until gets.strip() == "exit"
         if start_date_check == 'n'
             puts "\n"
             puts "-------------------------------------------------------"
-            puts "Re-Enter the Start Date of '#{stringsHash[:event_name]}' and press 'Enter':"
+            puts "Re-Enter the Start Date of '#{stringsHash[:band_name]}' and press 'Enter':"
             redo
         end
         if start_date_check != 'y' || start_date_check != 'n'
@@ -96,7 +134,7 @@ until gets.strip() == "exit"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
             puts "\n"
-            puts "**** Now Re-Enter the start date of '#{stringsHash[:event_name]}' and hit 'Enter'. ****"
+            puts "**** Now Re-Enter the start date of '#{stringsHash[:band_name]}' and hit 'Enter'. ****"
         redo
         end
     end
@@ -115,7 +153,7 @@ until gets.strip() == "exit"
             return
         end
         puts "\n"
-        puts "Is '#{stringsHash[:total_days]}' the correct amount of days of #{stringsHash[:event_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "Is '#{stringsHash[:total_days]}' the correct amount of days of #{stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         total_days_check = gets.strip
         if event_name_check == "exit"
             return
@@ -126,14 +164,14 @@ until gets.strip() == "exit"
         if total_days_check == 'n'
             puts "\n"
             puts "-------------------------------------------------------"
-            puts "Re-Enter the correct amount of days for '#{stringsHash[:event_name]}' and press 'Enter':"
+            puts "Re-Enter the correct amount of days for '#{stringsHash[:band_name]}' and press 'Enter':"
             redo
         end
         if total_days_check != 'y' || total_days_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
             puts "\n"
-            puts "**** Now Re-Enter the amount of days for '#{stringsHash[:event_name]}' and hit 'Enter'. ****"
+            puts "**** Now Re-Enter the amount of days for '#{stringsHash[:band_name]}' and hit 'Enter'. ****"
             redo
         end
     end
@@ -152,7 +190,7 @@ until gets.strip() == "exit"
             return
         end
         puts "\n"
-        puts "Is '#{stringsHash[:band_num]}' the correct BAND number for #{stringsHash[:event_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "Is '#{stringsHash[:band_num]}' the correct BAND number for #{stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         band_num_check = gets.strip
         if event_name_check == "exit"
             return
@@ -163,7 +201,7 @@ until gets.strip() == "exit"
         if band_num_check == 'n'
             puts "\n"
             puts "-------------------------------------------------------"
-            puts "Re-Enter the correct BAND number for '#{stringsHash[:event_name]}' and press 'Enter':"
+            puts "Re-Enter the correct BAND number for '#{stringsHash[:band_name]}' and press 'Enter':"
             redo
         end
         if band_num_check != 'y' || band_num_check != 'n'
@@ -201,6 +239,10 @@ end
     print '.'
     sleep(1)
     print '.'
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                            Dates Section                                               "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     
     # COVER THE DATES OF THE :starting_date UNTIL 3 DAYS AFTER
     puts "stringHash[:start_date]"
@@ -235,6 +277,26 @@ end
     
     datesArray = datesArray.sort
     p datesArray
+
+    # CREATING DATE RANGE FOR FINAL RESULTS TABLE (EX. "6/23 - 6/26")
+    days = Date.parse(stringsHash[:start_date])
+    puts "days:"
+    # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING
+    dateMonth = days.strftime('%m')
+    dateDayBeg = days.strftime('%d').to_i
+    # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
+    dateDayEnd = days.strftime('%d').to_i + (stringsHash[:total_days].to_i - 1)
+    campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
+
+    puts "dateMonth:"
+    puts dateMonth
+    puts "dateDayBeg:"
+    puts dateDayBeg
+    puts "dateDayEnd:"
+    puts dateDayEnd
+    puts "campDates:"
+    puts campDates
+
 
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -293,7 +355,7 @@ end
        #### p "cellDate = #{cellDate}" ####
        #### p datesArray ####
         if not datesArray.include?("#{cellDate}")
-           #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}." ####
+           #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:band_name]}." ####
            puts "cellDate: #{cellDate}"
             worksheet.delete_row(index)
            puts "Not new user. Row #{index} Deleted." ####
@@ -309,12 +371,12 @@ end
 
 
     puts "=============================="
-    puts "Results of first B7 (#{stringsHash[:event_name]}):"
+    puts "Results of first B7 (#{stringsHash[:band_name]}):"
     # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
     nruCount = nruCount.to_f
     puts "NRUs: #{nruCount}"
-    nruPercentage = ((nruCount / rowCount.to_f) * 100).round(2)
-    puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+    newMemberAvg = ((nruCount / rowCount.to_f) * 100).round(2)
+    puts "NRUs Percentage for the event '#{stringsHash[:band_name]}': #{newMemberAvg}%"
     puts "=============================="
 
     workbookB7first.write("secondScan.xlsx")
@@ -389,7 +451,7 @@ while index < rowCount
         #### p datesArray
         #### puts "\n"
         if not datesArray.include?("#{cellDateCreated}")
-            #### puts "SKIPPED : WRONG CELL DATE cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:event_name]}."
+            #### puts "SKIPPED : WRONG CELL DATE cellDateCreated: #{cellDateCreated} is not one of the dates of #{stringsHash[:band_name]}."
             index += 1
             #### puts "----------------------------------------------------------------------------------------------------------"
         elsif not cellMemberSize > 1
@@ -516,7 +578,7 @@ puts "next steps reached"
         #### p "cellDate = #{cellDate}"
         #### p datesArray
         if not datesArray.include?("#{cellDate}")
-            #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:event_name]}."
+            #### puts "cellDate: #{cellDate} is not one of the dates of #{stringsHash[:band_name]}."
             worksheet.delete_row(index)
             #### puts "Not new user. Row #{index} Deleted."
             #### puts "----------------------------------------------------------------------------------------------------------"
@@ -530,12 +592,12 @@ puts "next steps reached"
     finalScanRowCount = index - 1
 
     puts "=============================="
-    puts "Results of Second B7 (#{stringsHash[:event_name]}):"
+    puts "Results of Second B7 (#{stringsHash[:band_name]}):"
     # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
-    nru = finalScanRowCount.to_f
-    puts "Second B7 NRUs: #{nru}"
-    nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
-    puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+    gblNru = finalScanRowCount.to_f
+    puts "Second B7 NRUs: #{gblNru}"
+    newMemberAvg_2 = (finalScanRowCount / rowCount.to_f) * 100
+    puts "NRUs Percentage for the event '#{stringsHash[:band_name]}': #{newMemberAvg_2}%"
 
     workbookB7second.write("secondScan.xlsx")
 
@@ -552,21 +614,30 @@ puts "next steps reached"
 
 
 
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                            Adjustments to Variables                                    "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+
+
+
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                        Final Results to be Written                                    "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 
-puts "Results of first B7 for (#{stringsHash[:event_name]}):"
+puts "Results of first B7 for (#{stringsHash[:band_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
 # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
 nruCount = nruCount.to_f
 puts "NRUs: #{nruCount}"
 nruPercentage = ((nruCount / rowCount.to_f) * 100).round(2)
-puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+puts "NRUs Percentage for the event '#{stringsHash[:band_name]}': #{nruPercentage}%"
 
 
-puts "B3 Results (and Total Members) for (#{stringsHash[:event_name]}):"
+puts "B3 Results (and Total Members) for (#{stringsHash[:band_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
 puts "Total Leaders (totalLeaderCount):"
 p totalLeaderCount
@@ -590,17 +661,17 @@ puts "New Member Avg:"
 p (nruCount/totalMembers)
 
 
-puts "Results of second B7 for (#{stringsHash[:event_name]}):"
+puts "Results of second B7 for (#{stringsHash[:band_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
-puts "Results of Second B7 (#{stringsHash[:event_name]}):"
+puts "Results of Second B7 (#{stringsHash[:band_name]}):"
 # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
-nru = finalScanRowCount.to_f
-puts "Second B7 NRUs: #{nru}"
+gblNru = finalScanRowCount.to_f
+puts "Second B7 NRUs: #{gblNru}"
 nruPercentage = (finalScanRowCount / rowCount.to_f) * 100
-puts "NRUs Percentage for the event '#{stringsHash[:event_name]}': #{nruPercentage}%"
+puts "NRUs Percentage for the event '#{stringsHash[:band_name]}': #{nruPercentage}%"
 
 
-puts "Results of A2 Activity for (#{stringsHash[:event_name]}):"
+puts "Results of A2 Activity for (#{stringsHash[:band_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
 puts "Activity Sum:"
 p "STILL NEED TO GET A:2 AND PARSE"
@@ -610,6 +681,38 @@ puts "_____TBD_____"
 
 
 
+puts "Results for Final Table of (#{stringsHash[:band_name]}):"
+puts "---------------------------------------------------------------------------------------------------------------------------------------"
+puts "Band Name:"
+puts stringsHash[:band_name]
+puts "Band Number:"
+puts stringsHash[:band_num]
+puts "Brand Name:"
+puts stringsHash[:brand_name]
+puts "Camp Date:"
+puts campDates
+puts "Total Members:"
+puts totalMembers
+puts "Activity Sum:"
+
+puts "Avg Activity Per Member:"
+
+puts "NRUs:"
+puts nruCount
+puts "New Member Avg:"
+puts newMemberAvg
+puts "New Leaders:"
+puts newLeaderCount
+puts "New Leader Avg:"
+puts newLeaderAvg
+puts "GBLs:"
+puts new_GBL_LeaderCount
+puts "GBL Average:"
+puts 
+puts "GBL NRUs:"
+puts gblNru
+puts "NRUs Per GBL:"
+puts
 
 
 
