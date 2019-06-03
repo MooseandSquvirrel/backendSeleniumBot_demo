@@ -24,7 +24,10 @@ worksheet.insert_row(1)
 #infoArrayOfHashes = [{:band_name => "123412341234", :band_num => "12341234234", :brand => "UCA", :event_date => "5/23 - 5/26"}]
 
 titlesArray = Array.new
-titlesArray = ["Band Name", "Band Number", "Brand", "Camp Date", "Total Members", "Activity Sum", "Avg Activity Per Member", "New Member Avg", "New Leaders", "New Leader Avg", "GBLs", "GBL NRUs", "NRUs Per GBL"]
+inputDataArray = Array.new
+
+titlesArray = ["Band Name", "Band Number", "Brand", "Camp Date", "Total Members", "Activity Sum", "Avg Activity Per Member", "NRUs", "New Member Avg", "New Leaders", "New Leader Avg", "GBLs", "GBL Average", "GBL NRUs", "NRUs Per GBL"]
+inputDataArray = [""]
 
 "NEED TO MAKE AN ARRAY OF JUST THE VALUES FROM EACH BAND IN SAME ORDER EACH TIME CAUSE WONT BE KEYS TO IDENTIFY THE VALUES STORED IN ARRAY"
 
@@ -51,6 +54,23 @@ while i < 15
     worksheet.change_row_fill(0, 'dcdcdc')   
     i += 1
 end
+
+i = 0
+while i < 15
+    worksheet.add_cell(1, i, "#{titlesArray[i]}")
+    worksheet.change_row_height(1, 40)  # Sets first row height to 30
+    # HOZONTALLY CENTERS TEXT
+    worksheet.sheet_data[1][i].change_horizontal_alignment('center')
+    # VERTICALLY CENTERS TEXT
+    worksheet.change_row_vertical_alignment(1, 'distributed')
+    # TITLE ROW BOTTOM UNDERLINE
+    worksheet.sheet_data[1][i].change_border(:bottom, 'medium')
+    worksheet.change_row_border_color(1, :bottom, 'ed553b')
+    # FILL TITLE ROW WITH GREY
+    worksheet.change_row_fill(1, 'fdfdff')   
+    i += 1
+end
+
 
 workbookFinal.write("workbookFinal.xlsx")
 

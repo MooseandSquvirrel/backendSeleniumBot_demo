@@ -1,24 +1,112 @@
 #!/usr/env/bin ruby
 
-
+####################################
+# EXCELTESTPARSER REQUIRES
+####################################
 require 'rubyXL'
 require 'rubyXL/convenience_methods'
 require 'rubygems'
 require 'awesome_print'
 require 'date'
+####################################
+# TEST_CREEP REQUIRES
+####################################
+require 'selenium-webdriver'
+require 'pp'
+require 'rspec/expectations'
+require 'io/console'
+####################################
 
 puts "\n\n"
 print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
 print "                                            WELCOME TO Parser!                                          \n"
 print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
 
-print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\nHit 'Enter' key to begin.\n"
+print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
+print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
 
-bandsArray = Array.new
+# USERNAME AND PASSWORD ENTERING WITH HIDDEN INPUT AND TOKENIZATION
 
+# USERAME
+def userName()
+    userName_check = ""
+    while userName_check != 'y' || userName_check != "exit"
+        puts "Begin by entering your backend Username (employee i.d.):"
+        userName = gets.strip
+        if userName == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Is '#{userName}' the correct user name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        userName_check = gets.strip
+        if userName_check == "exit"
+            return
+        end
+        if userName_check == 'y'
+            break
+        end
+        if userName_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the correct user name and press 'Enter':"
+            redo
+        end
+        if userName_check != 'y' || userName_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the correct user name and hit 'Enter'. ****"
+            redo
+        end
+    end
+end
+
+
+puts "\n"
+
+# PASSWORD
+def pwd()
+    pwd_check = ""
+    while pwd_check != 'y' || pwd_check != "exit"
+        print "Enter backend password -- TEXT WILL BE INVISIBLE, AFTER TYPING PASSWORD HIT ENTER TWICE:\n"
+        pwd = STDIN.noecho(&:gets).chomp
+        if userName == 'exit'
+            return
+        end
+        puts "\n"
+        puts "Did your password correctly?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        pwd_check = gets.strip
+        if pwd_check == "exit"
+            return
+        end
+        if pwd_check == 'y'
+            break
+        end
+        if pwd_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the correct password and press 'Enter':"
+            redo
+        end
+        if pwd_check != 'y' || pwd_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the correct user name and hit 'Enter'. ****"
+            redo
+        end
+    end
+end
+pwd()
+
+puts "\n"
+
+class Band
+
+bandsArray = []
 until gets.strip() == "exit"
     puts "\n"
-    stringsHash = Hash.new
+    
     stringsHash = {:band_name => "Enter Event Name:", 
         :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
         :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:", :brand_name => "\nEnter bRand Name (ex. UCA):"}
@@ -208,26 +296,34 @@ until gets.strip() == "exit"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
             puts "\n"
-            puts "**** Now Re-Enter the BAND number for #{} 'Enter'. ****"
+            puts "**** Now Re-Enter the BAND number for #{stringsHash[:band_name]} 'Enter'. ****"
             redo
         end
     end
 
-    puts "bandsArray << stringsHash (Before hitting 'go')"
-    bandsArray << stringsHash
-    p bandsArray
+    # puts "bandsArray << stringsHash (Before hitting 'go')"
+    # bandsArray << stringsHash
+    # p bandsArray
 
     puts "\n"
     puts "----------------------------------------------------------------------------------"
     puts "If no more BANDs to enter info for, type 'go' and hit 'Enter'."
     puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
     if (orders = gets.strip) == "go"
+        bandsArray << stringsHash
         break
     else
+        bandsArray << stringsHash
         redo
     end
 end 
-"THE ABOVE 'end' IS WHERE THE BEGINNING 'UNTIL' end HAS BEEN MOVED TO TO TRY TO LOOP B7 (AND EVENTUALLY B3) INFORMATION. ++++  ++++  ++++  ++++ "
+
+    bandsLength = bandsArray.length
+
+    puts "bandsArray:"
+    ap bandsArray
+    puts "bands in Array (bandsArrayLength):"
+    puts bandsLength
 
     puts "\n"
     print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
@@ -238,7 +334,153 @@ end
     sleep(1)
     print '.'
     sleep(1)
-    print '.'
+    puts '.'
+
+
+
+    "DONT FOREGET TO REMOVE THIS RETURN TO LET THE PROGRAM WORK!"
+    
+    return 
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                        Driver Login  (up to iFrame switch)                             "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    
+browser = Selenium::WebDriver.for :chrome
+browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
+ 
+wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+ 
+# USR DATA ENTRY
+form = wait.until {
+    element = browser.find_element(:name, "user")
+    element if element.displayed?
+}
+sleep(1)
+form.send_keys("#{userName}")
+#### form.send_keys("#{naverUser}")
+ 
+# PW DATA ENTRY
+form = wait.until {
+    element = browser.find_element(:name, "password")
+    element if element.displayed?
+}
+sleep(1)
+form.send_keys("#{pwd}")
+#### form.send_keys("#{naverPwd}")
+
+
+# FINDS THE FORM BUTTON WITH XPATH AND THEN USES .execute_script (A JAVASCRIPT ACTION I BELIEVE)
+if button = browser.find_element(:xpath, "//*[@id='login-btn']")
+    puts "Found form 'Submit' 'login-btn'."
+    button = browser.find_element(:xpath, "//*[@id='login-btn']").click
+    sleep(1)
+else
+    puts "No form 'Submit' login-btn found."
+end
+
+# FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
+if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
+    puts "Card link found.\n"
+    card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
+    sleep(1)
+    puts "================================="
+    puts "Main menu of BAND backend reached.\n"
+    puts "================================="
+else
+    puts "Card link not found for clickable 'square' card before Main Menu screen."
+end
+
+# FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
+sleep(3)
+if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
+    puts "Statistics link found.\n"
+    card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
+    sleep(1)
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    puts "Statistics menu of BAND backend reached.\n"
+    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+else
+    puts "Statistcs link not found."
+end
+
+# FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
+browser.switch_to.frame("svc-iframe")
+
+
+# return
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                       Entering Bands for First B7                                      "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+bandsNumArray = Array.new
+
+# GETTING ALL BAND NUMBS WITH .map
+bandsNumArray = bandsArray.map {|x| x[:band_num]}
+
+bandNameCounter = 0
+until bandNameCounter == bandsLength
+    bandsNumArray[bandNameCounter]
+    # STORING ALL FUNCTION OPTIONS AND SELECTING B7
+    # INTERACTING WITH DROPDOWN BOX
+    select_list = wait.until {
+        if element = browser.find_element(:xpath, "//*[@id='templateNo']")
+            element = browser.find_element(:xpath, "//*[@id='templateNo']")
+        end
+    }
+    puts "Function collected from dropdown function options. (into select_list):"
+    pp select_list
+    
+    # EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
+    options=select_list.find_elements(:tag_name => "option")
+
+    # REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
+    dropdown = browser.find_element(id: 'templateNo') #### Comma needed between id: and 'templateNo' ?
+        select_list = Selenium::WebDriver::Support::Select.new(dropdown)
+        select_list.select_by(:value, '45')
+        puts "Dropdown option selected:"
+        puts selected_option = select_list.selected_options[0].text
+        sleep(2)
+
+    # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
+    form = wait.until {
+        if element = browser.find_element(:tag_name, "textarea")
+            puts "Inputing BAND name into data field."
+            element = browser.find_element(:tag_name, "textarea")
+        else
+            puts "BAND data not entered into text field."
+        end
+        element if element.displayed?
+    }
+    form.send_keys("#{bandsNumArray[bandNameCounter]}")
+    sleep(1)
+
+    "FIND CLICK SUBMIT"
+    form = wait.until {
+        element = browser.find_element(:id, "execute")
+        element if element.displayed?
+    }
+
+    form.click
+
+    bandNameCounter -= 1
+end
+
+return 
+
+"DO B3"
+
+"DOWNLOAD B7 AND B3 RESULTS (ONLY NEW ONES FROM SPREADSHEET) S0 HAVE TO IDENTIFY BY **DATE OF SUBMIT**"
+
+"SEPERATE DOWNLOADS INTO SEPERATE TEMP DIRECTORIES (mix of downloadFile.rb and test_chngee or chngee"
+
+"STORE VARIABLE DATA FROM B7 PARSING INTO ARRAY/HASH (THIS IS ALREADY DONE FOR ONE SO FIGURE OUT LOOP)"
+
+"STORE VARIABLE DATA FROM B3 PARSING INTO ARRAY/HASH (THIS IS ALREADY DONE FOR ONE SO FIGURE OUT LOOP)"
+
+
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            Dates Section                                               "
@@ -715,52 +957,85 @@ puts "NRUs Per GBL:"
 puts
 
 
-
-
+"NOW NEED TO STORE RESULTS OF SOME OF INITIAL USER INPUT AND FINAL RESULTS IN ARRAY OF ARRAYS OR ARRAY OF SINGLE KEY VALUE ARRAY = [ { (KEY) BANDNAME => {ALL INFO IN NESTED ARRAY (VALUE) } ]"
+"THIS IS TO HANDLE MULTIPLE BANDS AT ONCE"
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                               Writter                                                  "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 
-workbookFinal = RubyXL::Workbook.new
-worksheet = workbookFinal[0]
 
-worksheet.insert_row(0)
-worksheet.insert_row(1)
+bandsArrayCounter = 0
+"(CHANGE NAME FOR EACH WRITTEN ANALYSIS AND SPECIFY NEW DIRECTORY)"
+# LOOP UNTIL ALL BANDS IN bandsArray HAVE BEEN WRITTEN IN SEPERATE DOCUMENTS (CHANGE NAME FOR EACH AND SPECIFY NEW DIRECTORY)
+until bandsArryCounter > bandsLength
 
-"THIS WOULD BE FILLED WITH INFO FROM THE BEGINNING OF THE INITIAL GETS.STRIP OF PROGRAM"
-#infoArrayOfHashes = Array.new
-#infoArrayOfHashes = [{:band_name => "123412341234", :band_num => "12341234234", :brand => "UCA", :event_date => "5/23 - 5/26"}]
+    
+    workbookFinal = RubyXL::Workbook.new
+    worksheet = workbookFinal[0]
 
-titlesArray = Array.new
-titlesArray = ["Band Name", "Band Number", "Brand", "Camp Date", "Total Members", "Activity Sum", "Avg Activity Per Member", "New Member Avg", "New Leaders", "New Leader Avg", "GBLs", "GBL NRUs", "NRUs Per GBL"]
+    worksheet.insert_row(0)
+    worksheet.insert_row(1)
 
-"NEED TO MAKE AN ARRAY OF JUST THE VALUES FROM EACH BAND IN SAME ORDER EACH TIME CAUSE WONT BE KEYS TO IDENTIFY THE VALUES STORED IN ARRAY"
+    titlesArray = Array.new
+    titlesArray = ["Band Name", "Band Number", "Brand", "Camp Date", "Total Members", "Activity Sum", "Avg Activity Per Member", "New Member Avg", "New Leaders", "New Leader Avg", "GBLs", "GBL NRUs", "NRUs Per GBL"]
 
-    """"" NEED TO FILL THE ORIGINAL HASH WITH THE RETURN INFO FROM B7/B3/B72/A2 FOR EASY CELL FILLING BELOW """""
+    # CONVERTING ORIGINAL bandsArray (ARRAY OF HASHES OF BANDS' INFO) INTO ARRAY OF ARRAYS SO THAT EACH ARRAY CAN ITERATE ITS INFO INTO SHEET AT CORRECT CELL (HASH .each WOULDN'T WORK FOR THIS WHILE LOOP TO FILL EACH CELL INDIVIDUALLY, WOULD FILL ONE WITH ALL K/V PAIRS)
+    i = 0
+    bandsArray = bandsArray.map{|x| [x[:band_name], x[:band_num], x[:brand_name]]}
 
-k = 0
-j = 0
-i = 0
-while i < 15
-    worksheet.add_cell(0, i, "#{titlesArray[i]}")
-    worksheet.change_column_width(i, 25)
-    worksheet.change_row_height(0, 40)  # Sets first row height to 30
-    # worksheet[0][i].change_font_bold(true)
-    worksheet.change_column_font_name(i, 'Calibri')
-    worksheet.change_column_font_size(i, 14)
-    # HOZONTALLY CENTERS TEXT
-    worksheet.sheet_data[0][i].change_horizontal_alignment('center')
-    # VERTICALLY CENTERS TEXT
-    worksheet.change_row_vertical_alignment(0, 'distributed')
-    # TITLE ROW BOTTOM UNDERLINE
-    worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
-    worksheet.change_row_border_color(0, :bottom, 'ed553b')
-    # FILL TITLE ROW WITH GREY
-    worksheet.change_row_fill(0, 'dcdcdc')   
-    i += 1
+    puts "bandArrayOfArrays before pushing result variables into array:"
+    ap bandsArray
+
+
+    # TITLE ROW CELL FILLING
+    i = 0
+    while i < 15
+        worksheet.add_cell(0, i, "#{titlesArray[i]}")
+        worksheet.change_column_width(i, 25)
+        worksheet.change_row_height(0, 40)  # Sets first row height to 30
+        # worksheet[0][i].change_font_bold(true)
+        worksheet.change_column_font_name(i, 'Calibri')
+        worksheet.change_column_font_size(i, 14)
+        # HOZONTALLY CENTERS TEXT
+        worksheet.sheet_data[0][i].change_horizontal_alignment('center')
+        # VERTICALLY CENTERS TEXT
+        worksheet.change_row_vertical_alignment(0, 'distributed')
+        # TITLE ROW BOTTOM UNDERLINE
+        worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
+        worksheet.change_row_border_color(0, :bottom, 'ed553b')
+        # FILL TITLE ROW WITH GREY
+        worksheet.change_row_fill(0, 'dcdcdc')   
+        i += 1
+    end
+
+    # DATA ROW FILING
+    i = 0
+    j = 0
+    while i < 15
+        worksheet.add_cell(0, i, "#{bandArray[i][j]}")
+        worksheet.change_column_width(i, 25)
+        worksheet.change_row_height(0, 40)  # Sets first row height to 30
+        # worksheet[0][i].change_font_bold(true)
+        worksheet.change_column_font_name(i, 'Calibri')
+        worksheet.change_column_font_size(i, 14)
+        # HOZONTALLY CENTERS TEXT
+        worksheet.sheet_data[0][i].change_horizontal_alignment('center')
+        # VERTICALLY CENTERS TEXT
+        worksheet.change_row_vertical_alignment(0, 'distributed')
+        # TITLE ROW BOTTOM UNDERLINE
+        worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
+        worksheet.change_row_border_color(0, :bottom, 'ed553b')
+        # FILL TITLE ROW WITH GREY
+        worksheet.change_row_fill(0, 'dcdcdc')   
+        i += 1
+    end
+
+    workbookFinal.write("#{bandsArray}.xlsx")
+    bandsArrayCounter += 1
+
+
 end
 
-workbookFinal.write("workbookFinal.xlsx")
 
