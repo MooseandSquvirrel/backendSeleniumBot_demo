@@ -44,6 +44,7 @@ def userName()
             return
         end
         if userName_check == 'y'
+            $_userNameVar = userName 
             break
         end
         if userName_check == 'n'
@@ -78,6 +79,7 @@ def pwd()
             return
         end
         if pwd_check == 'y'
+            $_pwd = pwd
             break
         end
         if pwd_check == 'n'
@@ -90,7 +92,7 @@ def pwd()
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
             puts "\n"
-            puts "**** Now Re-Enter the correct user name and hit 'Enter'. ****"
+            puts "**** Now Re-Enter the correct password and hit 'Enter'. ****"
             redo
         end
     end
@@ -116,8 +118,8 @@ end
                 if counter == 0
                     puts @@stringsHash[:band_name]
                 end
-                event_name = gets.strip
                 counter += 1
+                event_name = gets.strip
                 if event_name == 'exit'
                     return
                 end
@@ -128,7 +130,7 @@ end
                     return
                 end
                 if event_name_check == 'y'
-                    @eventName = event_name_check
+                    @eventName = event_name
                     break
                 end
                 if event_name_check == 'n'
@@ -151,11 +153,9 @@ end
         def eventName
             @eventName
         end
-        
       
-
         # COUNTER TO IGNORE THE 'puts @@stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-        def getBrand()
+        def getBrand(eventName)
             counter = 0
             brand_name_check = ""
             @brandName = ""
@@ -188,7 +188,7 @@ end
                     puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
                     puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
                     puts "\n"
-                    puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
+                    puts "**** Now Re-Enter the bRand name and hit 'Enter'. ****"
                     redo
                 end
             end
@@ -202,7 +202,7 @@ end
      
 
         # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-        def getStartDate()
+        def getStartDate(eventName)
             counter = 0
             start_date_check = ""
             @startDate = ""
@@ -216,7 +216,7 @@ end
                     return
                 end
                 puts "\n"
-                puts "Is '#{start_date}' the correct start date? -----> ex. (??/??/????)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                puts "Is '#{start_date}' the correct start date? ---> ex. (??/??/????)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
                 start_date_check = gets.strip
                 if start_date_check == 'exit'
                     return
@@ -228,7 +228,7 @@ end
                 if start_date_check == 'n'
                     puts "\n"
                     puts "-------------------------------------------------------"
-                    puts "Re-Enter the Start Date of '#{@band_name}' and press 'Enter':"
+                    puts "Re-Enter the Start Date of '#{@eventName}' and press 'Enter':"
                     redo
                 end
                 if start_date_check != 'y' || start_date_check != 'n'
@@ -236,7 +236,7 @@ end
                     puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
                     puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
                     puts "\n"
-                    puts "**** Now Re-Enter the start date of '#{@@stringsHash[:band_name]}' and hit 'Enter'. ****"
+                    puts "**** Now Re-Enter the Start Date of '#{@eventName}' and hit 'Enter'. ****"
                 redo
                 end
             end
@@ -246,12 +246,9 @@ end
         def startDate
             @startDate
         end
-        
-        
-
 
             # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-        def getTotalDays()
+        def getTotalDays(eventName)
             counter = 0
             total_days_check = ""
             @totalDays = ""
@@ -265,7 +262,7 @@ end
                     return
                 end
                 puts "\n"
-                puts "Is '#{total_days}' the correct amount of days of #{:band_name}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                puts "Is '#{total_days}' the total amount of days of #{@eventName}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
                 total_days_check = gets.strip
                 if total_days_check == "exit"
                     return
@@ -277,14 +274,14 @@ end
                 if total_days_check == 'n'
                     puts "\n"
                     puts "-------------------------------------------------------"
-                    puts "Re-Enter the correct amount of days for '#{@@stringsHash[:band_name]}' and press 'Enter':"
+                    puts "Re-Enter the correct amount of days for '#{@eventName}' and press 'Enter':"
                     redo
                 end
                 if total_days_check != 'y' || total_days_check != 'n'
                     puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
                     puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
                     puts "\n"
-                    puts "**** Now Re-Enter the amount of days for '#{@@stringsHash[:band_name]}' and hit 'Enter'. ****"
+                    puts "**** Now Re-Enter the amount of days for '#{@eventName}' and hit 'Enter'. ****"
                     redo
                 end
             end
@@ -296,7 +293,7 @@ end
         end
 
         # COUNTER TO IGNORE THE 'puts stringsHash[:band_num]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-        def getBandNum()
+        def getBandNum(eventName)
             counter = 0
             band_num_check = ""
             @bandNum = ""
@@ -310,7 +307,7 @@ end
                     return
                 end
                 puts "\n"
-                puts "Is '#{@@stringsHash[:band_num]}' the correct BAND number for #{@@stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                puts "Is '#{band_num}' the correct BAND number for #{@eventName}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
                 band_num_check = gets.strip
                 if band_num_check == "exit"
                     return
@@ -322,14 +319,14 @@ end
                 if band_num_check == 'n'
                     puts "\n"
                     puts "-------------------------------------------------------"
-                    puts "Re-Enter the correct BAND number for '#{@@stringsHash[:band_name]}' and press 'Enter':"
+                    puts "Re-Enter the correct BAND number for '#{@eventName}' and press 'Enter':"
                     redo
                 end
                 if band_num_check != 'y' || band_num_check != 'n'
                     puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
                     puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
                     puts "\n"
-                    puts "**** Now Re-Enter the BAND number for #{@@stringsHash[:band_name]} 'Enter'. ****"
+                    puts "**** Now Re-Enter the BAND number for #{@eventName} 'Enter'. ****"
                     redo
                 end
             end
@@ -343,9 +340,9 @@ end
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         "                                                           Result Variables for B7.1, B3, A2, and B7.2"
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
-        def results()
-            attr_accessor :NRUs
-        end
+            
+        attr_accessor :campDates, :totalMembers, :activitySum, :actvPerMem, :nruCount, :newMemberAvg, :newLeaderCounter, :newLeaderAvg, :new_GBL_LeaderCount,
+            :gblAvg, :gblNru, :nruPerGbl
 
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -359,8 +356,9 @@ end
             puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
             gets.strip != "go"
         end
-end
+end ### END OF BAND CLASS ###
 
+    # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
     def eventNamesArray(bandsArray)
         eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
     end
@@ -377,123 +375,133 @@ end
         sleep(1)
         puts '.'
     end
-
-    def RUN
-        userName()
-        pwd()
-        eventTitleCounter = 0
-        bandsArray = []
-        loop do 
-            eventTitleCounter += 1
-            event = Band.new
-            event.getEventName()
-            event.getBrand()
-            event.getStartDate()
-            event.getTotalDays()
-            event.getBandNum()
-            if event.loopOrGo() == false
-                # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
-                bandsArray << event
-                break
-            else 
-               bandsArray << event
-               redo
-            end
-        end
-        eventNamesArray = eventNamesArray(bandsArray)
-        bandsLength = bandsArray.length
-        puts "bandsArray:"
-        ap bandsArray
-        puts "bands in Array (bandsArrayLength):"
-        puts bandsLength
-        puts "eventNamesArray Test:"
-        ap eventNamesArray
-        
-
-
-        loadingMessage()
-    end
-    RUN()
-    puts "successful run"
-    return    
   
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                        Driver Login  (up to iFrame switch)                             "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+ 
+def navigate(userNameVar)
+    browser = Selenium::WebDriver.for :chrome
+    browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
     
-browser = Selenium::WebDriver.for :chrome
-browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
- 
-wait = Selenium::WebDriver::Wait.new(:timeout => 15)
- 
-# USR DATA ENTRY
-form = wait.until {
-    element = browser.find_element(:name, "user")
-    element if element.displayed?
-}
-sleep(1)
-form.send_keys("#{userName}")
-#### form.send_keys("#{naverUser}")
- 
-# PW DATA ENTRY
-form = wait.until {
-    element = browser.find_element(:name, "password")
-    element if element.displayed?
-}
-sleep(1)
-form.send_keys("#{pwd}")
-#### form.send_keys("#{naverPwd}")
-
-
-# FINDS THE FORM BUTTON WITH XPATH AND THEN USES .execute_script (A JAVASCRIPT ACTION I BELIEVE)
-if button = browser.find_element(:xpath, "//*[@id='login-btn']")
-    puts "Found form 'Submit' 'login-btn'."
-    button = browser.find_element(:xpath, "//*[@id='login-btn']").click
+    wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+    
+    # USR DATA ENTRY
+    form = wait.until {
+        element = browser.find_element(:name, "user")
+        element if element.displayed?
+    }
     sleep(1)
-else
-    puts "No form 'Submit' login-btn found."
+    form.send_keys("#{$_userNameVar}")
+    #### form.send_keys("#{naverUser}")
+    
+    # PW DATA ENTRY
+    form = wait.until {
+        element = browser.find_element(:name, "password")
+        element if element.displayed?
+    }
+    sleep(1)
+    form.send_keys("#{$_pwd}")
+    #### form.send_keys("#{naverPwd}")
+
+
+    # FINDS THE FORM BUTTON WITH XPATH AND THEN USES .execute_script (A JAVASCRIPT ACTION I BELIEVE)
+    if button = browser.find_element(:xpath, "//*[@id='login-btn']")
+        puts "Found form 'Submit' 'login-btn'."
+        button = browser.find_element(:xpath, "//*[@id='login-btn']").click
+        sleep(1)
+    else
+        puts "No form 'Submit' login-btn found."
+    end
+
+    # FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
+    if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
+        puts "Card link found.\n"
+        card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
+        sleep(1)
+        puts "================================="
+        puts "Main menu of BAND backend reached.\n"
+        puts "================================="
+    else
+        puts "Card link not found for clickable 'square' card before Main Menu screen."
+    end
+
+    # FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
+    sleep(3)
+    if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
+        puts "Statistics link found.\n"
+        card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
+        sleep(1)
+        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+        puts "Statistics menu of BAND backend reached.\n"
+        puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
+    else
+        puts "Statistcs link not found."
+    end
+
+    # FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
+    browser.switch_to.frame("svc-iframe")
 end
 
-# FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
-if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
-    puts "Card link found.\n"
-    card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
-    sleep(1)
-    puts "================================="
-    puts "Main menu of BAND backend reached.\n"
-    puts "================================="
-else
-    puts "Card link not found for clickable 'square' card before Main Menu screen."
+def RUN
+    userName()
+    pwd()
+    eventTitleCounter = 0
+    bandsArray = []
+    loop do 
+        eventTitleCounter += 1
+        event = Band.new
+        event.getEventName()
+        event.getBrand(event.eventName)
+        event.getStartDate(event.eventName)
+        event.getTotalDays(event.eventName)
+        event.getBandNum(event.eventName)
+        if event.loopOrGo() == false
+            # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
+            bandsArray << event
+            break
+        else 
+           bandsArray << event
+        end
+    end
+    "----------------------------------------------------------------------------------------------"
+    # TEST PRINT STATEMENTS TO CHECK THAT ABOVE METHODS AND INSTANCE VARIABLES WORK -- Delete this section later
+
+    # INITIALIZING ONE OF THE RESULT VARIABLES FOR TESTING
+    bandsArray[0].campDates = "DOOPY"
+
+    puts "Results Test (bandsArray[0].campDates):"
+    ap bandsArray[0].campDates
+    "----------------------------------------------------------------------------------------------"
+
+    # CALLING eventNamesArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNamesArray
+    eventNamesArray = eventNamesArray(bandsArray)
+    bandsLength = bandsArray.length
+    puts "bandsArray:"
+    ap bandsArray
+    puts "bands in Array (bandsArrayLength):"
+    puts bandsLength
+    puts "eventNamesArray Test:"
+    ap eventNamesArray
+
+    loadingMessage()
+    navigate($_userNameVar)
 end
+RUN()
+puts "successful run"
 
-# FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
-sleep(3)
-if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
-    puts "Statistics link found.\n"
-    card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
-    sleep(1)
-    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-    puts "Statistics menu of BAND backend reached.\n"
-    puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
-else
-    puts "Statistcs link not found."
-end
+# return    
 
-# FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
-browser.switch_to.frame("svc-iframe")
-
-
-# return
-
+=begin
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                       Entering Bands for First B7                                      "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 bandsNumArray = Array.new
 
-# GETTING ALL BAND NUMBS WITH .map
-bandsNumArray = bandsArray.map {|x| x[:band_num]}
+# GETTING ALL BAND NUMBS WITH .collect
+bandsNumArray = bandsArray.collect {|x| x.bandNum}
 
 bandNameCounter = 0
 until bandNameCounter == bandsLength
@@ -531,6 +539,9 @@ until bandNameCounter == bandsLength
     }
     form.send_keys("#{bandsNumArray[bandNameCounter]}")
     sleep(1)
+
+    puts "Good"
+    return 
 
     "FIND CLICK SUBMIT"
     form = wait.until {
@@ -1116,30 +1127,13 @@ end
 
 
 
-
+=end
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                               RUN                                                      "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-def RUN
-    #until input == 'go'
-        Band.userName()
-        Band.pwd()
-        Band.getBrand()
-        Band.getStartDate()
-        Band.getTotalDays()
-        Band.getBandNum()
-        Band.loopOrGo()
-   # end
-    bandsLength = bandsArray.length
-    puts "bandsArray:"
-    ap bandsArray
-    puts "bands in Array (bandsArrayLength):"
-    puts bandsLength
-    loadingMessage()
-end
-RUN()
+
 
 
 
