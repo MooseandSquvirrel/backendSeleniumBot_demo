@@ -13,6 +13,7 @@ require 'date'
 ####################################
 require 'selenium-webdriver'
 require 'pp'
+require 'ap'
 require 'rspec/expectations'
 require 'io/console'
 ####################################
@@ -61,20 +62,17 @@ def userName()
     end
 end
 
-
-puts "\n"
-
 # PASSWORD
 def pwd()
     pwd_check = ""
     while pwd_check != 'y' || pwd_check != "exit"
         print "Enter backend password -- TEXT WILL BE INVISIBLE, AFTER TYPING PASSWORD HIT ENTER TWICE:\n"
         pwd = STDIN.noecho(&:gets).chomp
-        if userName == 'exit'
+        if pwd == 'exit'
             return
         end
         puts "\n"
-        puts "Did your password correctly?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "Did you enter the correct password? (Even though it is invisible :) ....)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         pwd_check = gets.strip
         if pwd_check == "exit"
             return
@@ -97,251 +95,328 @@ def pwd()
         end
     end
 end
-pwd()
 
-puts "\n"
+    class Band
+        
+        @@stringsHash = {:band_name => "Enter Event Name:", 
+            :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
+            :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:", :brand_name => "\nEnter bRand Name (ex. UCA):"}
 
-class Band
+        # OLD CODE FOR REFERENCE ONLY
+        # puts stringsHash[:total_days]
+        # stringsHash[:total_days] = gets.strip
 
-bandsArray = []
-until gets.strip() == "exit"
-    puts "\n"
-    
-    stringsHash = {:band_name => "Enter Event Name:", 
-        :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
-        :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:", :brand_name => "\nEnter bRand Name (ex. UCA):"}
+        # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+        def getEventName()
+            counter = 0
+            event_name_check = ""
+            event_name = ""
+            @eventName = ""
+            while event_name_check != 'y' || event_name_check != "exit"
+                if counter == 0
+                    puts @@stringsHash[:band_name]
+                end
+                event_name = gets.strip
+                counter += 1
+                if event_name == 'exit'
+                    return
+                end
+                puts "\n"
+                puts "Is '#{event_name}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                event_name_check = gets.strip
+                if event_name_check == "exit"
+                    return
+                end
+                if event_name_check == 'y'
+                    @eventName = event_name_check
+                    break
+                end
+                if event_name_check == 'n'
+                    puts "\n"
+                    puts "-------------------------------------------------------"
+                    puts "Re-Enter the Event Name and press 'Enter':"
+                    redo
+                end
+                if event_name_check != 'y' || event_name_check != 'n'
+                    puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+                    puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+                    puts "\n"
+                    puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
+                    redo
+                end
+            end
+        end
 
-    # OLD CODE FOR REFERENCE ONLY
-    # puts stringsHash[:total_days]
-    # stringsHash[:total_days] = gets.strip
+        # GETTER TO DEFINE FINAL @eventName RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+        def eventName
+            @eventName
+        end
+        
+      
 
-    # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-    counter = 0
-    event_name_check = ""
-    while event_name_check != 'y' || event_name_check != "exit"
-        if counter == 0
-            puts stringsHash[:band_name]
+        # COUNTER TO IGNORE THE 'puts @@stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+        def getBrand()
+            counter = 0
+            brand_name_check = ""
+            @brandName = ""
+            while brand_name_check != 'y' || brand_name_check != "exit"
+                if counter == 0
+                    puts @@stringsHash[:brand_name]
+                end
+                counter += 1
+                brand_name = gets.strip
+                if brand_name == 'exit'
+                    return
+                end
+                puts "\n"
+                puts "Is '#{brand_name}' the correct bRand name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                brand_name_check = gets.strip
+                if brand_name_check == "exit"
+                    return
+                end
+                if brand_name_check == 'y'
+                    @brandName = brand_name_check
+                    break
+                end
+                if brand_name_check == 'n'
+                    puts "\n"
+                    puts "-------------------------------------------------------"
+                    puts "Re-Enter the bRand Name and press 'Enter':"
+                    redo
+                end
+                if brand_name_check != 'y' || brand_name_check != 'n'
+                    puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+                    puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+                    puts "\n"
+                    puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
+                    redo
+                end
+            end
         end
-        counter += 1
-        stringsHash[:band_name] = gets.strip
-        if stringsHash[:band_name] == 'exit'
-            return
-        end
-        puts "\n"
-        puts "Is '#{stringsHash[:band_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
-        event_name_check = gets.strip
-        if event_name_check == "exit"
-            return
-        end
-        if event_name_check == 'y'
-            break
-        end
-        if event_name_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
-            puts "Re-Enter the Event Name and press 'Enter':"
-            redo
-        end
-        if event_name_check != 'y' || event_name_check != 'n'
-            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
-            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
-            redo
-        end
-    end
 
-
-    # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-    counter = 0
-    brand_name_check = ""
-    while brand_name_check != 'y' || brand_name_check != "exit"
-        if counter == 0
-            puts stringsHash[:brand_name]
+        # GETTER TO DEFINE FINAL @brandName RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+        def brandName
+            @brandName
         end
-        counter += 1
-        stringsHash[:brand_name] = gets.strip
-        if stringsHash[:brand_name] == 'exit'
-            return
-        end
-        puts "\n"
-        puts "Is '#{stringsHash[:brand_name]}' the correct event name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
-        brand_name_check = gets.strip
-        if brand_name_check == "exit"
-            return
-        end
-        if brand_name_check == 'y'
-            break
-        end
-        if brand_name_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
-            puts "Re-Enter the bRand Name and press 'Enter':"
-            redo
-        end
-        if brand_name_check != 'y' || brand_name_check != 'n'
-            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
-            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the event name and hit 'Enter'. ****"
-            redo
-        end
-    end
+        
      
-            
 
-    # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-    counter = 0
-    start_date_check = ""
-    while start_date_check != 'y' || start_date_check != "exit"
-        if counter == 0
-            puts stringsHash[:start_date]
+        # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+        def getStartDate()
+            counter = 0
+            start_date_check = ""
+            @startDate = ""
+            while start_date_check != 'y' || start_date_check != "exit"
+                if counter == 0
+                    puts @@stringsHash[:start_date]
+                end
+                counter += 1
+                start_date = gets.strip
+                if start_date == 'exit'
+                    return
+                end
+                puts "\n"
+                puts "Is '#{start_date}' the correct start date? -----> ex. (??/??/????)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                start_date_check = gets.strip
+                if start_date_check == 'exit'
+                    return
+                end
+                if start_date_check == 'y'
+                    @startDate = start_date_check
+                    break
+                end
+                if start_date_check == 'n'
+                    puts "\n"
+                    puts "-------------------------------------------------------"
+                    puts "Re-Enter the Start Date of '#{@band_name}' and press 'Enter':"
+                    redo
+                end
+                if start_date_check != 'y' || start_date_check != 'n'
+                    puts "\n"
+                    puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+                    puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+                    puts "\n"
+                    puts "**** Now Re-Enter the start date of '#{@@stringsHash[:band_name]}' and hit 'Enter'. ****"
+                redo
+                end
+            end
         end
-        counter += 1
-        stringsHash[:start_date] = gets.strip
-        if stringsHash[:start_date] == 'exit'
-            return
+          
+        # GETTER TO DEFINE FINAL @startDate RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+        def startDate
+            @startDate
         end
+        
+        
+
+
+            # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+        def getTotalDays()
+            counter = 0
+            total_days_check = ""
+            @totalDays = ""
+            while total_days_check != 'y' || total_days_check != "exit"
+                if counter == 0
+                    puts @@stringsHash[:total_days]
+                end
+                counter += 1
+                total_days = gets.strip
+                if total_days == 'exit'
+                    return
+                end
+                puts "\n"
+                puts "Is '#{total_days}' the correct amount of days of #{:band_name}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                total_days_check = gets.strip
+                if total_days_check == "exit"
+                    return
+                end
+                if total_days_check == 'y'
+                    @totalDays = total_days
+                    break
+                end
+                if total_days_check == 'n'
+                    puts "\n"
+                    puts "-------------------------------------------------------"
+                    puts "Re-Enter the correct amount of days for '#{@@stringsHash[:band_name]}' and press 'Enter':"
+                    redo
+                end
+                if total_days_check != 'y' || total_days_check != 'n'
+                    puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+                    puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+                    puts "\n"
+                    puts "**** Now Re-Enter the amount of days for '#{@@stringsHash[:band_name]}' and hit 'Enter'. ****"
+                    redo
+                end
+            end
+        end
+
+        # GETTER TO DEFINE FINAL @totalDays RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+        def totalDays
+            @totalDays
+        end
+
+        # COUNTER TO IGNORE THE 'puts stringsHash[:band_num]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
+        def getBandNum()
+            counter = 0
+            band_num_check = ""
+            @bandNum = ""
+            while band_num_check != 'y' || band_num_check != "exit"
+                if counter == 0
+                    puts @@stringsHash[:band_num]
+                end
+                counter += 1
+                band_num = gets.strip
+                if band_num == "exit"
+                    return
+                end
+                puts "\n"
+                puts "Is '#{@@stringsHash[:band_num]}' the correct BAND number for #{@@stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+                band_num_check = gets.strip
+                if band_num_check == "exit"
+                    return
+                end
+                if band_num_check == 'y'
+                    @bandNum = band_num
+                    break
+                end
+                if band_num_check == 'n'
+                    puts "\n"
+                    puts "-------------------------------------------------------"
+                    puts "Re-Enter the correct BAND number for '#{@@stringsHash[:band_name]}' and press 'Enter':"
+                    redo
+                end
+                if band_num_check != 'y' || band_num_check != 'n'
+                    puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+                    puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+                    puts "\n"
+                    puts "**** Now Re-Enter the BAND number for #{@@stringsHash[:band_name]} 'Enter'. ****"
+                    redo
+                end
+            end
+        end
+
+        # GETTER TO DEFINE FINAL @bandNum RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+        def bandNum
+            @bandNum
+        end
+
+        "-----------------------------------------------------------------------------------------------------------------------------------------------------"
+        "                                                           Result Variables for B7.1, B3, A2, and B7.2"
+        "-----------------------------------------------------------------------------------------------------------------------------------------------------"
+        def results()
+            attr_accessor :NRUs
+        end
+
+        "-----------------------------------------------------------------------------------------------------------------------------------------------------"
+        "-----------------------------------------------------------------------------------------------------------------------------------------------------"
+
+        # puts "bandsArray << stringsHash (Before hitting 'go')"
+        # bandsArray << stringsHash
+        def loopOrGo()
+            puts "\n"
+            puts "----------------------------------------------------------------------------------"
+            puts "If no more BANDs to enter info for, type 'go' and hit 'Enter'."
+            puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
+            gets.strip != "go"
+        end
+end
+
+    def eventNamesArray(bandsArray)
+        eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+    end
+
+    def loadingMessage()
         puts "\n"
-        puts "Is '#{stringsHash[:start_date]}' the correct start date? -----> ex. (??/??/????)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
-        start_date_check = gets.strip
-        if start_date_check == 'exit'
-            return
-        end
-        if start_date_check == 'y'
-            break
-        end
-        if start_date_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
-            puts "Re-Enter the Start Date of '#{stringsHash[:band_name]}' and press 'Enter':"
-            redo
-        end
-        if start_date_check != 'y' || start_date_check != 'n'
-            puts "\n"
-            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
-            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the start date of '#{stringsHash[:band_name]}' and hit 'Enter'. ****"
-        redo
-        end
+        print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
+        sleep(1)
+        print '.'
+        sleep(1)
+        print '.'
+        sleep(1)
+        print '.'
+        sleep(1)
+        puts '.'
     end
 
+    def RUN
+        userName()
+        pwd()
+        eventTitleCounter = 0
+        bandsArray = []
+        loop do 
+            eventTitleCounter += 1
+            event = Band.new
+            event.getEventName()
+            event.getBrand()
+            event.getStartDate()
+            event.getTotalDays()
+            event.getBandNum()
+            if event.loopOrGo() == false
+                # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
+                bandsArray << event
+                break
+            else 
+               bandsArray << event
+               redo
+            end
+        end
+        eventNamesArray = eventNamesArray(bandsArray)
+        bandsLength = bandsArray.length
+        puts "bandsArray:"
+        ap bandsArray
+        puts "bands in Array (bandsArrayLength):"
+        puts bandsLength
+        puts "eventNamesArray Test:"
+        ap eventNamesArray
+        
 
-        # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-    counter = 0
-    total_days_check = ""
-    while total_days_check != 'y' || total_days_check != "exit"
-        if counter == 0
-            puts stringsHash[:total_days]
-        end
-        counter += 1
-        stringsHash[:total_days] = gets.strip
-        if stringsHash[:total_days] == 'exit'
-            return
-        end
-        puts "\n"
-        puts "Is '#{stringsHash[:total_days]}' the correct amount of days of #{stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
-        total_days_check = gets.strip
-        if event_name_check == "exit"
-            return
-        end
-        if total_days_check == 'y'
-            break
-        end
-        if total_days_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
-            puts "Re-Enter the correct amount of days for '#{stringsHash[:band_name]}' and press 'Enter':"
-            redo
-        end
-        if total_days_check != 'y' || total_days_check != 'n'
-            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
-            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the amount of days for '#{stringsHash[:band_name]}' and hit 'Enter'. ****"
-            redo
-        end
+
+        loadingMessage()
     end
-
-
-    # COUNTER TO IGNORE THE 'puts stringsHash[:band_num]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
-    counter = 0
-    band_num_check = ""
-    while band_num_check != 'y' || band_num_check != "exit"
-        if counter == 0
-            puts stringsHash[:band_num]
-        end
-        counter += 1
-        stringsHash[:band_num] = gets.strip
-        if stringsHash[:band_num] == "exit"
-            return
-        end
-        puts "\n"
-        puts "Is '#{stringsHash[:band_num]}' the correct BAND number for #{stringsHash[:band_name]}?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
-        band_num_check = gets.strip
-        if event_name_check == "exit"
-            return
-        end
-        if band_num_check == 'y'
-            break
-        end
-        if band_num_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
-            puts "Re-Enter the correct BAND number for '#{stringsHash[:band_name]}' and press 'Enter':"
-            redo
-        end
-        if band_num_check != 'y' || band_num_check != 'n'
-            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
-            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the BAND number for #{stringsHash[:band_name]} 'Enter'. ****"
-            redo
-        end
-    end
-
-    # puts "bandsArray << stringsHash (Before hitting 'go')"
-    # bandsArray << stringsHash
-    # p bandsArray
-
-    puts "\n"
-    puts "----------------------------------------------------------------------------------"
-    puts "If no more BANDs to enter info for, type 'go' and hit 'Enter'."
-    puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
-    if (orders = gets.strip) == "go"
-        bandsArray << stringsHash
-        break
-    else
-        bandsArray << stringsHash
-        redo
-    end
-end 
-
-    bandsLength = bandsArray.length
-
-    puts "bandsArray:"
-    ap bandsArray
-    puts "bands in Array (bandsArrayLength):"
-    puts bandsLength
-
-    puts "\n"
-    print "THANK YOU. NOW I WILL DO WORK FOR YOU :)"
-    sleep(1)
-    print '.'
-    sleep(1)
-    print '.'
-    sleep(1)
-    print '.'
-    sleep(1)
-    puts '.'
-
-
-
-    "DONT FOREGET TO REMOVE THIS RETURN TO LET THE PROGRAM WORK!"
-    
-    return 
-
+    RUN()
+    puts "successful run"
+    return    
+  
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                        Driver Login  (up to iFrame switch)                             "
@@ -510,8 +585,9 @@ return
     # COVERS THE DATES LEADING UP TO THE EVENT'S :start_date (7 DAYS BEFORE :start_date)
     daysParsed = Date.parse(stringsHash[:start_date])
     i = 0
-    earlyDaysParsed = daysParsed - 7
-    while i < 7
+    # -14 for two weeks before event 
+    earlyDaysParsed = daysParsed - 14
+    while i < 14
         datesArray << earlyDaysParsed.to_s
         earlyDaysParsed += 1
         i += 1
@@ -921,7 +997,7 @@ puts "_____TBD_____"
 
 
 
-
+"THE BELOW RESULTS NOW NEEDS TO BE IN LOOP TO ACCOUNT FOR EACH BAND OBJECT IN ARRAY FROM INITIAL USER ENTRY"
 
 puts "Results for Final Table of (#{stringsHash[:band_name]}):"
 puts "---------------------------------------------------------------------------------------------------------------------------------------"
@@ -1037,5 +1113,37 @@ until bandsArryCounter > bandsLength
 
 
 end
+
+
+
+
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                               RUN                                                      "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+def RUN
+    #until input == 'go'
+        Band.userName()
+        Band.pwd()
+        Band.getBrand()
+        Band.getStartDate()
+        Band.getTotalDays()
+        Band.getBandNum()
+        Band.loopOrGo()
+   # end
+    bandsLength = bandsArray.length
+    puts "bandsArray:"
+    ap bandsArray
+    puts "bands in Array (bandsArrayLength):"
+    puts bandsLength
+    loadingMessage()
+end
+RUN()
+
+
+
+
+
 
 
