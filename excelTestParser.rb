@@ -492,7 +492,7 @@ def b7_1(eventBandNumsArray, bandsLength)
             $_form.send_keys("#{bandsNumArray[bandNameCounter]}\n")
             bandNameCounter += 1
         end
-        sleep(1)
+        sleep(2)
 
         puts "Good"
 end
@@ -547,7 +547,7 @@ def b3(eventBandNumsArray, bandsLength)
         # REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
         dropdown = $_browser.find_element(id: 'templateNo') #### Comma needed between id: and 'templateNo' ?
             select_list = Selenium::WebDriver::Support::Select.new(dropdown)
-            select_list.select_by(:value, '45')
+            select_list.select_by(:value, '3')
             puts "Dropdown option selected:"
             puts selected_option = select_list.selected_options[0].text
             sleep(2)
@@ -566,11 +566,12 @@ def b3(eventBandNumsArray, bandsLength)
             $_form.send_keys("#{bandsNumArray[bandNameCounter]}\n")
             bandNameCounter += 1
         end
-        sleep(1)
+        sleep(2)
 
         puts "Good"
 end
-  
+
+=begin
 def clickit()
     $_form = $_wait.until {
         element = $_browser.find_element(:id, "execute")
@@ -590,6 +591,8 @@ def alert_clickit()
     sleep(5)
     puts "Alert Clicked"
 end
+
+=end
 
     def RUN
         userName()
@@ -638,12 +641,14 @@ end
 
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         navigate($_userNameVar)
-        b7_1(eventBandNumsArray, bandsLength)
-        clickit()
-        alert_clickit()
+        #### b7_1(eventBandNumsArray, bandsLength)
+        #### clickit()
+        #### alert_clickit()
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate TO iFrame FOR THIS TO BE ABLE TO WORK"
-        
+        b3(eventBandNumsArray, bandsLength)
+        #### clickit() "CHANGE THIS TO INCLUDE NEW DATA"
+        #### alert_clickit() "CHANGE THIS TO INCLUDE NEW DATA"
 
     end
     RUN()
