@@ -359,8 +359,8 @@ end
 end ### END OF BAND CLASS ###
 
     # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
-    def eventNamesArray(bandsArray)
-        eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+    def eventNumsArray(bandsArray)
+        eventNumsArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
     end
 
     def loadingMessage()
@@ -382,14 +382,14 @@ end ### END OF BAND CLASS ###
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
  
 def navigate(userNameVar)
-    browser = Selenium::WebDriver.for :chrome
-    browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
+    $_browser = Selenium::WebDriver.for :chrome
+    $_browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
     
-    wait = Selenium::WebDriver::Wait.new(:timeout => 15)
+    $_wait = Selenium::WebDriver::Wait.new(:timeout => 15)
     
     # USR DATA ENTRY
-    form = wait.until {
-        element = browser.find_element(:name, "user")
+    form = $_wait.until {
+        element = $_browser.find_element(:name, "user")
         element if element.displayed?
     }
     sleep(1)
@@ -397,8 +397,8 @@ def navigate(userNameVar)
     #### form.send_keys("#{naverUser}")
     
     # PW DATA ENTRY
-    form = wait.until {
-        element = browser.find_element(:name, "password")
+    form = $_wait.until {
+        element = $_browser.find_element(:name, "password")
         element if element.displayed?
     }
     sleep(1)
@@ -407,18 +407,18 @@ def navigate(userNameVar)
 
 
     # FINDS THE FORM BUTTON WITH XPATH AND THEN USES .execute_script (A JAVASCRIPT ACTION I BELIEVE)
-    if button = browser.find_element(:xpath, "//*[@id='login-btn']")
+    if button = $_browser.find_element(:xpath, "//*[@id='login-btn']")
         puts "Found form 'Submit' 'login-btn'."
-        button = browser.find_element(:xpath, "//*[@id='login-btn']").click
+        button = $_browser.find_element(:xpath, "//*[@id='login-btn']").click
         sleep(1)
     else
         puts "No form 'Submit' login-btn found."
     end
 
     # FINDS THE CARD LINK TO CLICK TO GO TO THE MAIN BACKEND MENU
-    if card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
+    if card = $_browser.find_element(:xpath, "//*[@id='card-view-search-area']/li")
         puts "Card link found.\n"
-        card = browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
+        card = $_browser.find_element(:xpath, "//*[@id='card-view-search-area']/li").click
         sleep(1)
         puts "================================="
         puts "Main menu of BAND backend reached.\n"
@@ -429,9 +429,9 @@ def navigate(userNameVar)
 
     # FIND THE LINK TO STATISTICS PAGE, ACCES STATISTICS PAGE
     sleep(3)
-    if statistics = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
+    if statistics = $_browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a")
         puts "Statistics link found.\n"
-        card = browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
+        card = $_browser.find_element(:xpath, "//*[@id='carousel']/div[1]/ul/li[8]/div/a").click
         sleep(1)
         puts "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%"
         puts "Statistics menu of BAND backend reached.\n"
@@ -441,118 +441,130 @@ def navigate(userNameVar)
     end
 
     # FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
-    browser.switch_to.frame("svc-iframe")
+    $_browser.switch_to.frame("svc-iframe")
 end
 
-def RUN
-    userName()
-    pwd()
-    eventTitleCounter = 0
-    bandsArray = []
-    loop do 
-        eventTitleCounter += 1
-        event = Band.new
-        event.getEventName()
-        event.getBrand(event.eventName)
-        event.getStartDate(event.eventName)
-        event.getTotalDays(event.eventName)
-        event.getBandNum(event.eventName)
-        if event.loopOrGo() == false
-            # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
-            bandsArray << event
-            break
-        else 
-           bandsArray << event
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                  Function Entering Bands for First B7                                  "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+
+def b7_1(eventBandNumsArray, bandsLength)
+    bandsNumArray = eventBandNumsArray
+
+    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
+    # bandsNumArray = bandsArray.collect {|x| x.bandNum}
+
+    bandNameCounter = 0
+    # until bandNameCounter == bandsLength
+        bandsNumArray[bandNameCounter]
+        # STORING ALL FUNCTION OPTIONS AND SELECTING B7
+        # INTERACTING WITH DROPDOWN BOX
+        select_list = $_wait.until {
+            if element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
+                element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
+            end
+        }
+        puts "Function collected from dropdown function options. (into select_list):"
+        pp select_list
+        
+        # EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
+        options=select_list.find_elements(:tag_name => "option")
+
+        # REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
+        dropdown = $_browser.find_element(id: 'templateNo') #### Comma needed between id: and 'templateNo' ?
+            select_list = Selenium::WebDriver::Support::Select.new(dropdown)
+            select_list.select_by(:value, '45')
+            puts "Dropdown option selected:"
+            puts selected_option = select_list.selected_options[0].text
+            sleep(2)
+
+        # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
+        form = $_wait.until {
+            if element = $_browser.find_element(:tag_name, "textarea")
+                puts "Inputing BAND name into data field."
+                element = $_browser.find_element(:tag_name, "textarea")
+            else
+                puts "BAND data not entered into text field."
+            end
+            element if element.displayed?
+        }
+        until bandNameCounter == bandsLength
+            form.send_keys("#{bandsNumArray[bandNameCounter]}\n")
+            bandNameCounter += 1
         end
-    end
-    "----------------------------------------------------------------------------------------------"
-    # TEST PRINT STATEMENTS TO CHECK THAT ABOVE METHODS AND INSTANCE VARIABLES WORK -- Delete this section later
+        sleep(1)
 
-    # INITIALIZING ONE OF THE RESULT VARIABLES FOR TESTING
-    bandsArray[0].campDates = "DOOPY"
-
-    puts "Results Test (bandsArray[0].campDates):"
-    ap bandsArray[0].campDates
-    "----------------------------------------------------------------------------------------------"
-
-    # CALLING eventNamesArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNamesArray
-    eventNamesArray = eventNamesArray(bandsArray)
-    bandsLength = bandsArray.length
-    puts "bandsArray:"
-    ap bandsArray
-    puts "bands in Array (bandsArrayLength):"
-    puts bandsLength
-    puts "eventNamesArray Test:"
-    ap eventNamesArray
-
-    loadingMessage()
-    navigate($_userNameVar)
+        puts "Good"
 end
-RUN()
-puts "successful run"
+  
 
-# return    
+
+
+
+
+    def RUN
+        userName()
+        pwd()
+        eventTitleCounter = 0
+        bandsArray = []
+        loop do 
+            eventTitleCounter += 1
+            event = Band.new
+            event.getEventName()
+            event.getBrand(event.eventName)
+            event.getStartDate(event.eventName)
+            event.getTotalDays(event.eventName)
+            event.getBandNum(event.eventName)
+            if event.loopOrGo() == false
+                # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
+                bandsArray << event
+                break
+            else 
+               bandsArray << event
+            end
+        end
+        "----------------------------------------------------------------------------------------------"
+        # TEST PRINT STATEMENTS TO CHECK THAT ABOVE METHODS AND INSTANCE VARIABLES WORK -- Delete this section later
+    
+        # INITIALIZING ONE OF THE RESULT VARIABLES FOR TESTING
+        bandsArray[0].campDates = "DOOPY"
+    
+        puts "Results Test (bandsArray[0].campDates):"
+        ap bandsArray[0].campDates
+        "----------------------------------------------------------------------------------------------"
+    
+        # CALLING eventNumsArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNumsArray
+        eventBandNumsArray = Array.new
+        eventBandNumsArray = eventNumsArray(bandsArray)
+        bandsLength = bandsArray.length
+        puts "bandsArray:"
+        ap bandsArray
+        puts "bands in Array (bandsArrayLength):"
+        puts bandsLength
+        puts "eventBandNumsArray Test:"
+        ap eventBandNumsArray
+    
+        loadingMessage()
+        navigate($_userNameVar)
+        b7_1(eventBandNumsArray, bandsLength)
+    end
+    RUN()
+    puts "successful run"
+    
+    # return    
+    
 
 =begin
-"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-"                                       Entering Bands for First B7                                      "
-"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
-bandsNumArray = Array.new
-
-# GETTING ALL BAND NUMBS WITH .collect
-bandsNumArray = bandsArray.collect {|x| x.bandNum}
-
-bandNameCounter = 0
-until bandNameCounter == bandsLength
-    bandsNumArray[bandNameCounter]
-    # STORING ALL FUNCTION OPTIONS AND SELECTING B7
-    # INTERACTING WITH DROPDOWN BOX
-    select_list = wait.until {
-        if element = browser.find_element(:xpath, "//*[@id='templateNo']")
-            element = browser.find_element(:xpath, "//*[@id='templateNo']")
-        end
-    }
-    puts "Function collected from dropdown function options. (into select_list):"
-    pp select_list
-    
-    # EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
-    options=select_list.find_elements(:tag_name => "option")
-
-    # REFERENCE URL http://elementalselenium.com/tips/5-select-from-a-dropdown
-    dropdown = browser.find_element(id: 'templateNo') #### Comma needed between id: and 'templateNo' ?
-        select_list = Selenium::WebDriver::Support::Select.new(dropdown)
-        select_list.select_by(:value, '45')
-        puts "Dropdown option selected:"
-        puts selected_option = select_list.selected_options[0].text
-        sleep(2)
-
-    # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
-    form = wait.until {
-        if element = browser.find_element(:tag_name, "textarea")
-            puts "Inputing BAND name into data field."
-            element = browser.find_element(:tag_name, "textarea")
-        else
-            puts "BAND data not entered into text field."
-        end
-        element if element.displayed?
-    }
-    form.send_keys("#{bandsNumArray[bandNameCounter]}")
-    sleep(1)
-
-    puts "Good"
-    return 
-
     "FIND CLICK SUBMIT"
-    form = wait.until {
-        element = browser.find_element(:id, "execute")
+    form = $_wait.until {
+        element = $_browser.find_element(:id, "execute")
         element if element.displayed?
     }
 
     form.click
 
-    bandNameCounter -= 1
-end
+    # bandNameCounter -= 1
+# end
 
 return 
 
@@ -566,7 +578,7 @@ return
 
 "STORE VARIABLE DATA FROM B3 PARSING INTO ARRAY/HASH (THIS IS ALREADY DONE FOR ONE SO FIGURE OUT LOOP)"
 
-
+=begin
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            Dates Section                                               "
