@@ -17,6 +17,11 @@ require 'ap'
 require 'rspec/expectations'
 require 'io/console'
 ####################################
+# DOWNLOADFILE REQUIRES
+####################################
+require './productionDownloadFile'
+####################################
+
 
 puts "\n\n"
 print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
@@ -313,7 +318,7 @@ end
                     return
                 end
                 if band_num_check == 'y'
-                    @bandNum = band_num
+                    @bandNum = band_num 
                     break
                 end
                 if band_num_check == 'n'
@@ -441,7 +446,9 @@ def navigate(userNameVar)
     end
 
     # FRAME/IFRAME SWITCH REQUIRED TO CONTINUE ACCESSING INNER BROWSER NON-POP-UP WINDOWS/ELEMENTS
+    $_browser.switch_to.default_content
     $_browser.switch_to.frame("svc-iframe")
+    return $_browser
 end
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -677,6 +684,7 @@ def a2(eventBandNumsArray, bandsLength, startDate, endDate)
         }
 
         "CHANGE THIS TO DRAW FROM ARRAY OF 2 DATE SUB ARRAYS FOR START DATE AND END DATE OF EACH EVENT"
+        "STRINGS IN THIS ARRAY MUST BE FORMATED MMDDYYYY WITH '/' EXTRACTED"
         $_dateEndInput.send_keys("#{endDate}")
 
         
@@ -760,6 +768,51 @@ end
 
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         navigate($_userNameVar)
+
+            "=============== MOVE THIS TO AFTER b7.1 and b3 FURTHER DOWN IN RUN() ================"
+            
+            storeTable($_browser)
+            p $_table
+
+            # FUNCTION TO CHECK IF DOWNLOAD LINK IS READY IN CELL, IF NOT RELOAD PAGE, IF SO, STORE INTO $_files_href ARRAY
+            def checkTableDownload(bandsArray)
+                bandsArray.each do |event|
+                    # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
+                    checkHref($_userNameVar, $_browser, $_table, event.bandNum)
+                    puts "$_cellReturnText: #{$_cellReturnText}"
+                    storeReadyDownloadLink($_table, event.bandNum, $_cellReturnText)
+                end
+            end
+            ap $_files_href
+            checkTableDownload(bandsArray)
+            downloadFile($_browser, $_files_href)
+=begin
+            # FUNCTION TO DOWNLOAD EACH LINK FROM $_files_href ARRAY
+            def downloadEach()
+                i = 1
+                $_files_href.each do |x|
+                    x.downloadFile($_browser, $_files_href)
+                    puts "Downloading file ##{i} for $_files_href..."
+                    i += 1
+                end
+            end
+            downloadEach()
+=end
+
+            "Pre edited code from above"
+            # bandsArray.each do |event|
+            #     # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
+            #     if checkHref($_userNameVar, $_browser, $_table, event.bandNum) == true
+            #         puts "$_cellReturnText: #{$_cellReturnText}"
+            #         if checkDownloadReady($_table, bandsArray[event].bandNum, $_cellReturnText) == true
+            #             downloadFile($_browser, $_files_href)
+            #         end
+            #     end
+            # end
+
+
+            "==================================================="
+
         #### b7_1(eventBandNumsArray, bandsLength)
         #### clickit()
         #### alert_clickit()
@@ -769,6 +822,16 @@ end
         #### clickit() "CHANGE THIS TO INCLUDE NEW DATA"
         #### alert_clickit() "CHANGE THIS TO INCLUDE NEW DATA"
 
+        # storeTable($_browser)
+        # if checkHref($_userNameVar, $_browser, $_table) == true
+        #     if checkDownloadReady($_table, bandNum, $_cellReturnText) == true
+        #         downloadFile($_browser, $_files_href)
+        #     end
+        # end
+
+
+
+=begin
         "==================== a2 =========================" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         # TEST INPUT FOR DATES -- DELETE LATER
@@ -777,9 +840,9 @@ end
         a2(eventBandNumsArray, bandsLength, startDate, endDate)
 
         "RELOAD UNTIL DOWNLOADABLE"
+=end
 
-
-    end
+end
     RUN()
     puts "successful run"
     
