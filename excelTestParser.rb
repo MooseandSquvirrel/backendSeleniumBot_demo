@@ -768,6 +768,7 @@ end
 
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         navigate($_userNameVar)
+        sleep (5) ###"CHANGE THIS TO form = wait.until"
 
             "=============== MOVE THIS TO AFTER b7.1 and b3 FURTHER DOWN IN RUN() ================"
             
@@ -776,28 +777,17 @@ end
 
             # FUNCTION TO CHECK IF DOWNLOAD LINK IS READY IN CELL, IF NOT RELOAD PAGE, IF SO, STORE INTO $_files_href ARRAY
             def checkTableDownload(bandsArray)
+                $_files_href = []
                 bandsArray.each do |event|
                     # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
                     checkHref($_userNameVar, $_browser, $_table, event.bandNum)
                     puts "$_cellReturnText: #{$_cellReturnText}"
-                    storeReadyDownloadLink($_table, event.bandNum, $_cellReturnText)
+                    storeReadyDownloadLink($_table, event.bandNum, $_cellReturnText, $_userNameVar, $_files_href)
                 end
             end
             ap $_files_href
             checkTableDownload(bandsArray)
             downloadFile($_browser, $_files_href)
-=begin
-            # FUNCTION TO DOWNLOAD EACH LINK FROM $_files_href ARRAY
-            def downloadEach()
-                i = 1
-                $_files_href.each do |x|
-                    x.downloadFile($_browser, $_files_href)
-                    puts "Downloading file ##{i} for $_files_href..."
-                    i += 1
-                end
-            end
-            downloadEach()
-=end
 
             "Pre edited code from above"
             # bandsArray.each do |event|
