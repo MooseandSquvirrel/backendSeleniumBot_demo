@@ -21,6 +21,10 @@ require 'io/console'
 ####################################
 require './productionDownloadFile'
 ####################################
+# ADMINSLIST REQUIRES
+####################################
+require './adminsList'
+####################################
 
 
 puts "\n\n"
@@ -768,7 +772,7 @@ end
 
         navigate($_userNameVar)
         sleep (5) ###"CHANGE THIS TO form = wait.until"
-
+=begin
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         b7_1(eventBandNumsArray, bandsLength)
         clickit()
@@ -785,7 +789,7 @@ end
         #         downloadFile($_browser, $_files_href)
         #     end
         # end
-
+=end
 
 
 =begin
