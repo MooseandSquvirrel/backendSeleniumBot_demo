@@ -454,7 +454,7 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                  Function Entering Bands for First B7                                  "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-=begin
+
 def b7_1(eventBandNumsArray, bandsLength)
     bandsNumArray = eventBandNumsArray
 
@@ -528,7 +528,7 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                      Function Entering Bands for B3                                    "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
+=begin
 def b3(eventBandNumsArray, bandsLength)
     bandsNumArray = eventBandNumsArray
 
@@ -766,46 +766,13 @@ end
     
         loadingMessage()
 
-        "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         navigate($_userNameVar)
         sleep (5) ###"CHANGE THIS TO form = wait.until"
 
-            "=============== MOVE THIS TO AFTER b7.1 and b3 FURTHER DOWN IN RUN() ================"
-            
-            storeTable($_browser)
-            p $_table
-
-            # FUNCTION TO CHECK IF DOWNLOAD LINK IS READY IN CELL, IF NOT RELOAD PAGE, IF SO, STORE INTO $_files_href ARRAY
-            def checkTableDownload(bandsArray)
-                $_files_href = []
-                bandsArray.each do |event|
-                    # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
-                    checkHref($_userNameVar, $_browser, $_table, event.bandNum)
-                    puts "$_cellReturnText: #{$_cellReturnText}"
-                    storeReadyDownloadLink($_table, event.bandNum, $_cellReturnText, $_userNameVar, $_files_href)
-                end
-            end
-            ap $_files_href
-            checkTableDownload(bandsArray)
-            downloadFile($_browser, $_files_href)
-
-            "Pre edited code from above"
-            # bandsArray.each do |event|
-            #     # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
-            #     if checkHref($_userNameVar, $_browser, $_table, event.bandNum) == true
-            #         puts "$_cellReturnText: #{$_cellReturnText}"
-            #         if checkDownloadReady($_table, bandsArray[event].bandNum, $_cellReturnText) == true
-            #             downloadFile($_browser, $_files_href)
-            #         end
-            #     end
-            # end
-
-
-            "==================================================="
-
-        #### b7_1(eventBandNumsArray, bandsLength)
-        #### clickit()
-        #### alert_clickit()
+        "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
+        b7_1(eventBandNumsArray, bandsLength)
+        clickit()
+        alert_clickit()
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         #### b3(eventBandNumsArray, bandsLength)
@@ -831,6 +798,26 @@ end
 
         "RELOAD UNTIL DOWNLOADABLE"
 =end
+
+        storeTable($_browser)
+        p $_table
+
+        # FUNCTION TO CHECK IF DOWNLOAD LINK IS READY IN CELL, IF NOT RELOAD PAGE, IF SO, STORE INTO $_files_href ARRAY
+        def checkTableDownload(bandsArray)
+            $_files_href = []
+            bandsArray.each do |event|
+                # MIGHT NEED TO MAKE $_cellReturnText INTO EMPTY STRING HERE TO RESET IT FOR EACH LOOP FOR EACH BAND IN ARRAY
+                checkHref($_userNameVar, $_browser, $_table, event.bandNum)
+                puts "$_cellReturnText: #{$_cellReturnText}"
+
+
+                "***TEST TO SEE IF THIS FUNCTION IS REDUNDANT***"
+                storeReadyDownloadLink($_table, event.bandNum, $_cellReturnText, $_userNameVar, $_files_href)
+            end
+        end
+        ap $_files_href
+        checkTableDownload(bandsArray)
+        downloadFile($_browser, $_files_href)
 
 end
     RUN()
@@ -1418,6 +1405,19 @@ end
 
 
 
+"TO DO:
+- Test if storeReadyDownloadLink is redundant function
+- Test if b3 and b7.1 download for multiple bands
+- Work on new b3 with all admins in an array removed from file returned
+- Work on new b7.1 (in while loop?) to grab data for multiple bands
+    - Store data in instance variables of event.bands for final results 
+- Work on new b3 (in while loop?) to grab data from multiple bands?
+    - Store data in instance variables of event.bands for final results 
+- Work on b7.2 (in while loops?) to grab data from multiple bands?
+    - Store data in instance variables of event.bands for final results 
+- Work on A.2 (can I do this for multiple bands? Based on dates I don’t remember check with Taylor)
+    - Store data in instance variables of event.bands for final result
+- Write All data from bands."
 
 
 
