@@ -16,19 +16,23 @@ require 'pp'
 require 'ap'
 require 'rspec/expectations'
 require 'io/console'
-####################################
-# DOWNLOADFILE REQUIRES
+require 'twilio-ruby'
 ####################################
 require './productionDownloadFile'
 ####################################
-# ADMINSLIST REQUIRES
-####################################
 require './adminsList'
-####################################
-# INITIALDOWNLOADSCLEAN.RB
 ####################################
 require './fileMoveOldXlsx.rb'
 ####################################
+require './grabXlsxB71.rb'
+####################################
+require './grabXlsxB3.rb'
+####################################
+require './b7-1multipleBands.rb'
+####################################
+require './send_sms.rb'
+####################################
+
 
 def helloMessage()
     puts "\n\n"
@@ -40,6 +44,48 @@ def helloMessage()
 
     print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
     print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
+end
+
+# TWILIO TEXT MESSAGE OPTION (COLLECT usrNumber)
+def textMessage()
+    answer_check = ""
+    while answer_check != 'y' || answer_check != "exit"
+        puts "Before beginning, would you like to receive an alert on your phone when Fixit is done?"
+        puts "'y' for yes, 'n' for no."
+        yORn = gets.strip
+        if yORn == 'exit'
+            return
+        end
+        if yORn == 'y'
+            puts "Please type your full phone number ( ex. 925-123-4567 = 9251234567 )"
+            usrNumber = gets.strip
+        end
+        if yORn == 'n'
+            break
+        end
+        puts "\n"
+        puts "Is '#{usrNumber}' the correct number?"
+        answer_check = gets.strip
+        if answer_check == "exit"
+            return
+        end
+        if answer_check == 'y' 
+            return usrNumber
+        end
+        if answer_check == 'n'
+            puts "\n"
+            puts "-------------------------------------------------------"
+            puts "Re-Enter the correct cell number and press 'Enter':"
+            redo
+        end
+        if answer_check != 'y' || answer_check != 'n'
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "\n"
+            puts "**** Now Re-Enter the correct cell number and hit 'Enter'. ****"
+            redo
+        end
+    end
 end
 
 # USERNAME AND PASSWORD ENTERING WITH HIDDEN INPUT AND TOKENIZATION
@@ -735,6 +781,7 @@ end
     def RUN
         fileMoveOldXlsx()
         helloMessage()
+        usrNumber = textMessage()
         userName()
         pwd()
         eventTitleCounter = 0
@@ -767,7 +814,7 @@ end
     
         "MAKE THIS SECTION A FUNCTION? WITH ARGUEMENTS BEING PASSED IN THAT ARE REQUIRED"
         # CALLING eventNumsArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNumsArray
-        eventBandNumsArray = Array.new
+        eventBandNumsArray = []
         eventBandNumsArray = eventNumsArray(bandsArray)
         bandsLength = bandsArray.length
         puts "bandsArray:"
@@ -780,12 +827,14 @@ end
         loadingMessage()
 
         navigate($_userNameVar)
-        sleep (5) ###"CHANGE THIS TO form = wait.until"
+        sleep (7) ###"CHANGE THIS TO form = wait.until"
 =begin
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
         b7_1(eventBandNumsArray, bandsLength)
         clickit()
         alert_clickit()
+=end
+=begin
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         #### b3(eventBandNumsArray, bandsLength)
@@ -831,6 +880,23 @@ end
         ap $_files_href
         checkTableDownload(bandsArray)
         downloadFile($_browser, $_files_href)
+        
+        tempB7Dir()
+        grabXlsxB71()
+        "PARSE B7 -- Fix function (if necessary) and call from b7-1multpleBands -- B71Parse()"
+        "SAVE RESULTS INTO PROPER EVENT.BANDS INSTANCE VARIABLES FOR EACH BAND.NUM"
+        "CALL removeTEMPB7 to delete folder"
+
+        #tempB3Dir()
+        #grabXlsxB3()
+        "PARSE B7"
+        "SAVE RESULTS INTO PROPER EVENT.BANDS INSTANCE VARIABLES FOR EACH BAND.NUM"
+        "CALL removeTEMPB7 to delete folder"
+
+        "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"
+        puts "usrNumber:"
+        puts usrNumber
+        twilio(usrNumber)
 
 end
     RUN()

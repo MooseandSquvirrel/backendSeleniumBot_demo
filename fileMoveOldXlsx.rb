@@ -16,7 +16,7 @@ require './adminsList.rb'
 ############################
 
 # FUNCTION TO MOVE OLD .XLSX FILES FROM ~/DOWNLOADS DIRECTORY TO NEWLY CREATED DIRECTORY ON DESKTOP OLD_XLSX_DATA (CREATES IF NON-EXISTENT)
-def oldSubsidiary()
+def oldXlsx()
     puts "\n"
     puts "+++++++++++++++++++++++++++++"
     puts "Dirctory before:"
@@ -39,7 +39,7 @@ def fileMoveOldXlsx()
     puts "\n"
     puts "+++++++++++++++++++++++++++++"
     puts "Checking ~/Desktop for OLD_XLSX_DATA Directory..."
-    oldSubsidiary()
+    oldXlsx()
     puts "Directory before:"
     puts Dir.pwd
     downloadDir = '~/Downloads'
