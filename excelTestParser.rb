@@ -26,14 +26,15 @@ require './productionDownloadFile'
 require './adminsList'
 ####################################
 
+def helloMessage()
+    puts "\n\n"
+    print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    print "                                            WELCOME TO Parser!                                          \n"
+    print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
 
-puts "\n\n"
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-print "                                            WELCOME TO Parser!                                          \n"
-print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-
-print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
-print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
+    print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
+    print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
+end
 
 # USERNAME AND PASSWORD ENTERING WITH HIDDEN INPUT AND TOKENIZATION
 
@@ -603,7 +604,7 @@ def alert_clickit()
     puts "Alert Clicked"
 end
 
-=end
+
 
 "MIGHT NOT BE POSSIBLE TO AUTOMATE A2 BECAUSE OF SPECIAL CALENDAR MODULE"
 
