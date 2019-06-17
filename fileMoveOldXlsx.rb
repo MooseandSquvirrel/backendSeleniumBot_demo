@@ -25,9 +25,9 @@ def oldSubsidiary()
     Dir.chdir(File.expand_path(desktopDir))
     puts "Directory is now:"
     puts Dir.pwd
-    puts "Checking Desktop for OLD_XLSX_DATA..."
+    puts "Checking Desktop for OLD_XLSX_DATA Directory..."
     if Dir.exist?("OLD_XLSX_DATA") == false
-        puts "Creating OLD_XLSX_DATA directory..."
+        puts "Creating OLD_XLSX_DATA Directory..."
         Dir.mkdir("OLD_XLSX_DATA")
     else
         puts "OLD_XLSX_DATA Directory exists."

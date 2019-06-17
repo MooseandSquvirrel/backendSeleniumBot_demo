@@ -25,12 +25,18 @@ require './productionDownloadFile'
 ####################################
 require './adminsList'
 ####################################
+# INITIALDOWNLOADSCLEAN.RB
+####################################
+require './fileMoveOldXlsx.rb'
+####################################
 
 def helloMessage()
     puts "\n\n"
     print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
     print "                                            WELCOME TO Parser!                                          \n"
     print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    puts "\n"
+    puts "-- .xlsx files from your ~/Downloads Folder have been moved to OLD_XLSX_DATA Folder on your Desktop --"
 
     print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
     print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
@@ -727,6 +733,8 @@ end
 
 
     def RUN
+        fileMoveOldXlsx()
+        helloMessage()
         userName()
         pwd()
         eventTitleCounter = 0
