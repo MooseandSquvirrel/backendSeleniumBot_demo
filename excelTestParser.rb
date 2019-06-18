@@ -828,11 +828,14 @@ end
         puts bandsLength
         puts "eventNumsArray Test:"
         ap eventNumsArray
-=begin
+
         loadingMessage()
 
-        dates(bandsArray)
-
+        #  STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
+        bandsArraywDates = []
+        bandsArraywDates = dates(bandsArray)
+        ap bandsArraywDates
+=begin
         navigate($_userNameVar)
         sleep (7) ###"CHANGE THIS TO form = wait.until"
 =end
@@ -889,7 +892,7 @@ end
 =begin
         grabXlsxB71()
 =end
-        b71Parse(bandsArray, eventNumsArray)
+        b71Parse(eventNumsArray, bandsArraywDates)
         removeTEMPB7()
         puts "Check for event.Bands results being set:"
         ap bandsArray

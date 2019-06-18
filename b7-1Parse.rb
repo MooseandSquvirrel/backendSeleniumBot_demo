@@ -10,21 +10,18 @@ require 'ap'
 require 'rubyXL'
 require 'fileutils'
 ############################
-# REQUIRE ADMINS.LIST.RB
-############################
 require './adminsList.rb' 
 ############################
+require './datesSection.rb' 
+############################
 
-=begin TESTING COMMENTING OUT TO SEE IF THIS IS EXTRA CODE FOR THIS MODULE
-# SETTING UP ARRAY OF ADMINS NAMES FROM ADMINS EXCEL SPREADSHEET -- FOR USE IN B3 (AND B7.1?) TO REMOVE ADMINS WHO CREATED BANDS
-adminsArray = adminsList()
 
-puts "adminsArray"
-ap adminsArray
-=end
-
-def dateRange()
-    # USE USER INPUT FROM INITIAL GETS.CHOMPS (stringsHash[:start_date]) ABOVE TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+# USE USER INPUT FROM INITIAL GETS.CHOMPS ($_start_date]) TO REMOVE DATES OUTSIDE EVENT RANGE TO GET FINAL N.R.U.
+def dateRange(worksheet, datesArray)
+    puts "inside dateRange"
+    puts "datesArray: "
+    ap datesArray
+    
     index = 1
     puts "cellDate = worksheet.sheet_data[1][3] = #{worksheet.sheet_data[index][3].value}"
     while index < worksheet.sheet_data.rows.size
@@ -46,8 +43,6 @@ def dateRange()
     end
 end
 
-
-
 # CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_B7)
 def mvDir()
     puts "----- Moving Directories to reach TEMP_B7 Directory -----"
@@ -59,6 +54,7 @@ def mvDir()
     puts Dir.pwd
 end
 
+# STORING RESULTS INTO ORIGINAL EVENT OBJECTS' INSTANCE VARIABLES
 def resultsB7(eventName, band, rowCount, worksheet)
     nruCount = worksheet.sheet_data.rows.size - 1
     puts "nruCout: #{nruCount}"
@@ -74,8 +70,8 @@ def resultsB7(eventName, band, rowCount, worksheet)
 end
 
 
-# bandsArray PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
-def b71Parse(bandsArray, eventNumsArray)
+# bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
+def b71Parse(eventNumsArray, bandsArraywDates)
 
     # Move to TEMP_B7
     mvDir()
@@ -96,7 +92,7 @@ def b71Parse(bandsArray, eventNumsArray)
         worksheet = workbookB7first[0]
 
         #  ASSIGNS BAND OBJECT FROM ARRAY
-        band = bandsArray[i]
+        band = bandsArraywDates[i]
     
         # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0]
         rowCount = worksheet.sheet_data.rows.size - 1
@@ -115,7 +111,8 @@ def b71Parse(bandsArray, eventNumsArray)
                 index += 1
             end
         end
-        ap bandsArray
+        dateRange(worksheet, band.datesArray)
+        ap bandsArraywDates
         resultsB7(band.eventName, band, rowCount, worksheet)
         puts "band"
         print band

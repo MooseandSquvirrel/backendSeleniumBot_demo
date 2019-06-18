@@ -53,7 +53,7 @@ def dates(bandsArray)
         # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
         x.campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
-
+        x.datesArray = 
         puts "dateMonth:"
         puts dateMonth
         puts "dateDayBeg:"
@@ -62,5 +62,7 @@ def dates(bandsArray)
         puts dateDayEnd
         puts "campDates stored in event.campDates as:"
         puts x.campDates
+        puts "x.datesArray:"
+        puts x.datesArray
     end
 end
