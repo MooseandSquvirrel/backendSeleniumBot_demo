@@ -32,7 +32,10 @@ require './b7-1multipleBands.rb'
 ####################################
 require './send_sms.rb'
 ####################################
-
+require './datesSection.rb'
+####################################
+require './b7-1Parse.rb'
+####################################
 
 def helloMessage()
     puts "\n\n"
@@ -237,7 +240,7 @@ end
                     return
                 end
                 if brand_name_check == 'y'
-                    @brandName = brand_name_check
+                    @brandName = brand_name
                     break
                 end
                 if brand_name_check == 'n'
@@ -284,7 +287,7 @@ end
                     return
                 end
                 if start_date_check == 'y'
-                    @startDate = start_date_check
+                    @startDate = start_date
                     break
                 end
                 if start_date_check == 'n'
@@ -399,6 +402,9 @@ end
             @bandNum
         end
 
+        # FOR ARRAY OF DATES TO INCLUDE OR EXCLUDE WHILE PARSING EACH B7/B3
+        attr_accessor :datesArray
+
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         "                                                           Result Variables for B7.1, B3, A2, and B7.2"
         "-----------------------------------------------------------------------------------------------------------------------------------------------------"
@@ -421,7 +427,7 @@ end
 end ### END OF BAND CLASS ###
 
     # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
-    def eventNumsArray(bandsArray)
+    def getEventNumsArray(bandsArray)
         eventNumsArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
     end
 
@@ -512,8 +518,8 @@ end
 "                                  Function Entering Bands for First B7                                  "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-def b7_1(eventBandNumsArray, bandsLength)
-    bandsNumArray = eventBandNumsArray
+def b7_1(eventNumsArray, bandsLength)
+    bandsNumArray = eventNumsArray
 
     # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
     # bandsNumArray = bandsArray.collect {|x| x.bandNum}
@@ -585,9 +591,9 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                      Function Entering Bands for B3                                    "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-=begin
-def b3(eventBandNumsArray, bandsLength)
-    bandsNumArray = eventBandNumsArray
+
+def b3(eventNumsArray, bandsLength)
+    bandsNumArray = eventNumsArray
 
     # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
     # bandsNumArray = bandsArray.collect {|x| x.bandNum}
@@ -635,7 +641,7 @@ def b3(eventBandNumsArray, bandsLength)
         puts "Band Numbers entered into b3 field..."
 end
 
-=begin
+
 def clickit()
     $_form = $_wait.until {
         element = $_browser.find_element(:id, "execute")
@@ -657,9 +663,8 @@ def alert_clickit()
 end
 
 
-
 "MIGHT NOT BE POSSIBLE TO AUTOMATE A2 BECAUSE OF SPECIAL CALENDAR MODULE"
-
+=begin
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                     Function Entering Bands for A2                                     "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -672,8 +677,8 @@ end
 startDate = "12122019"
 endDate = "12152019"
 
-def a2(eventBandNumsArray, bandsLength, startDate, endDate)
-    bandsNumArray = eventBandNumsArray
+def a2(eventNumsArray, bandsLength, startDate, endDate)
+    bandsNumArray = eventNumsArray
 
     # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
     # bandsNumArray = bandsArray.collect {|x| x.bandNum}
@@ -754,7 +759,7 @@ def a2(eventBandNumsArray, bandsLength, startDate, endDate)
 end #### "MOVE THIS until 'END' TO AFTER THE CLICKS ONCE MY FIELD INPUT AND DATE INPUTS ARE WORKING"
 
 
-=begin
+
 def clickit()
     $_form = $_wait.until {
         element = $_browser.find_element(:id, "execute")
@@ -814,53 +819,50 @@ end
     
         "MAKE THIS SECTION A FUNCTION? WITH ARGUEMENTS BEING PASSED IN THAT ARE REQUIRED"
         # CALLING eventNumsArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNumsArray
-        eventBandNumsArray = []
-        eventBandNumsArray = eventNumsArray(bandsArray)
+        eventNumsArray = []
+        eventNumsArray = getEventNumsArray(bandsArray)
         bandsLength = bandsArray.length
         puts "bandsArray:"
         ap bandsArray
         puts "bands in Array (bandsArrayLength):"
         puts bandsLength
-        puts "eventBandNumsArray Test:"
-        ap eventBandNumsArray
-    
+        puts "eventNumsArray Test:"
+        ap eventNumsArray
+=begin
         loadingMessage()
+
+        dates(bandsArray)
 
         navigate($_userNameVar)
         sleep (7) ###"CHANGE THIS TO form = wait.until"
+=end
+
 =begin
         "-------------------- b7_1 -----------------------" # MAKE THIS A FUNCTION?
-        b7_1(eventBandNumsArray, bandsLength)
+        b7_1(eventNumsArray, bandsLength)
         clickit()
         alert_clickit()
-=end
-=begin
+
+
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
-        #### b3(eventBandNumsArray, bandsLength)
-        #### clickit() "CHANGE THIS TO INCLUDE NEW DATA"
-        #### alert_clickit() "CHANGE THIS TO INCLUDE NEW DATA"
-
-        # storeTable($_browser)
-        # if checkHref($_userNameVar, $_browser, $_table) == true
-        #     if checkDownloadReady($_table, bandNum, $_cellReturnText) == true
-        #         downloadFile($_browser, $_files_href)
-        #     end
-        # end
+        b3(eventNumsArray, bandsLength)
+        clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
+        alert_clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
 =end
-
-
+     
 =begin
         "==================== a2 =========================" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         # TEST INPUT FOR DATES -- DELETE LATER
         startDate = "12122019"
         endDate = "12152019"
-        a2(eventBandNumsArray, bandsLength, startDate, endDate)
+        a2(eventNumsArray, bandsLength, startDate, endDate)
 
         "RELOAD UNTIL DOWNLOADABLE"
 =end
 
+=begin
         storeTable($_browser)
         p $_table
 
@@ -880,16 +882,22 @@ end
         ap $_files_href
         checkTableDownload(bandsArray)
         downloadFile($_browser, $_files_href)
-        
-        tempB7Dir()
-        grabXlsxB71()
-        "PARSE B7 -- Fix function (if necessary) and call from b7-1multpleBands -- B71Parse()"
-        "SAVE RESULTS INTO PROPER EVENT.BANDS INSTANCE VARIABLES FOR EACH BAND.NUM"
-        "CALL removeTEMPB7 to delete folder"
+=end
 
-        #tempB3Dir()
-        #grabXlsxB3()
-        "PARSE B7"
+
+        tempB7Dir()
+=begin
+        grabXlsxB71()
+=end
+        b71Parse(bandsArray, eventNumsArray)
+        removeTEMPB7()
+        puts "Check for event.Bands results being set:"
+        ap bandsArray
+        
+=begin
+        tempB3Dir()
+        grabXlsxB3()
+        "PARSE B3"
         "SAVE RESULTS INTO PROPER EVENT.BANDS INSTANCE VARIABLES FOR EACH BAND.NUM"
         "CALL removeTEMPB7 to delete folder"
 
@@ -897,7 +905,7 @@ end
         puts "usrNumber:"
         puts usrNumber
         twilio(usrNumber)
-
+=end
 end
     RUN()
     puts "successful run"
@@ -915,22 +923,22 @@ return
 
 "STORE VARIABLE DATA FROM B3 PARSING INTO ARRAY/HASH (THIS IS ALREADY DONE FOR ONE SO FIGURE OUT LOOP)"
 
-=begin
 
+=begin
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            Dates Section                                               "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
     
-    # COVER THE DATES OF THE :starting_date UNTIL 3 DAYS AFTER
-    puts "stringHash[:start_date]"
-    puts stringsHash[:start_date]
-    daysParsed = Date.parse(stringsHash[:start_date])
+    # COVER THE DATES OF THE event.startDate UNTIL 3 DAYS AFTER
+    puts "event.startDate]"
+    puts event.startDate
+    daysParsed = Date.parse(event.startDate)
     datesArray = []
     i = 0
     # EVENT DATE RANGE PLUS 3 DAYS AFTER
-    while i < ((stringsHash[:total_days].to_i) + 3)
+    while i < ((event.startDate.to_i) + 3)
         datesArray << daysParsed.to_s
-        if stringsHash[:total_days] == 1
+        if event.totalDays == 1
             break
         else
             daysParsed += 1
@@ -943,7 +951,7 @@ return
     end
 
     # COVERS THE DATES LEADING UP TO THE EVENT'S :start_date (7 DAYS BEFORE :start_date)
-    daysParsed = Date.parse(stringsHash[:start_date])
+    daysParsed = Date.parse(event.startDate)
     i = 0
     # -14 for two weeks before event 
     earlyDaysParsed = daysParsed - 14
@@ -957,13 +965,13 @@ return
     p datesArray
 
     # CREATING DATE RANGE FOR FINAL RESULTS TABLE (EX. "6/23 - 6/26")
-    days = Date.parse(stringsHash[:start_date])
+    days = Date.parse(event.startDate)
     puts "days:"
     # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING
     dateMonth = days.strftime('%m')
     dateDayBeg = days.strftime('%d').to_i
     # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
-    dateDayEnd = days.strftime('%d').to_i + (stringsHash[:total_days].to_i - 1)
+    dateDayEnd = days.strftime('%d').to_i + (event.totalDays.to_i - 1)
     campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
 
     puts "dateMonth:"
@@ -974,8 +982,8 @@ return
     puts dateDayEnd
     puts "campDates:"
     puts campDates
-
-
+=end
+=begin
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            1st B7 Loop                                     "

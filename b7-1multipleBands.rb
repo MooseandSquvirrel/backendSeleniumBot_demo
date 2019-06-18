@@ -14,6 +14,10 @@ require 'fileutils'
 ############################
 require './adminsList.rb' 
 ############################
+# REQUIRE FILEMOVEOLDXLSX.RB
+############################
+require './fileMoveOldXlsx.rb'
+############################
 
 =begin TESTING COMMENTING OUT TO SEE IF THIS IS EXTRA CODE FOR THIS MODULE
 # SETTING UP ARRAY OF ADMINS NAMES FROM ADMINS EXCEL SPREADSHEET -- FOR USE IN B3 (AND B7.1?) TO REMOVE ADMINS WHO CREATED BANDS

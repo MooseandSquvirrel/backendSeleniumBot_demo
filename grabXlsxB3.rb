@@ -35,7 +35,7 @@ def tempB3Dir()
 end
 
 # FUNCTION TO GRAB B7.1 FROM ~/DOWNLOADS AND MOVE IT INTO FIXIT'S WORKING DIRECTORY FOR PARSING (PUTTING INSIDE NEW DIRECTORY FOR ORGANIZATION)
-def grabXlsxb3()
+def grabXlsxB3()
     puts "\n"
     tempB3Dir()
     puts "Grabbing B-3 .xlsx from ~/Downloads..."
