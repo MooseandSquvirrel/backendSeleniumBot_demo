@@ -43,6 +43,7 @@ def dateRange(worksheet, datesArray)
     end
 end
 
+
 # CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_B7)
 def mvDir()
     puts "----- Moving Directories to reach TEMP_B7 Directory -----"
@@ -59,15 +60,21 @@ def resultsB7(eventName, band, rowCount, worksheet)
     nruCount = worksheet.sheet_data.rows.size - 1
     puts "nruCout: #{nruCount}"
 
-    puts "=============================="
+    puts "==============================================================================================="
     puts "Results of first B7 (#{eventName}):"
-    # to_f BELOW SO THAT DIVISION FOR PERCENTAGE DOESN'T EQUAL 0
-    band.nruCount = nruCount.to_f
-    puts "NRUs: #{band.nruCount}"
-    band.newMemberAvg = ((nruCount / rowCount.to_f) * 100).round(2)
-    puts "NRUs Percentage for the event '#{band.eventName}': #{band.newMemberAvg}%"
-    puts "=============================="
+    puts "-----------------------------------"
+    puts "nruCount: #{band.nruCount}"
+    puts "-----------------------------------"
+    "I DON'T BELIEVE THE BELOW 2 LINES WORK SINCE band.totalMembers NEEDS TO BE COLLECTED FROM B3 IN ORDER TO NOW GET band.newMemberAvg IN B3 LOOP"
+    "PROBABLY DELETABLE SOON"
+    # band.newMemberAvg = ((nruCount / rowCount.to_f) * 100).round(2)
+    # puts "NRUs Percentage for the event '#{band.eventName}': #{band.newMemberAvg}%"
+    puts "==============================================================================================="
 end
+
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+"                                              B7_1 Loop Main                                            "
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 
 # bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
@@ -94,9 +101,11 @@ def b71Parse(eventNumsArray, bandsArraywDates)
         #  ASSIGNS BAND OBJECT FROM ARRAY
         band = bandsArraywDates[i]
     
-        # SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0]
+        # **FINAL RESULT** SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0] -- to_f FOR DIVISION PURPOSES LATER
         rowCount = worksheet.sheet_data.rows.size - 1
+        band.totalMembers = rowCount.to_f
         puts "Initial row count (rowCount) of sheet before filtering: #{rowCount}"
+
 
     #  CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
         index = 1
