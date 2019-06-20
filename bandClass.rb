@@ -116,10 +116,8 @@ class Band
     # GETTER TO DEFINE FINAL @brandName RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
     def brandName
         @brandName
-    end
-    
+    end    
  
-
     # COUNTER TO IGNORE THE 'puts stringsHash[:start_date]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     def getStartDate(eventName)
         counter = 0
@@ -161,10 +159,8 @@ class Band
         end
     end
       
-    # GETTER TO DEFINE FINAL @startDate RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
-    def startDate
-        @startDate
-    end
+    # GETTER/SETTER TO DEFINE FINAL @startDate RESULT FOR ACCESSING THE INSTANCE VARIABLE OUTSIDE THE CLASS WITH DOT NOTATION
+    attr_accessor :startDate
 
         # COUNTER TO IGNORE THE 'puts stringsHash[:total_days]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     def getTotalDays(eventName)

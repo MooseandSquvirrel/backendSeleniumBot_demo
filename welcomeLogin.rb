@@ -45,26 +45,32 @@ def textMessage()
         if yORn == 'n'
             break
         end
+        if yORn != 'y' && yORn != 'n'
+            puts "-------------------------------------------------------------------"
+            puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
+            puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "-------------------------------------------------------------------"
+            puts "\n"
+            redo
+        end
         puts "\n"
         puts "Is '#{usrNumber}' the correct number?"
         answer_check = gets.strip
         if answer_check == "exit"
             return
-        end
-        if answer_check == 'y' 
+        elsif answer_check == 'y' 
             return usrNumber
-        end
-        if answer_check == 'n'
+        elsif answer_check == 'n'
             puts "\n"
             puts "-------------------------------------------------------"
             puts "Re-Enter the correct cell number and press 'Enter':"
             redo
-        end
-        if answer_check != 'y' || answer_check != 'n'
+        else
+            puts "-------------------------------------------------------------------"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
+            puts "-------------------------------------------------------------------"
             puts "\n"
-            puts "**** Now Re-Enter the correct cell number and hit 'Enter'. ****"
             redo
         end
     end

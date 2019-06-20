@@ -197,7 +197,11 @@ end
             event = Band.new
             event.getEventName()
             event.getBrand(event.eventName)
-            event.getStartDate(event.eventName)
+            if eventTitleCounter == 1
+                event.getStartDate(event.eventName)
+            else
+                event.startDate = bandsArray[0].startDate
+            end
             event.getTotalDays(event.eventName)
             event.getBandNum(event.eventName)
             if event.loopOrGo() == false
@@ -226,9 +230,7 @@ end
         loadingMessage()
 
         # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
-        bandsArraywDates = []
-        bandsArraywDates = dates(bandsArray)
-        #ap bandsArraywDates
+        dates(bandsArray)
 =begin
         navigate($_userNameVar)
         sleep (7) ###"CHANGE THIS TO form = wait.until"
@@ -256,7 +258,7 @@ end
         endDate = "12152019"
         a2(eventNumsArray, bandsLength, startDate, endDate)
 
-        "RELOAD UNTIL DOWNLOADABLE"
+        "RELOAD 2UNTIL DOWNLOADABLE"
 =end
 
 =begin
@@ -273,8 +275,8 @@ end
         grabXlsxB71()
 =end
 
-        b71Parse(eventNumsArray, bandsArraywDates)
-        removeTEMPB7()
+        b71Parse(eventNumsArray, bandsArray)
+        # removeTEMPB7()
         puts "Check for event.Bands results being set:"
         ap bandsArray
         
@@ -283,10 +285,9 @@ end
 =begin
         grabXlsxB3()
 =end
-        b3Parse(bandsArraywDates, eventNumsArray)
+        b3Parse(eventNumsArray, bandsArray)
+        # need the remove TEMP for b3 here
 
-        "SAVE RESULTS INTO PROPER EVENT.BANDS INSTANCE VARIABLES FOR EACH BAND.NUM"
-        "CALL removeTEMPB7 to delete folder"
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"
         puts "usrNumber:"
@@ -296,11 +297,10 @@ end
         "Chatbot functionality for running next round of Bands stored in larger array? (ability to start or continue logging full 'data analaysis sessions'
             run current session or store a new one, then chatbot would notify completed session, remotely ask run next session?"
 
-=end
 end
-    RUN()
-    puts "successful run"
-    
+RUN()
+puts "successful run"
+
 
 return 
 

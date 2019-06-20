@@ -19,8 +19,8 @@ require './adminsList.rb'
 ####################################
 
 # MOVE TO PROPER DIRECTORY FOR PARSING
-def mvDir()
-    puts "----- Moving Directories to reach TEMP_B7 Directory -----"
+def mvDirB3()
+    puts "----- Moving Directories to reach TEMP_B3 Directory -----"
     puts "Directory before:"
     puts Dir.pwd
     b3Dir = '~/fixit/backendSelenium/TEMP_B3'
@@ -221,7 +221,7 @@ def b3Parse(eventNumsArray, bandsArraywDates)
     ap adminsArray
 
     # Move to TEMP_B3
-    mvDir()
+    mvDirB3()
 
     # COLLECT FILE NAME(S) IN TEMP_B3 (JUST WANT IT TO BE ONE BUT MIGHT GET MULTIPLES IF NOT WORKING PROPERLY)
     fileNamesArray = []
