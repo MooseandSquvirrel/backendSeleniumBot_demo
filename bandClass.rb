@@ -259,7 +259,7 @@ class Band
     "                                                           Result Variables for B7.1, B3, A2, and B7.2"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         
-    attr_accessor :campDates, :totalMembers, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderAvg, :new_GBL_LeaderCount, 
+    attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderAvg, :new_GBL_LeaderCount, 
         :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg
 
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
