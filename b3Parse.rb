@@ -30,7 +30,7 @@ def mvDirB3()
 end
 
 def nruPercentage(band)
-    band.nruPercentage = (band.nruCount / band.totalMemberCount).round(2)
+    band.nruPercentage = ("#{((band.nruCount / band.totalMemberCount).round(2) * 100)}%")
 end
 
 # COACHES COUNT FOR EVENT/BAND 
@@ -113,19 +113,22 @@ def totalLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray, 
 end
 
 # NEW LEADER COUNT FOR EVENT/BAND
-def newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
+def newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray, bandNum)
     newLeaderArray = []
     index = 1
     # GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
     while index < b3TotalRowCount
-        cellDateCreated = worksheet.sheet_data[index][10].value
-        cellCoachesName = worksheet.sheet_data[index][5].value
         # IF THE DATE CELL IS NOT EMPTY
         if not worksheet.sheet_data[index][10].nil?
-            if not adminsArray.include?("#{cellCoachesName}")
-                # DATES BELOW 'DECIDES' IF LEADER IS NEW
-                if not datesArray.include?("#{datesArray}")
-                    newLeaderArray << worksheet.sheet_data[index][5].value
+            cellDateCreated = worksheet.sheet_data[index][10].value
+            cellCoachesName = worksheet.sheet_data[index][5].value
+            cellBandNum = worksheet.sheet_data[index][0].value
+            if cellBandNum == bandNum 
+                if not adminsArray.include?("#{cellCoachesName}")
+                    # DATES BELOW 'DECIDES' IF LEADER IS NEW
+                    if not datesArray.include?("#{datesArray}")
+                        newLeaderArray << worksheet.sheet_data[index][5].value
+                    end
                 end
             end
         end
@@ -141,28 +144,31 @@ def newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
     ap tempNewLeaderArray
 
     # TO FLOAT FOR DIVISION PURPOSES LATER
-    newLeaderArrayLength = tempLeaderArray.length.to_f
-    puts "totalLeaderArray:\n#{totalLeaderArrayLength}"
+    newLeaderArrayLength = tempNewLeaderArray.length.to_f
+    puts "totalLeaderArray:\n#{newLeaderArrayLength}"
 
     band.newLeaderCount = newLeaderArrayLength
 end
 
 # NEW GBL COUNT FOR EVENT/BAND
-def newGblCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
+def newGblCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray, bandNum)
     newGblArray = []
     index = 1
     # GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
     while index < b3TotalRowCount
-        cellDateCreated = worksheet.sheet_data[index][10].value
-        cellCoachesName = worksheet.sheet_data[index][5].value
-        cellBandMemSize = worksheet.sheet_data[index][15].value.to_f
         # IF THE DATE CELL IS NOT EMPTY
         if not worksheet.sheet_data[index][10].nil?
-            if not adminsArray.include?("#{cellCoachesName}")
-                # DATES BELOW 'DECIDES' IF LEADER IS NEW
-                if not datesArray.include?("#{datesArray}")
-                    if cellBandMemSize > 1
-                        newGblArray << worksheet.sheet_data[index][5].value
+            cellDateCreated = worksheet.sheet_data[index][10].value
+            cellCoachesName = worksheet.sheet_data[index][5].value
+            cellBandMemSize = worksheet.sheet_data[index][14].value.to_i
+            cellBandNum = worksheet.sheet_data[index][0].value
+            if cellBandNum == bandNum 
+                if not adminsArray.include?("#{cellCoachesName}")
+                    # DATES BELOW 'DECIDES' IF LEADER IS NEW
+                    if not datesArray.include?("#{datesArray}")
+                        if cellBandMemSize > 1
+                            newGblArray << worksheet.sheet_data[index][5].value
+                        end
                     end
                 end
             end
@@ -170,34 +176,29 @@ def newGblCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
         index += 1
     end
 
-    puts "\nnewLeaderArray.length (count) -- before .uniq: #{newLeaderArray.length}"
-
-    # DELETES MULTIPLES OF LEADERS
-    tempGblArray = newGblArray.uniq
-    puts "\nleaderArray.length (count) -- after .uniq: \n#{tempGblArray.length}"
-    puts "\n(tempGblArray:"
-    ap tempGblLeaderArray
+    puts "\n(newGblArray:"
+    ap newGblArray
 
     # TO FLOAT FOR DIVISION PURPOSES LATER
-    tempGblArrayLength = tempGblArray.length.to_f
+    tempGblArrayLength = newGblArray.length.to_f
     puts "tempGblArrayLength:\n#{tempGblArrayLength}"
 
-    band.new_GBL_LeaderCount = tempGblArrayLength
+    band.newGblCount = tempGblArrayLength
 end
 
 # NEW LEADER AVG FUNCTION
-def newLeaderAvg(coachesCount, newLeaderCount)
+def newLeaderAvg(band, coachesCount, newLeaderCount)
     newLeaderAvg = "#{((newLeaderCount / coachesCount).round(2) * 100)}%"
     band.newLeaderAvg = newLeaderAvg
 end
 
 # EXTRANEOUS PRINT STATEMENT TO SHOW RESULTS OF B3 LOOP (PER EVENT)
-def resultsB3(eventName)
+def resultsB3(band, eventName)
 
     puts "==============================================================================================="
     puts "Results of first B3 (#{eventName})"
     puts "-----------------------------------"
-    puts "totalMemberCount: #{band.totalMembersCount}"
+    puts "totalMemberCount: #{band.totalMemberCount}"
     puts "nruPercentage: #{band.nruPercentage}"
     puts "coachesCount: #{band.coachesCount}"
     puts "totalLeaderCount: #{band.totalLeaderCount}"
@@ -257,16 +258,16 @@ def b3Parse(eventNumsArray, bandsArraywDates)
         totalLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray, band.bandNum)
 
         # **FINAL RESULT** newLeaderCount - STORED INTO RESULT IN BAND OBJECT
-        newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray)
+        newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray, band.bandNum)
 
         # **FINAL RESULT** new_GBL_LeaderCount - STORED INTO RESULT IN BAND OBJECT
-        newGblCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray)
+        newGblCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray, band.bandNum)
 
         # **FINAL RESULT** newLeaderAvg - STORED INTO RESULT IN BAND OBJECT
-        newLeaderAvg(band.coachesCount, band.newLeaderCount)
+        newLeaderAvg(band, band.coachesCount, band.newLeaderCount)
 
         # RESULTS PRINTED FOR B3 FOR ONE EVENT
-        resultsB3()
+        resultsB3(band, band.eventName)
 
         i += 1
     end
