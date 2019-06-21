@@ -29,69 +29,69 @@ def mvDirB3()
     puts Dir.pwd
 end
 
-# TOTAL MEMBER COUNT FUNCTION
-def totalMembersCount(band, worksheet, bandNum, b3TotalRowCount)
-    index = 1
-    cellBandNum = worksheet.sheet_data[index][0].value
-    while cellbandNum != bandNum
-        index +=1
-    end
-    puts "cellbandNum = #{cellBandNum}"
-    if cellBandNum == bandNum
-        totalMembers = worksheet.sheet_data[index][2].value
-        # TO FLOAT FOR DIVISION PURPOSES LATER
-        band.totalMembers = totalMembers.to_f
-    end
-end
-
-def nruPercentage()
-    band.nruPercentage = (band.nruCount / band.totalMembersCount).round(2)
+def nruPercentage(band)
+    band.nruPercentage = (band.nruCount / band.totalMemberCount).round(2)
 end
 
 # COACHES COUNT FOR EVENT/BAND 
-def coachesCount(band, worksheet, adminsList, b3TotalRowCount, bandNum)
-    bandAdminsArray = []
-    coachesCount = 0
-    cellBandNum = worksheet.sheet_data[index][0].value
-    cellAdminName = worksheet.sheet_data[index][5].value
-    index = 1
-    #   GRAB AND STORE ALL COACHES AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
-    while index < b3TotalRowCount
-        # IF THE DATE CELL IS NOT EMPTY
-        if not worksheet.sheet_data[index][10].nil?
-            if cellBandNum == bandNum 
-                if adminList.include?("#{cellAdminName}")
-                    bandAdminsArray << worksheet.sheet_data[index][5].value
-                end
-            end
-        end
-        index += 1 
-    end
-        return
+def coachesCount(band, worksheet, b3TotalRowCount, adminsArray, bandNum)
 
-    bandsAdminsArray = bandAdminsArray.uniq
-    # TO FLOAT FOR DIVISION PURPOSES LATER
-    adminsCount = bandsAdminsArray.length.to_f
-    band.coachesCount = band.totalMembers - adminsCount
+    "THIS WAS ASSUMING B3 PROVIDED ALL ADMINS IN BAND, IT'S JUST -POSSIBLY- ADMINS THAT CREATED BANDS, NOT IN THEM. THAT IS B7 USER_NUMBERS THAT IS NEEDED FOR EACH ADMIN TO GET PROPER COACHES COUNT."
+    "FOR NOW, THE AVERAGE IS 5 ADMINS PER BAND SO SUBTRACT FROM TOTAL MEMBERS TO GET ROUGH AVERAGE. CAN BE FIXED LATER WITH ALL USER_NO OF ADMINS/HI'S AND USE IT WITH B7 PARSE."
+    
+    band.coachesCount = band.totalMemberCount - 5
+    
+    # bandAdminsArray = []
+    # coachesCount = 0
+    # index = 1
+    # # GRAB AND STORE ALL COACHES AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
+    # while index < b3TotalRowCount
+    #     cellBandNum = worksheet.sheet_data[index][0].value
+    #     puts "coachesCount cellBandNum: #{cellBandNum}"
+    #     cellAdminName = worksheet.sheet_data[index][5].value
+    #     puts "coachesCount cellAdminName: #{cellAdminName}"
+    #     # IF THE DATE CELL IS NOT EMPTY
+    #     if not worksheet.sheet_data[index][10].nil?
+    #         if cellBandNum == bandNum 
+    #             if adminsArray.include?("#{cellAdminName}")
+    #                 bandAdminsArray << worksheet.sheet_data[index][5].value
+    #             end
+    #         end
+    #     end
+    #     index += 1 
+    # end
+   
+    # bandsAdminsArray = bandAdminsArray.uniq
+    # # TO FLOAT FOR DIVISION PURPOSES LATER
+    # adminsCount = bandsAdminsArray.length.to_f
+    # puts "adminsCount: #{adminsCount}"
+    # band.coachesCount = band.totalMemberCount - adminsCount
     
 end
 
 # TOTAL LEADER COUNT FOR EVENT/BAND
-def totalLeaderArray(adminsArray, b3RowCount, worksheet, adminList, datesArray)
+def totalLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray, bandNum)
     leaderArray = []
     totalLeaderArray = []
-    cellDateCreated = worksheet.sheet_data[index][10].value
-    cellCoachesName = worksheet.sheet_data[index][5].value
     index = 1
+    puts "cellDateCreated = worksheet.sheet_data[index][10].value: #{worksheet.sheet_data[index][10].value}"
+    puts "cellCoachesName = worksheet.sheet_data[index][5].value: #{worksheet.sheet_data[index][5].value}"
     # GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
     " $$$$$$$$ $$$$$$$$  THIS MIGHT NEED TO BE '<=' INSTEAD OF '<' TO GET THE LAST ROW $$$$$$$$ $$$$$$$$"
-    while index < b3RowCount
+    while index < b3TotalRowCount
         # IF THE DATE CELL IS NOT EMPTY
         if not worksheet.sheet_data[index][10].nil?
-            # IF -NOT- IN adminList THEN IT IS COACH
-            if not adminList.include?("#{cellCoachesName}")
-                # STORING ALL LEADER NAMES (MULTIPLES INCLUDED)
-                leaderArray << worksheet.sheet_data[index][5].value
+            cellDateCreated = worksheet.sheet_data[index][10].value
+            cellCoachesName = worksheet.sheet_data[index][5].value
+            cellBandNum = worksheet.sheet_data[index][0].value
+            if cellBandNum == bandNum 
+                # IF -NOT- IN adminsArray THEN IT IS COACH
+                if not adminsArray.include?("#{cellCoachesName}")
+                    if datesArray.include?("#{cellDateCreated}")
+                        # STORING ALL LEADER NAMES (MULTIPLES INCLUDED)
+                        leaderArray << worksheet.sheet_data[index][5].value
+                    end
+                end
             end
         end
         index += 1
@@ -99,8 +99,8 @@ def totalLeaderArray(adminsArray, b3RowCount, worksheet, adminList, datesArray)
 
     puts "\nnewLeaderArray.length (count) -- before .uniq: #{leaderArray.length}"
 
-    # DELETES MULTIPLES OF LEADERS
-    draftLeaderArray = leaderArray.uniq
+    # *DONT* DELETES MULTIPLES OF LEADERS
+    draftLeaderArray = leaderArray - adminsArray
     puts "\nleaderArray.length (count) -- after .uniq: \n#{draftLeaderArray.length}"
     puts "\n(draftLeaderArray:"
     ap draftLeaderArray
@@ -113,16 +113,16 @@ def totalLeaderArray(adminsArray, b3RowCount, worksheet, adminList, datesArray)
 end
 
 # NEW LEADER COUNT FOR EVENT/BAND
-def newLeaderCount(band, worksheet, b3RowCount, datesArray)
+def newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
     newLeaderArray = []
-    cellDateCreated = worksheet.sheet_data[index][10].value
-    cellCoachesName = worksheet.sheet_data[index][5].value
     index = 1
     # GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
-    while index < b3RowCount
+    while index < b3TotalRowCount
+        cellDateCreated = worksheet.sheet_data[index][10].value
+        cellCoachesName = worksheet.sheet_data[index][5].value
         # IF THE DATE CELL IS NOT EMPTY
         if not worksheet.sheet_data[index][10].nil?
-            if not adminList.include?("#{cellCoachesName}")
+            if not adminsArray.include?("#{cellCoachesName}")
                 # DATES BELOW 'DECIDES' IF LEADER IS NEW
                 if not datesArray.include?("#{datesArray}")
                     newLeaderArray << worksheet.sheet_data[index][5].value
@@ -147,19 +147,18 @@ def newLeaderCount(band, worksheet, b3RowCount, datesArray)
     band.newLeaderCount = newLeaderArrayLength
 end
 
-
 # NEW GBL COUNT FOR EVENT/BAND
-def newGblCount(band, worksheet, b3RowCount, adminsList, datesArray)
+def newGblCount(band, worksheet, b3TotalRowCount, adminsArray, datesArray)
     newGblArray = []
-    cellDateCreated = worksheet.sheet_data[index][10].value
-    cellCoachesName = worksheet.sheet_data[index][5].value
-    cellBandMemSize = worksheet.sheet_data[index][15].value.to_f
     index = 1
     # GRAB AND STORE ALL LEADERS AND THEN USE .uniq  TO DELETE REPEAT NAMES AND GET newLeaderCount (CHECKS IF DATE CREATED CELL IS nil?, IF NOT, STORE)
-    while index < b3RowCount
+    while index < b3TotalRowCount
+        cellDateCreated = worksheet.sheet_data[index][10].value
+        cellCoachesName = worksheet.sheet_data[index][5].value
+        cellBandMemSize = worksheet.sheet_data[index][15].value.to_f
         # IF THE DATE CELL IS NOT EMPTY
         if not worksheet.sheet_data[index][10].nil?
-            if not adminList.include?("#{cellCoachesName}")
+            if not adminsArray.include?("#{cellCoachesName}")
                 # DATES BELOW 'DECIDES' IF LEADER IS NEW
                 if not datesArray.include?("#{datesArray}")
                     if cellBandMemSize > 1
@@ -188,7 +187,7 @@ end
 
 # NEW LEADER AVG FUNCTION
 def newLeaderAvg(coachesCount, newLeaderCount)
-    newLeaderAvg = (newLeaderCount / coachesCount).round(2)
+    newLeaderAvg = "#{((newLeaderCount / coachesCount).round(2) * 100)}%"
     band.newLeaderAvg = newLeaderAvg
 end
 
@@ -244,24 +243,24 @@ def b3Parse(eventNumsArray, bandsArraywDates)
 
         # USE TO ITERATE IN filterBandNums FUNCTION TO GRAB ROW COUNT SPECIFIC FOR EACH BAND IN ORDER TO ITERATE IN LATER FUNCTIONS
         b3TotalRowCount = worksheet.sheet_data.rows.size - 1
-
-        # **FINAL RESULT** SAVE TOTALMEMBERS COUNT - STORED INTO RESULT IN BAND OBJECT
-        totalMembersCount(band, worksheet, band.bandNum, b3TotalRowCount)
+        puts "b3TotalRowCount: #{b3TotalRowCount}"
 
         # **FINAL RESULT** SAVE NRUPERCENTAGE - STORED INTO RESULT IN BAND OBJECT
-        nruPercentage()
+        nruPercentage(band)
+        puts "band.nruPercentage: #{band.nruPercentage}"
 
         # **FINAL RESULT** SAVE COACHESCOUNT (USED IN B3 AND FINAL RESULT GRAPH) - STORED INTO RESULT IN BAND OBJECT
-        coachesCount(band, worksheet, b3RowCount, adminsList, band.bandNum)
+        coachesCount(band, worksheet, b3TotalRowCount, adminsArray, band.bandNum)
+        puts "band.coachesCount: #{band.coachesCount}"
 
         # **FINAL RESULT** totalLeadersCount - STORED INTO RESULT IN BAND OBJECT
-        totalLeaderCount(band, worksheet, b3RowCount, adminsList, band.datesArray)
+        totalLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray, band.bandNum)
 
         # **FINAL RESULT** newLeaderCount - STORED INTO RESULT IN BAND OBJECT
-        newLeaderCount(band, worksheet, b3RowCount, adminsList, band.datesArray)
+        newLeaderCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray)
 
         # **FINAL RESULT** new_GBL_LeaderCount - STORED INTO RESULT IN BAND OBJECT
-        newGblCount(band, worksheet, b3RowCount, adminsList, band.datesArray)
+        newGblCount(band, worksheet, b3TotalRowCount, adminsArray, band.datesArray)
 
         # **FINAL RESULT** newLeaderAvg - STORED INTO RESULT IN BAND OBJECT
         newLeaderAvg(band.coachesCount, band.newLeaderCount)
