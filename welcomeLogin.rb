@@ -112,7 +112,7 @@ def userName()
         end
     end
 end
-
+=begin
 # PASSWORD
 def pwd()
     pwd_check = ""
@@ -147,3 +147,4 @@ def pwd()
         end
     end
 end
+=end

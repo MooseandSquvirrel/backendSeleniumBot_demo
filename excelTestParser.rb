@@ -189,7 +189,7 @@ end
         helloMessage()
         usrNumber = textMessage()
         userName()
-        pwd()
+        #### pwd()                   ##############################################
         eventTitleCounter = 0
         bandsArray = []
         loop do 
