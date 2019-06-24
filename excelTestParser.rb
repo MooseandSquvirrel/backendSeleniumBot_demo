@@ -46,6 +46,8 @@ require './driverLogin.rb'
 ####################################
 require './b7_1Driver.rb'
 ####################################
+require './b7_2Driver.rb'
+####################################
 
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
@@ -189,7 +191,8 @@ end
         helloMessage()
         usrNumber = textMessage()
         userName()
-        #### pwd()                   ##############################################
+        # COMMENT OUT PWD() TO LET TEST SCRIPT WORK
+        #pwd()                   ##############################################
         eventTitleCounter = 0
         bandsArray = []
         loop do 
@@ -221,7 +224,7 @@ end
         bandsLength = bandsArray.length
         puts "bandsArray:"
         ap bandsArray
-        puts "bands in Array (bandsArrayLength):"
+        puts "bands in Array (bandsArrayLength):"                                        #########################################
         puts bandsLength
         puts "eventNumsArray Test:"
         ap eventNumsArray
@@ -231,8 +234,8 @@ end
 
         # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
         dates(bandsArray)
-=begin
-        navigate($_userNameVar)
+=begin # Comment out to b3 below
+        navigate($_userNameVar)                                                             ########################################
         sleep (7) ###"CHANGE THIS TO form = wait.until"
 =end
 
@@ -242,7 +245,7 @@ end
         clickit()
         alert_clickit()
 
-
+=begin
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         b3(eventNumsArray, bandsLength)
@@ -264,7 +267,7 @@ end
 =begin
         storeTable($_browser)
         p $_table
-
+                                                                                     ################################################
         ap $_files_href
         checkTableDownload(bandsArray)
         downloadFile($_browser, $_files_href)
@@ -287,6 +290,8 @@ end
 =end
         b3Parse(eventNumsArray, bandsArray)
         # need the remove TEMP for b3 here
+
+        b7_2Driver(bandsArray)
 
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"

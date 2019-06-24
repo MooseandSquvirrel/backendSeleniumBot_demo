@@ -255,12 +255,15 @@ class Band
     # FOR ARRAY OF DATES TO INCLUDE OR EXCLUDE WHILE PARSING EACH B7/B3
     attr_accessor :datesArray
 
+    # FOR NEW BAND NUMBERS FROM THE NEW BANDS CREATING DURING EVENT FOR B7-2 DRIVE/PARSE.RB
+    attr_accessor :newBandNumbsb7_2
+
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "                                                           Result Variables for B7.1, B3, A2, and B7.2"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         
-    attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderAvg, :newGblCount, 
-        :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg
+    attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderPerc, :newGblCount, 
+        :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount
 
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"

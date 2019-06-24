@@ -14,6 +14,8 @@ require './adminsList.rb'
 ############################
 require './datesSection.rb' 
 ############################
+require './stringToArrayCsv.rb'
+############################
 
 
 # CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_B7)
@@ -27,7 +29,40 @@ def mvDirB7()
     puts Dir.pwd
 end
 
-def parser(bandNumber, band, worksheet)
+def adminCounter(bandNumber, band, worksheet)
+    adminNumbArray = adminNumbers()
+    # COLLECTS ADMINS FOR MATH
+    index = 1
+    totalMemberCounter = 0
+    nruCounter = 0
+    adminCounter = 0
+    counter = 0
+    while counter < worksheet.sheet_data.rows.size - 1
+        puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
+        cellDate = worksheet.sheet_data[index][3].value
+        lastCell = worksheet.sheet_data[index][7].value
+        userNum = worksheet.sheet_data[index][1].value
+        # IF USER ENTERED BANDNUMBER MATCHES BAND NUMBER FIRST ROW (IDENTIFY CORRECT BAND TO PARSE IN DOCUMENT)
+        if bandNumber == worksheet.sheet_data[index][0].value
+            totalMemberCounter += 1
+            # COULD EVENTUALLY INCLUDE BANDS SHARED ACCOUNT USERNUMS IN userNum ARRAY INSIDE stringToArrayCsv.rb ARRAY
+            if adminNumbArray.include?("#{userNum}")
+                adminCounter += 1
+            # IF USER ENTERED BANDNUMBER MATCHES THE 'DATE JOINED BAND' LASTCELL AND ALSO IN THE DATE RANGE OF EVENT -  MEANS PERSON IS NRU
+            elsif bandNumber == lastCell && band.datesArray.include?("#{cellDate}")
+                nruCounter += 1
+            end
+            index += 1
+        else
+            index += 1
+        end
+        counter += 1
+    end
+    return adminCounter
+end
+
+
+def parser(bandNumber, band, worksheet, adminCount)
     # CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
     index = 1
     totalMemberCounter = 0
@@ -52,6 +87,7 @@ def parser(bandNumber, band, worksheet)
     end
     # **FINAL RESULT** SAVE ROWCOUNT FOR MATH OF TOTAL MEMBERS -- subtract 1 FOR TITLE ROW AT INDEX[0] -- to_f FOR DIVISION PURPOSES LATER
     band.totalMemberCount = (totalMemberCounter).to_f
+    band.testCoachesCount = (totalMemberCounter - adminCount)
     # **FINAL RESULT** SAVE NRU COUNT INTO BAND OBJ EVENT
     band.nruCount = nruCounter.to_f
 
@@ -63,8 +99,9 @@ def resultsB7(eventName, band, worksheet)
     puts "==============================================================================================="
     puts "Results of first B7 (#{eventName}):"
     puts "-----------------------------------"
-    puts "nruCount: #{band.nruCount}"
     puts "totalMemberCount: #{band.totalMemberCount}"
+    puts "coachesCount: #{band.coachesCount}"
+    puts "nruCount: #{band.nruCount}"
     puts "-----------------------------------"
     puts "==============================================================================================="
 end
@@ -101,7 +138,9 @@ def b71Parse(eventNumsArray, bandsArraywDates)
 
         bandNumber = eventNumsArray[bandNum]
 
-        parser(bandNumber, band, worksheet)
+        adminCount = adminCounter(bandNumber, band, worksheet)
+
+        parser(bandNumber, band, worksheet, adminCount)
 
         #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsB7(band.eventName, band, worksheet)
