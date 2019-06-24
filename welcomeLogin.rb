@@ -112,13 +112,14 @@ def userName()
         end
     end
 end
-=begin
+# =begin
 # PASSWORD
 def pwd()
     pwd_check = ""
     while pwd_check != 'y' || pwd_check != "exit"
         print "Enter backend password -- TEXT WILL BE INVISIBLE, AFTER TYPING PASSWORD HIT ENTER TWICE:\n"
-        pwd = STDIN.noecho(&:gets).chomp
+        # pwd = STDIN.noecho(&:gets).chomp   #### Delete below line of code and UNDO Commented out code WHEN TESTING FINISHED TO HIDE PASSWORD ON COMMANDLINE
+        pwd = gets.strip
         if pwd == 'exit'
             return
         end
@@ -147,4 +148,4 @@ def pwd()
         end
     end
 end
-=end
+# =end

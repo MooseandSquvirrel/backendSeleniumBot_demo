@@ -51,8 +51,8 @@ require './b7_2Driver.rb'
 
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
-def getEventNumsArray(bandsArray)
-    eventNumsArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+def getEventNamesArray(bandsArray)
+    eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
 end
 
 def loadingMessage()
@@ -82,10 +82,10 @@ end
 startDate = "12122019"
 endDate = "12152019"
 
-def a2(eventNumsArray, bandsLength, startDate, endDate)
-    bandsNumArray = eventNumsArray
+def a2(eventNamesArray, bandsLength, startDate, endDate)
+    bandsNumArray = eventNamesArray
 
-    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
+    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNamesArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
     # bandsNumArray = bandsArray.collect {|x| x.bandNum}
 
     bandNameCounter = 0
@@ -192,7 +192,7 @@ end
         usrNumber = textMessage()
         userName()
         # COMMENT OUT PWD() TO LET TEST SCRIPT WORK
-        #pwd()                   ##############################################
+        pwd()                   ##############################################
         eventTitleCounter = 0
         bandsArray = []
         loop do 
@@ -216,9 +216,9 @@ end
             end
         end
     
-        # CALLING eventNumsArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNumsArray
-        eventNumsArray = []
-        eventNumsArray = getEventNumsArray(bandsArray)
+        # CALLING eventNamesArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNamesArray
+        eventNamesArray = []
+        eventNamesArray = getEventNamesArray(bandsArray)
 
 =begin
         bandsLength = bandsArray.length
@@ -226,29 +226,29 @@ end
         ap bandsArray
         puts "bands in Array (bandsArrayLength):"                                        #########################################
         puts bandsLength
-        puts "eventNumsArray Test:"
-        ap eventNumsArray
+        puts "eventNamesArray Test:"
+        ap eventNamesArray
 =end
 
         loadingMessage()
 
         # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
         dates(bandsArray)
-=begin # Comment out to b3 below
+# =begin # Comment out to b3 below
         navigate($_userNameVar)                                                             ########################################
         sleep (7) ###"CHANGE THIS TO form = wait.until"
-=end
+# =end
 
 =begin
         "-------------------- b7_1Driver -----------------------" # MAKE THIS A FUNCTION?
-        b7_1Driver(eventNumsArray, bandsLength)
+        b7_1Driver(eventNamesArray, bandsLength)
         clickit()
         alert_clickit()
 
 =begin
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
-        b3(eventNumsArray, bandsLength)
+        b3(eventNamesArray, bandsLength)
         clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
         alert_clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
 =end
@@ -259,7 +259,7 @@ end
         # TEST INPUT FOR DATES -- DELETE LATER
         startDate = "12122019"
         endDate = "12152019"
-        a2(eventNumsArray, bandsLength, startDate, endDate)
+        a2(eventNamesArray, bandsLength, startDate, endDate)
 
         "RELOAD 2UNTIL DOWNLOADABLE"
 =end
@@ -276,9 +276,9 @@ end
         tempB7Dir()
 =begin
         grabXlsxB71()
-=end
 
-        b71Parse(eventNumsArray, bandsArray)
+=end
+        b71Parse(eventNamesArray, bandsArray)
         # removeTEMPB7()
         puts "Check for event.Bands results being set:"
         ap bandsArray
@@ -288,10 +288,10 @@ end
 =begin
         grabXlsxB3()
 =end
-        b3Parse(eventNumsArray, bandsArray)
+        b3Parse(eventNamesArray, bandsArray)
         # need the remove TEMP for b3 here
 
-        b7_2Driver(bandsArray)
+        b7_2Driver(eventNamesArray, bandsArray)
 
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"

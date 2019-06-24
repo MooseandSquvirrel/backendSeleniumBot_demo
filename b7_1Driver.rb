@@ -2,15 +2,15 @@
 "                                  Function Entering Bands for First B7                                  "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-def b7_1Driver(eventNumsArray, bandsLength)
-    bandsNumArray = eventNumsArray
+def b7_1Driver(eventNamesArray, bandsLength)
+    bandsNamesArray = eventNamesArray
 
-    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
-    # bandsNumArray = bandsArray.collect {|x| x.bandNum}
+    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNamesArray)))
+    # bandsNamesArray = bandsArray.collect {|x| x.bandNum}
 
     bandNameCounter = 0
     # until bandNameCounter == bandsLength
-        bandsNumArray[bandNameCounter]
+        bandsNamesArray[bandNameCounter]
         # STORING ALL FUNCTION OPTIONS AND SELECTING B7
         # INTERACTING WITH DROPDOWN BOX
         select_list = $_wait.until {
@@ -43,7 +43,7 @@ def b7_1Driver(eventNumsArray, bandsLength)
             element if element.displayed?
         }
         until bandNameCounter == bandsLength
-            $_form.send_keys("#{bandsNumArray[bandNameCounter]}\n")
+            $_form.send_keys("#{bandsNamesArray[bandNameCounter]}\n")
             bandNameCounter += 1
         end
         sleep(2)

@@ -2,16 +2,28 @@
 "                                  Function Entering Bands for Second B7                                 "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
-def b7_2Driver()
-    bandsNumArray = band.newBandNumbsb7_2
-    bandsLength = band.newBandNumbsb7_2.bandsLength
-    ap bandsNumArray
+def b7_2Driver(eventNamesArray, bandsArray)
+    
+    # COUNTER FOR INNER LOOP OF NESTED UNTIL LOOP BELOW TO REACH ALL NEW BAND NUMBERS FROM GBLS INSIDE EACH EVENT IN EVENT ARRAY
+    ap bandsArray
+    #### bandsLength = bandsArray.newBandNumbsb7_2.length #this might not be necessary if collect works
 
-    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNumsArray ((JUST STORED THAT ARRAY INTO bandsNumArray)))
-    # bandsNumArray = bandsArray.collect {|x| x.bandNum}
+
+
+    "I need a counter for conditional of until/while loop for how long the new numbs array is inside each event AND counter for events array itself"
+    "question is how to double loop to get all newbands in each event"
+
+    #eventNewBandsArrayLength = band.newBandNumbsb7_2.bandsLength
+    ap bandsArray
+
+    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNamesArray ((JUST STORED THAT ARRAY INTO bandsArray)))
+    bandsInnerArray = bandsArray.collect {|x| x.newBandNumbsb7_2}
+    puts "bandsInnerArray: 88888888888888888888888888888888888888888888888888888888888888888"
+    ap bandsInnerArray
 
     bandNameCounter = 0
-    bandsNumArray[bandNameCounter]
+    bandsArray[bandNameCounter]
+
     # STORING ALL FUNCTION OPTIONS AND SELECTING B7
     # INTERACTING WITH DROPDOWN BOX
     select_list = $_wait.until {
@@ -44,13 +56,34 @@ def b7_2Driver()
         element if element.displayed?
     }
     # NESTED LOOP TO ACCOUNT FOR ALL THE NEW BAND NUMBS ARRAYS IN EACH EVENT IN THE EVENT ARRAY
-    until eventNumsArray == eventNumsArrayLength
-        until bandNameCounter == bandsLength
-            $_form.send_keys("#{bandsNumArray[bandNameCounter]}\n")
-            bandNameCounter += 1
+    # i = 0
+    # j = 0
+    # eventNameCounter = 0
+    # until i == eventNamesArray.length
+    #     until bandNumbCounter == bandsLength
+    #         $_form.send_keys("#{bandsArray[eventNameCounter].newBandNumbsb7_2[bandNumbCounter]}\n")
+    #         bandNumCounter += 1
+    #     end
+    #     eventNameCounter += 1
+    #     i += 1
+    # end
+
+    i = 0
+    j = 0
+    lengthCounter = bandsInnerArray.length
+    eventNameCounter = 1
+        bandsInnerArray.each do |bandNum|
+            bandNum = bandNum.join(",")
+            if eventNameCounter < lengthCounter
+                $_form.send_keys("#{bandNum}, ")
+            else
+                $_form.send_keys("#{bandNum} ")
+            end
+            eventNameCounter += 1
+            puts "bandNum: #{bandNum}"
         end
-    end
-    sleep(2)
+        puts "bandArray: #{bandsArray}"
+    sleep(10)
 
     puts "Good"
 end
