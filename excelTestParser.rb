@@ -48,6 +48,10 @@ require './b7_1Driver.rb'
 ####################################
 require './b7_2Driver.rb'
 ####################################
+require './grabXlsxB7_2.rb'
+####################################
+require './b7_2Parse.rb'
+####################################
 
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
@@ -234,10 +238,10 @@ end
 
         # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
         dates(bandsArray)
-# =begin # Comment out to b3 below
+=begin # Comment out to b3 below
         navigate($_userNameVar)                                                             ########################################
         sleep (7) ###"CHANGE THIS TO form = wait.until"
-# =end
+=end
 
 =begin
         "-------------------- b7_1Driver -----------------------" # MAKE THIS A FUNCTION?
@@ -279,19 +283,46 @@ end
 
 =end
         b71Parse(eventNamesArray, bandsArray)
-        # removeTEMPB7()
         puts "Check for event.Bands results being set:"
         ap bandsArray
         
-
+        puts "B71Parsed"
         tempB3Dir()
+        puts "tempB3Dir"
 =begin
         grabXlsxB3()
 =end
         b3Parse(eventNamesArray, bandsArray)
+        puts "b3Parse"
         # need the remove TEMP for b3 here
 
+        # MIGHT NEED navigate() here to find proper page or switch to iframe
+
+        # test below b72 drive and wait and download after checking parsing working
+=begin
         b7_2Driver(eventNamesArray, bandsArray)
+        clickit()
+        alert_clickit()
+
+        storeTable($_browser)
+        p $_table
+        ap $_files_href
+        checkTableDownload(bandsArray)
+        downloadFile($_browser, $_files_href)
+
+        tempB7_2Dir()
+
+        grabXlsxB72()
+=end 
+        # remove below and change to grabXlsxB7_2 (which includes TempB7_2
+        tempB7_2Dir()
+        b7_2Parse(eventNamesArray, bandsArray)
+
+        # CLEAN/CLEAR OUT DIRECTORIES AND THEIR FILES
+        # removeTEMPB7()
+        # removeTEMPB3()
+        # removeTEMPB7_2()
+
 
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"

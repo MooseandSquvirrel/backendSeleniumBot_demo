@@ -18,7 +18,7 @@ def b7_2Driver(eventNamesArray, bandsArray)
 
     # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNamesArray ((JUST STORED THAT ARRAY INTO bandsArray)))
     bandsInnerArray = bandsArray.collect {|x| x.newBandNumbsb7_2}
-    puts "bandsInnerArray: 88888888888888888888888888888888888888888888888888888888888888888"
+    puts "bandsInnerArray:"
     ap bandsInnerArray
 
     bandNameCounter = 0
@@ -68,8 +68,6 @@ def b7_2Driver(eventNamesArray, bandsArray)
     #     i += 1
     # end
 
-    i = 0
-    j = 0
     lengthCounter = bandsInnerArray.length
     eventNameCounter = 1
         bandsInnerArray.each do |bandNum|
@@ -83,9 +81,8 @@ def b7_2Driver(eventNamesArray, bandsArray)
             puts "bandNum: #{bandNum}"
         end
         puts "bandArray: #{bandsArray}"
-    sleep(10)
-
-    puts "Good"
+    sleep(2)
+    puts "New Band Numbers entered into b7-2 text field for submission..."
 end
   
 def clickit()
