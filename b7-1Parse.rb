@@ -29,7 +29,7 @@ def mvDirB7()
     puts Dir.pwd
 end
 
-def adminCounter(bandNumber, band, worksheet)
+def adminCounterb71(bandNumber, band, worksheet)
     adminNumbArray = adminNumbers()
     # COLLECTS ADMINS FOR MATH
     index = 1
@@ -58,6 +58,7 @@ def adminCounter(bandNumber, band, worksheet)
         end
         counter += 1
     end
+    band.adminCount = adminCounter
     return adminCounter
 end
 
@@ -138,7 +139,7 @@ def b71Parse(eventNumsArray, bandsArraywDates)
 
         bandNumber = eventNumsArray[bandNum]
 
-        adminCount = adminCounter(bandNumber, band, worksheet)
+        adminCount = adminCounterb71(bandNumber, band, worksheet)
 
         parserb71(bandNumber, band, worksheet, adminCount)
 

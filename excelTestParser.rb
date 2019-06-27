@@ -52,7 +52,8 @@ require './grabXlsxB7_2.rb'
 ####################################
 require './b7_2Parse.rb'
 ####################################
-
+require './writer2.rb'
+####################################
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
 def getEventNamesArray(bandsArray)
@@ -324,6 +325,7 @@ end
         # removeTEMPB3()
         # removeTEMPB7_2()
 
+        writer2(bandsArray)
 
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"

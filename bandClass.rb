@@ -258,12 +258,15 @@ class Band
     # FOR NEW BAND NUMBERS FROM THE NEW BANDS CREATING DURING EVENT FOR B7-2 DRIVE/PARSE.RB
     attr_accessor :newBandNumbsb7_2
 
+    # FOR HOLDING THE adminsCount FOR SUBTRACTING FROM VARIABLES IN THE LATER PARSING
+    attr_accessor :adminCount
+
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "                                                           Result Variables for B7.1, B3, A2, and B7.2"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
         
     attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderPerc, :newGblCount, 
-        :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount
+        :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount, :newGblPerc
 
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"

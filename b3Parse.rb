@@ -214,6 +214,12 @@ def newLeaderPerc(band, coachesCount, newLeaderCount)
     band.newLeaderPerc = newLeaderPerc
 end
 
+# NEW GBL PERC FUNCTION
+def newGblPerc(band)
+    newGblPerc = "#{((band.newGblCount / band.newLeaderCount).round(2) * 100)}%"
+    band.newGblPerc = newGblPerc
+end
+
 # EXTRANEOUS PRINT STATEMENT TO SHOW RESULTS OF B3 LOOP (PER EVENT)
 def resultsB3(band, eventName)
 
@@ -227,6 +233,7 @@ def resultsB3(band, eventName)
     puts "newLeaderCount: #{band.newLeaderCount}"
     puts "newGblCount: #{band.newGblCount}"
     puts "newLeaderPerc: #{band.newLeaderPerc}%"
+    puts "newGblPerc: #{band.newGblPerc}%"
     puts "==============================================================================================="
 end
 
