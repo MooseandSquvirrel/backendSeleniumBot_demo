@@ -35,7 +35,7 @@ def adminCounter(bandNumber, band, worksheet)
     index = 1
     totalMemberCounter = 0
     nruCounter = 0
-    adminCounter = 0
+    adminNumbs = 0
     counter = 0
     while counter < worksheet.sheet_data.rows.size - 1
         puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
@@ -47,7 +47,7 @@ def adminCounter(bandNumber, band, worksheet)
             totalMemberCounter += 1
             # COULD EVENTUALLY INCLUDE BANDS SHARED ACCOUNT USERNUMS IN userNum ARRAY INSIDE stringToArrayCsv.rb ARRAY
             if adminNumbArray.include?("#{userNum}")
-                adminCounter += 1
+                adminNumbs += 1
             # IF USER ENTERED BANDNUMBER MATCHES THE 'DATE JOINED BAND' LASTCELL AND ALSO IN THE DATE RANGE OF EVENT -  MEANS PERSON IS NRU
             elsif bandNumber == lastCell && band.datesArray.include?("#{cellDate}")
                 nruCounter += 1
@@ -58,22 +58,25 @@ def adminCounter(bandNumber, band, worksheet)
         end
         counter += 1
     end
-    return adminCounter
+    return adminNumbs
 end
 
 
-def parser(bandNumber, band, worksheet, adminCount)
+def parserb72(bandNumber, band, worksheet, adminNumbs)
     # CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
+    puts"\n\n\n\n"
+    puts "bandNumber: #{bandNumber}"
+    puts"\n\n\n\n"
+
     index = 1
     totalMemberCounter = 0
     nruCounter = 0
+    gblNru = 0
     counter = 0
-    cellDate = worksheet.sheet_data[index][3].value
+    cellOriginalBandNum = worksheet.sheet_data[index][7].value
     while counter < worksheet.sheet_data.rows.size - 1
-        # puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
-        cellDate = worksheet.sheet_data[index][3].value
         # IF USER ENTERED BANDNUMBER MATCHES THE 'DATE JOINED BAND' LASTCELL AND ALSO IN THE DATE RANGE OF EVENT -  MEANS PERSON IS NRU
-        if band.datesArray.include?("#{cellDate}")
+        if cellOriginalBandNum == worksheet.sheet_data[index][0].value
             nruCounter += 1
             index += 1
         else
@@ -82,8 +85,13 @@ def parser(bandNumber, band, worksheet, adminCount)
         counter += 1
     end
 
+    puts "nruCounter for b7_2 parse: #{nruCounter}"
+    puts "adminNumbs subtracted from nruCounter (to equal band.gblNru): #{adminNumbs}"
+    puts "gblNru: #{gblNru}"
     # **FINAL RESULT** gblNru, nruPerGbl, totalNru
-    band.gblNru = nruCounter.to_f
+    gblNru = (nruCounter - adminNumbs).to_f
+    puts "gblNru: #{gblNru}"
+    band.gblNru = gblNru
     puts "band.newGblCount: #{band.newGblCount}"
     band.nruPerGbl = (nruCounter / band.newGblCount)
     band.totalNru = (band.nruCount + nruCounter).to_f
@@ -124,19 +132,21 @@ def b7_2Parse(eventNumsArray, bandsArraywDates)
     workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
     worksheet = workbookB7first[0]
     cellBandNumArray = []
-    index = 0
+    index = 1
     while index < worksheet.sheet_data.rows.size - 1
-        cellBandNum = worksheet.sheet_data[index][0]
+        cellBandNum = worksheet.sheet_data[index][0].value
         cellBandNumArray << cellBandNum
         index += 1
     end
     gblBandNumArray = cellBandNumArray.uniq
     gblbandNumArrayLength = gblBandNumArray.length
 
+    # 
+    adminNumbs = adminCounter(bandNumber, band, worksheet)
+
     i = 1
     bandNum = 0
-    while i < worksheet.sheet_data.rows.size - 1
-        puts "gblbandNumArrayLength = #{gblbandNumArrayLength}"
+    while i < eventNumsArray.length
 
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
 
@@ -146,17 +156,20 @@ def b7_2Parse(eventNumsArray, bandsArraywDates)
         #  ASSIGNS BAND OBJECT FROM ARRAY
         band = bandsArraywDates[i]
 
+=begin
+        # ASSIGNING GBLS FROM ARRAY OF GBLS ONE AT A TIME
+        bandNumber = gblBandNumArray[bandNum]
+=end
+        # ASSIGNING GBLS FROM ARRAY OF GBLS ONE AT A TIME
         bandNumber = gblBandNumArray[bandNum]
 
-        adminCount = adminCounter(bandNumber, band, worksheet)
-
-        parser(bandNumber, band, worksheet, adminCount)
+        parserb72(bandNumber, band, worksheet, adminNumbs)
 
         #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsB7_2(band.eventName, band, worksheet)
     
-        i += 1
-        bandNum += 1
+        i += 1 
+        bandNum += 1 
     end
 end
 
@@ -207,9 +220,9 @@ def b7_2Parse(eventNumsArray, bandsArraywDates)
 
         bandNumber = gblBandNumArray[bandNum]
 
-        adminCount = adminCounter(bandNumber, band, worksheet)
+        adminNumbs = adminCounter(bandNumber, band, worksheet)
 
-        parser(bandNumber, band, worksheet, adminCount)
+        parser(bandNumber, band, worksheet, adminNumbs)
 
         #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsB7_2(band.eventName, band, worksheet)

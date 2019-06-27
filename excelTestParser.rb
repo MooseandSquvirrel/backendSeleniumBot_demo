@@ -316,8 +316,9 @@ end
 =end 
         # remove below and change to grabXlsxB7_2 (which includes TempB7_2
         tempB7_2Dir()
+        ap bandsArray
         b7_2Parse(eventNamesArray, bandsArray)
-
+        ap bandsArray
         # CLEAN/CLEAR OUT DIRECTORIES AND THEIR FILES
         # removeTEMPB7()
         # removeTEMPB3()
