@@ -39,7 +39,8 @@ def finalResultsDir()
 end
 
 def mvFinalRes()
-    Dir.glob("*Band*.xlsx") {|file|
+    puts "mvFinalRes function."
+    Dir.glob("*Worksheet*.xlsx") {|file|
         if file
             puts "Moving file '#{file}' into Final_Results Directory on Desktop..."
             temp_data_path = '~/Desktop/Final_Results'
@@ -55,75 +56,80 @@ def writer2(bandsArray)
     # EQUALS LENGTH OF ARRAY
     bandsLength = bandsArray.length
 
-    bandsArrayCounter = 0
+  
+    workbookFinal = RubyXL::Workbook.new
+    worksheet = workbookFinal[0]
 
-    # LOOP UNTIL ALL BANDS IN bandsArray HAVE BEEN WRITTEN IN SEPERATE DOCUMENTS (CHANGE NAME FOR EACH AND SPECIFY NEW DIRECTORY)
-    until bandsArrayCounter > bandsLength
-
-        puts "bandsArray:"
-        ap bandsArray
-        band = bandsArray[bandsArrayCounter]
-        ap "band: #{band}"
-        
-        workbookFinal = RubyXL::Workbook.new
-        worksheet = workbookFinal[0]
-
-        worksheet.insert_row(0)
-        worksheet.insert_row(1)
-
-        titlesArray = Array.new
+    worksheet.insert_row(0)
+    # TITLE ROW CELL FILLING
+    i = 0
+    while i < 15
+        titlesArray = []
         titlesArray = ["Summer Camp", "Brand", "Camp Date", "Band", "Total Members", "Coaches(Non-Admins", "NRUs", "NRU%", "Total Leaders", "New Leaders", "New Leaders %", "New GBLs", "New GBL %", "GBL NRUs", "NRUS per GBL", "Total NRUs", "Activity Sum", "Unique Users w/ Activity", "Sum/Total Member", "Unique/Member"]
+
+        worksheet.add_cell(0, i, "#{titlesArray[i]}")
+        worksheet.change_column_width(i, 25)
+        worksheet.change_row_height(0, 40)  # Sets first row height to 30
+        # worksheet[0][i].change_font_bold(true)
+        worksheet.change_column_font_name(i, 'Calibri')
+        worksheet.change_column_font_size(i, 14)
+        worksheet.sheet_data[0][i].change_font_bold(true)        # HOZONTALLY CENTERS TEXT
+        worksheet.sheet_data[0][i].change_horizontal_alignment('center')
+        # VERTICALLY CENTERS TEXT
+        worksheet.change_row_vertical_alignment(0, 'distributed')
+        # TITLE ROW BOTTOM UNDERLINE
+        worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
+        worksheet.change_row_border_color(0, :bottom, 'ed553b')
+        # FILL TITLE ROW WITH GREY
+        worksheet.change_row_fill(0, '00FF00')   
+        i += 1
+    end
+
+    bandsArrayCounter = 0
+    row = 1
+    # LOOP UNTIL ALL BANDS IN bandsArray HAVE BEEN WRITTEN IN DOCUMENT 
+    until bandsArrayCounter == bandsLength
+        worksheet.insert_row(row)
+        band = bandsArray[bandsArrayCounter]
+        "inside UNTIL LOOP IN WRITER band 'ap' :"
+        ap band
+
+        contentArray = []
         contentArray = [band.eventName, band.brandName, band.campDates, band.bandNum, band.totalMemberCount, band.coachesCount, band.nruCount, band.nruPercentage, band.totalLeaderCount, band.newLeaderCount, band.newLeaderPerc, band.newGblCount, band.newGblPerc, band.gblNru, band.nruPerGbl, band.totalNru]
         i = 0
         index = 0
 
-        # TITLE ROW CELL FILLING
-        i = 0
-        while i < 15
-            worksheet.add_cell(0, i, "#{titlesArray[i]}")
-            worksheet.change_column_width(i, 25)
-            worksheet.change_row_height(0, 40)  # Sets first row height to 30
-            # worksheet[0][i].change_font_bold(true)
-            worksheet.change_column_font_name(i, 'Calibri')
-            worksheet.change_column_font_size(i, 14)
-            # HOZONTALLY CENTERS TEXT
-            worksheet.sheet_data[0][i].change_horizontal_alignment('center')
-            # VERTICALLY CENTERS TEXT
-            worksheet.change_row_vertical_alignment(0, 'distributed')
-            # TITLE ROW BOTTOM UNDERLINE
-            worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
-            worksheet.change_row_border_color(0, :bottom, 'ed553b')
-            # FILL TITLE ROW WITH GREY
-            worksheet.change_row_fill(0, 'dcdcdc')   
-            i += 1
-        end
-
         # DATA ROW FILING
         i = 0
-        j = 0
         while i < 15
             # worksheet.add_cell(0, i, "#{bandArray[i][j]}")
-            worksheet.add_cell(1, i, "#{contentArray[i]}")
+            worksheet.add_cell(row, i, "#{contentArray[i]}")
             worksheet.change_column_width(i, 25)
-            worksheet.change_row_height(1, 40)  # Sets first row height to 30
+            worksheet.change_row_height(row, 40)  # Sets first row height to 30
             # worksheet[0][i].change_font_bold(true)
             worksheet.change_column_font_name(i, 'Calibri')
             worksheet.change_column_font_size(i, 14)
             # HOZONTALLY CENTERS TEXT
-            worksheet.sheet_data[1][i].change_horizontal_alignment('center')
+            worksheet.sheet_data[row][i].change_horizontal_alignment('center')
             # VERTICALLY CENTERS TEXT
-            worksheet.change_row_vertical_alignment(1, 'distributed')
+            worksheet.change_row_vertical_alignment(row, 'distributed')
             # TITLE ROW BOTTOM UNDERLINE
             worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
-            worksheet.change_row_border_color(1, :bottom, 'ed553b')
-            # FILL TITLE ROW WITH GREY
-            worksheet.change_row_fill(1, 'dcdcdc')   
+            worksheet.change_row_border_color(row, :bottom, 'ed553b')
+            # FILL ROW WITH WHITE
+            if row.even?
+                worksheet.change_row_fill(row, 'D3D3D3')
+            else
+                worksheet.change_row_fill(row, 'ffffff')
+            end
             i += 1
         end
-    
-        workbookFinal.write("#{bandsArray[bandsArrayCounter]}.xlsx")
-        mvFinalRes()
-
+        puts "EXIT LOOP Row #{row}"
+        row += 1
+        puts "Row NOW #{row}"
         bandsArrayCounter += 1
     end
+    workbookFinal.write("#{worksheet}.xlsx")
+    puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
+    mvFinalRes()
 end

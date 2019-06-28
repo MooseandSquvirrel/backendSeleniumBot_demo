@@ -268,6 +268,7 @@ class Band
     attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderPerc, :newGblCount, 
         :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount, :newGblPerc
 
+    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ 
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
