@@ -69,7 +69,7 @@ def getEventNamesArray(bandsArray)
 end
 
 "OK TO REMOVE SECONDS IF THIS ISN'T MATCHING CELL ON TABLE, MINUTES IS ENOUGH TO MATCH FOR THIS."
-def timestamp(bandsArray)
+def timestampB71(bandsArray)
     band = bandsArray[0]
     # MINUS 8 FOR SOUTH KOREA TIME ZONE
     minutes1 = Time.now.strftime '%M'
@@ -78,8 +78,34 @@ def timestamp(bandsArray)
     puts "minutes2 #{minutes2}"
     tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
     puts "tmpHours : #{tmpHours}"
-    band.hoursMinutes2 = "#{tmpHours}:#{minutes2}"
-    hoursMinutes1 = "#{tmpHours}:#{minutes1}"
+    band.hoursMinutesB71_backUp = "#{tmpHours}:#{minutes2}"
+    hoursMinutesB71 = "#{tmpHours}:#{minutes1}"
+end
+
+def timestampB3(bandsArray)
+    band = bandsArray[0]
+    # MINUS 8 FOR SOUTH KOREA TIME ZONE
+    minutes1 = Time.now.strftime '%M'
+    puts "minutes1 #{minutes1}"
+    minutes2 = ((minutes1.to_i) + 1).to_s
+    puts "minutes2 #{minutes2}"
+    tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
+    puts "tmpHours : #{tmpHours}"
+    band.hoursMinutesB3_backUp = "#{tmpHours}:#{minutes2}"
+    hoursMinutesB3 = "#{tmpHours}:#{minutes1}"
+end
+
+def timestampA2(bandsArray)
+    band = bandsArray[0]
+    # MINUS 8 FOR SOUTH KOREA TIME ZONE
+    minutes1 = Time.now.strftime '%M'
+    puts "minutes1 #{minutes1}"
+    minutes2 = ((minutes1.to_i) + 1).to_s
+    puts "minutes2 #{minutes2}"
+    tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
+    puts "tmpHours : #{tmpHours}"
+    band.hoursMinutesA2_backUp = "#{tmpHours}:#{minutes2}"
+    hoursMinutesA2 = "#{tmpHours}:#{minutes1}"
 end
 
 def loadingMessage()
@@ -152,20 +178,19 @@ end
 "TIMESTAMP CELL INTEGRATION NEEDED FOR THIS INITIAL DOWNLOADPRODUCTIONFILE.RB WITH TIMESTAMPS FOR EACH B7/B3/A2 (SO EACHTIME NEW EVENT ANALYSIS IS DONE 
 ON THE SAME DAY FOR OTHER EVENTS WITH DIFFERENT DATES OF EVENT, IT WON'T DONWLOAD SAME XLSX FILES."
 
-
+        initialCellTimeStampArray = []
 
         "-------------------- b7_1Driver -----------------------" # MAKE THIS A FUNCTION?
         b7_1Driver(eventNamesArray, bandsLength)
         clickit()
-        initialCellTimeStamp = timestamp(bandsArray)
+        initialCellTimeStampArray << timestampB71(bandsArray)
         alert_clickit()
-        puts "\n\n\n\n\n\n\n\n initialCellTimeStamp: #{initialCellTimeStamp}"
-
-=begin 
+       
         "-------------------- b3 -------------------------" # MAKE THIS A FUNCTION?
         "MIGHT NEED TO navigate() (SLIGHTLY ALTERED NAVIGATE) TO iFrame FOR THIS TO BE ABLE TO WORK"
         b3(eventNamesArray, bandsLength)
         clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
+        initialCellTimeStampArray << timestampB3(bandsArray)
         alert_clickit() # "CHANGE THIS TO INCLUDE NEW DATA"
 
         "==================== a2 =========================" # MAKE THIS A FUNCTION?
@@ -176,15 +201,17 @@ ON THE SAME DAY FOR OTHER EVENTS WITH DIFFERENT DATES OF EVENT, IT WON'T DONWLOA
 
         a2_Driver(eventNamesArray, bandsLength, band)
         clickit()
+        initialCellTimeStampArray << timestampA2(bandsArray)
         alert_clickit()
         alert_clickit()
 
-=end
+        puts "initialCellTimeStampArray Array:"
+        ap initialCellTimeStampArray
+
         storeTable($_browser)
         p $_table
-                                                                                     ################################################
         ap $_files_href
-        checkTableDownload(bandsArray, initialCellTimeStamp)
+        checkTableDownload(bandsArray, initialCellTimeStampArray)
         downloadFile($_browser, $_files_href)
 
 
