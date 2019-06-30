@@ -55,9 +55,13 @@ def dates(bandsArray)
         # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING
         dateMonth = days.strftime('%m')
         dateDayBeg = days.strftime('%d').to_i
+        dateYear = days.strftime('%Y')
         # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
         x.campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
+        x.a2StartDate = "#{dateMonth}#{dateDayBeg.to_s}#{dateYear}"
+        x.a2EndDate  = "#{dateMonth}#{dateDayEnd.to_s}#{dateYear}"
+
         puts "dateMonth:"
         puts dateMonth
         puts "dateDayBeg:"

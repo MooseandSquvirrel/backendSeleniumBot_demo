@@ -253,7 +253,7 @@ class Band
     end
 
     # FOR ARRAY OF DATES TO INCLUDE OR EXCLUDE WHILE PARSING EACH B7/B3
-    attr_accessor :datesArray
+    attr_accessor :datesArray, :a2StartDate, :a2EndDate
 
     # FOR NEW BAND NUMBERS FROM THE NEW BANDS CREATING DURING EVENT FOR B7-2 DRIVE/PARSE.RB
     attr_accessor :newBandNumbsb7_2
@@ -268,7 +268,8 @@ class Band
     attr_accessor :campDates, :totalMemberCount, :coachesCount, :nruCount, :nruPercentage, :totalLeaderCount, :newLeaderCount, :newLeaderPerc, :newGblCount, 
         :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount, :newGblPerc
 
-    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ 
+    # hoursMinutes2 IS TO ACCOUNT FOR EXTRA MINUTE THAT MIGHT NEED TO BE ACCOUNTED FOR FOR CHECKING TIME SUBMITED FOR CELL CHECKING FOR DOWNLOAD LINKS
+    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ , :hoursMinutes2
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
