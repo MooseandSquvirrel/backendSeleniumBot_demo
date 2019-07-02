@@ -15,7 +15,7 @@ require 'fileutils'
 require './adminsList.rb' 
 ############################
 
-# MAKE A TEMP DIRECTORY FOR HOUSING THE B7 FOR PARSING
+# MAKE A TEMP DIRECTORY FOR HOUSING THE A2 FOR PARSING
 def tempA2_2Dir()
     puts "\n"
     puts "Checking for TEMP_A2 Directory..."
@@ -34,10 +34,10 @@ def tempA2_2Dir()
     end
 end
 
-# FUNCTION TO GRAB B7.1 FROM ~/DOWNLOADS AND MOVE IT INTO FIXIT'S WORKING DIRECTORY FOR PARSING (PUTTING INSIDE NEW DIRECTORY FOR ORGANIZATION)
-def grabXlsxB72()
+# FUNCTION TO GRAB A2 FROM ~/DOWNLOADS AND MOVE IT INTO FIXIT'S WORKING DIRECTORY FOR PARSING (PUTTING INSIDE NEW DIRECTORY FOR ORGANIZATION)
+def grabXlsxA2()
     puts "\n"
-    tempB7_2Dir()
+    tempA2_2Dir()
     puts "Grabbing A-2 .xlsx from ~/Downloads..."
     puts "Directory before:"
     puts Dir.pwd

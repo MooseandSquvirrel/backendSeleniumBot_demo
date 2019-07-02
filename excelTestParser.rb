@@ -62,6 +62,8 @@ require './B72ProductionDownloadFile.rb'
 ####################################
 require './grabXlsxA2.rb'
 ####################################
+require './A2Parse.rb'
+####################################
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
 def getEventNamesArray(bandsArray)
@@ -169,7 +171,7 @@ end
 
         # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
         dates(bandsArray)
-
+=begin
         navigate($_userNameVar)                                                             ########################################
         sleep (7) ###"CHANGE THIS TO form = wait.until"
 
@@ -231,13 +233,12 @@ ON THE SAME DAY FOR OTHER EVENTS WITH DIFFERENT DATES OF EVENT, IT WON'T DONWLOA
 
         b3Parse(eventNamesArray, bandsArray)
         puts "b3Parse"
-        # need the remove TEMP for b3 here
-
-        # MIGHT NEED navigate() here to find proper page or switch to iframe
-
-        #   a2Parse
-        # PARSER NEEDED!
-
+=end
+        tempA2_2Dir()
+        grabXlsxA2()
+        a2Parse(eventNamesArray, bandsArray)
+      
+       
 
         # test below b72 drive and wait and download after checking parsing working
 
@@ -260,7 +261,7 @@ ON THE SAME DAY FOR OTHER EVENTS WITH DIFFERENT DATES OF EVENT, IT WON'T DONWLOA
         tempB7_2Dir()
 
         grabXlsxB72()
-=end 
+
         # remove below and change to grabXlsxB7_2 (which includes TempB7_2
         tempB7_2Dir()
         ap bandsArray
@@ -272,7 +273,7 @@ ON THE SAME DAY FOR OTHER EVENTS WITH DIFFERENT DATES OF EVENT, IT WON'T DONWLOA
         # removeTEMPB7_2()
 
         writer2(bandsArray)
-
+=end
 
         "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"
         puts "usrNumber:"
