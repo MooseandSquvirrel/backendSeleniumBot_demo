@@ -1,5 +1,3 @@
-
-
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            Dates Section                                               "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -51,16 +49,30 @@ def dates(bandsArray)
 
         # CREATING DATE RANGE FOR FINAL RESULTS TABLE (EX. "6/23 - 6/26")
         days = Date.parse(x.startDate)
+       
         puts "days:"
-        # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING
+        # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING FOR startDate
         dateMonth = days.strftime('%m')
         dateDayBeg = days.strftime('%d').to_i
         dateYear = days.strftime('%Y')
+
+        endDay = Date.parse(x.startDate)
+        puts "\n\n\n\n\n\n\n\n\n\n\ endDay: #{endDay}"            #####################
+
+        # EXRACTS MONTH AND DAY FROM PARSED DATE STRING endDay FOR endDate
+        dateMonthEndDate = endDay.strftime('%m').to_i
+        dateDayEndDate = endDay.strftime('%d').to_i
+        dateYearEndDate = endDay.strftime('%Y').to_i
+        endDate = (DateTime.new(dateYearEndDate, dateMonthEndDate, dateYearEndDate)) + x.totalDays
+        puts "endDate: #{endDate}"
+
         # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
         x.campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
         x.a2StartDate = "#{dateMonth}#{dateDayBeg.to_s}#{dateYear}"
-        x.a2EndDate  = "#{dateMonth}#{dateDayEnd.to_s}#{dateYear}"
+        # x.a2EndDate  = "#{dateMonth}#{dateDayEnd.to_s}#{dateYear}"
+        x.a2EndDate  = "#{dateMonthEndDate}#{dateDayEndDate.to_s}#{dateYearEndDate}"
+
 
         puts "dateMonth:"
         puts dateMonth

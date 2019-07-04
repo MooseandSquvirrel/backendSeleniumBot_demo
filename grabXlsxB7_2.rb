@@ -1,20 +1,3 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'pp'
-require 'rspec/expectations'
-require 'io/console'
-require 'httparty'
-require 'rest-client'
-require 'open-uri'
-require 'ap'
-require 'rubyXL'
-require 'fileutils'
-############################
-# REQUIRE ADMINS.LIST.RB
-############################
-require './adminsList.rb' 
-############################
-
 # MAKE A TEMP DIRECTORY FOR HOUSING THE B7 FOR PARSING
 def tempB7_2Dir()
     puts "\n"

@@ -1,23 +1,3 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'pp'
-require 'rspec/expectations'
-require 'io/console'
-require 'httparty'
-require 'rest-client'
-require 'open-uri'
-require 'ap'
-require 'rubyXL'
-require 'fileutils'
-############################
-require './adminsList.rb' 
-############################
-require './datesSection.rb' 
-############################
-require './stringToArrayCsv.rb'
-############################
-
-
 # CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_A2)
 def mvDirA2()
     puts "----- Moving Directories to reach TEMP_A2 Directory -----"

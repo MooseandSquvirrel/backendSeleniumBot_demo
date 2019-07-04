@@ -1,27 +1,9 @@
-####################################
-# EXCELTESTPARSER REQUIRES
-####################################
-require 'rubyXL'
-require 'rubyXL/convenience_methods'
-require 'rubygems'
-require 'awesome_print'
-require 'date'
-####################################
-# TEST_CREEP REQUIRES
-####################################
-require 'selenium-webdriver'
-require 'pp'
-require 'ap'
-require 'rspec/expectations'
-require 'io/console'
-####################################
-
 def helloMessage()
-    puts "\n\n"
-    print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-    print "                                            WELCOME TO Parser!                                          \n"
-    print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
-    puts "\n"
+    # puts "\n\n"
+    # print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    # print "                                            WELCOME TO Parser!                                          \n"
+    # print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
+    # puts "\n"
     puts "-- .xlsx files from your ~/Downloads Folder have been moved to OLD_XLSX_DATA Folder on your Desktop --"
 
     print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"

@@ -1,15 +1,3 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'pp'
-require 'rspec/expectations'
-require 'io/console'
-require 'httparty'
-require 'rest-client'
-require 'open-uri'
-require 'ap'
-require 'rubyXL'
-
-
 # SETTING UP ARRAY OF ADMINS NAMES FROM ADMINS EXCEL SPREADSHEET -- FOR USE IN B3 (AND B7.1?) TO REMOVE ADMINS WHO CREATED BANDS
 def adminsList()
     rightDir = '~/fixit/backendSelenium'

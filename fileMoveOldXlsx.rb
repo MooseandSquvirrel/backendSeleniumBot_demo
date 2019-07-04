@@ -1,20 +1,3 @@
-require 'rubygems'
-require 'selenium-webdriver'
-require 'pp'
-require 'rspec/expectations'
-require 'io/console'
-require 'httparty'
-require 'rest-client'
-require 'open-uri'
-require 'ap'
-require 'rubyXL'
-require 'fileutils'
-############################
-# REQUIRE ADMINS.LIST.RB
-############################
-require './adminsList.rb' 
-############################
-
 # FUNCTION TO MOVE OLD .XLSX FILES FROM ~/DOWNLOADS DIRECTORY TO NEWLY CREATED DIRECTORY ON DESKTOP OLD_XLSX_DATA (CREATES IF NON-EXISTENT)
 def oldXlsx()
     puts "\n"

@@ -1,17 +1,6 @@
-
-require 'rubyXL'
-require 'rubyXL/convenience_methods'
-require 'rubygems'
-require 'awesome_print'
-require 'date'
-require 'FileUtils'
-
-
-
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                               Writter_2                                                  "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-
 
 # MAKE A TEMP DIRECTORY FOR HOUSING THE FINAL RESULTS 
 def finalResultsDir()

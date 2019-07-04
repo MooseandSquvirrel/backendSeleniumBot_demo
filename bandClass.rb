@@ -1,21 +1,3 @@
-####################################
-# EXCELTESTPARSER REQUIRES
-####################################
-require 'rubyXL'
-require 'rubyXL/convenience_methods'
-require 'rubygems'
-require 'awesome_print'
-require 'date'
-####################################
-# TEST_CREEP REQUIRES
-####################################
-require 'selenium-webdriver'
-require 'pp'
-require 'ap'
-require 'rspec/expectations'
-require 'io/console'
-####################################
-
 
 class Band
         

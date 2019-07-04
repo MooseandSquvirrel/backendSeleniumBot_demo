@@ -26,9 +26,10 @@ require './bandClass.rb'
 require './adminsList'
 require './datesSection.rb'
 require './driverLogin.rb'
-require './allDrivers_File.rb'
+require './allDrivers.rb'
 require './productionDownloadFile'
-require './timeStamps_File.rb'
+require './timeStamps.rb'
+require './allDrivers.rb'
 require './b7_1Driver.rb'
 require './grabXlsxB71.rb'
 require './b7-1Parse.rb'
@@ -47,12 +48,21 @@ require './finalResultsToWrite.rb'
 require './send_sms.rb'
 ####################################
 
+# FUNCTION TO PRINT BANNERS
+def bannerOutPut(file)
+    File.open("#{file}").each do |line|
+        puts line
+        sleep (0.10)
+    end
+    sleep (2)
+end
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
 def getEventNamesArray(bandsArray)
     eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
 end
 
+# SUPERFLOUS INTEGRAL LOADING MESSAGE
 def loadingMessage()
     puts "\n"
     print "Thank you #{$_userNameVar}. Now I will do work for you :)"
@@ -66,6 +76,7 @@ def loadingMessage()
     puts '.'
 end
 
+# ALL FUNCTIONS FOR B7_1 B3 A2
 def go_B71_B3_A2(bandsArray)
     # CALLING eventNamesArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNamesArray
     eventNamesArray = []
@@ -87,11 +98,14 @@ def go_B71_B3_A2(bandsArray)
     # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
     dates(bandsArray)
 
-    navigate($_userNameVar)                                                             ########################################
+    # DRIVERLOGIN.RB FUNCTION TO LOG INTO BACKEND AND FIND PROPER PAGE/IFRAME
+    navigate($_userNameVar)                                                           ########################################
     sleep (7) ###"CHANGE THIS TO form = wait.until"
 
+    # ARRAY FOR TIME STAMPS FOR TABLE TO IDENTIFY BY MINUTE AND HOUR WHICH EXCEL SHEETS TO DOWNLOAD WHEN READY
     initialCellTimeStampArray = []
-    allDrivers(eventNamesArray, bandsLength, bandsArray, initialCellTimeStampArray)
+
+    b71_b3_a2_Drivers(eventNamesArray, bandsLength, bandsArray, initialCellTimeStampArray)
 
     puts "initialCellTimeStampArray Array:"
     ap initialCellTimeStampArray
@@ -115,6 +129,7 @@ def go_B71_B3_A2(bandsArray)
     band.eventNamesArray = eventNamesArray
 end
 
+# ALL FUNCTION FOR B7_2
 def go_B72(eventNamesArray, bandsArray)
     b7_2Driver(eventNamesArray, bandsArray)
     clickit()
@@ -143,6 +158,7 @@ end
 
 def RUN
     #### fileMoveOldXlsx()
+    bannerOutPut("banner_Welcome.txt")
      helloMessage()
      usrNumber = textMessage()
      userName()
