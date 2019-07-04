@@ -261,6 +261,9 @@ class Band
     # FOR HOLDING THE adminsCount FOR SUBTRACTING FROM VARIABLES IN THE LATER PARSING
     attr_accessor :adminCount
 
+    # FOR TOTAL BANDSARRAY AND EVENTNAMESARRAY STORAGE IN ORDER TO ACCESS IN 'GO' FUNCTIONS IN RUN
+    attr_accessor :bandsArray, :eventNamesArray
+
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "                                                           Result Variables for B7.1, B3, A2, and B7.2"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"

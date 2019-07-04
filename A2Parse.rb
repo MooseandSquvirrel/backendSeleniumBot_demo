@@ -18,9 +18,9 @@ require './stringToArrayCsv.rb'
 ############################
 
 
-# CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_B7)
+# CHANGING DIRECTORIES (THIS ONE TO ACCESS TEMP_A2)
 def mvDirA2()
-    puts "----- Moving Directories to reach TEMP_B7 Directory -----"
+    puts "----- Moving Directories to reach TEMP_A2 Directory -----"
     puts "Directory before:"
     puts Dir.pwd
     a2Dir = '~/fixit/backendSelenium/TEMP_A2'
