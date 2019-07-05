@@ -1,7 +1,6 @@
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 "                                            Dates Section                                               "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    
 
 def dates(bandsArray)
     bandsArray.each do |x|
@@ -57,14 +56,12 @@ def dates(bandsArray)
         dateYear = days.strftime('%Y')
 
         endDay = Date.parse(x.startDate)
-        puts "\n\n\n\n\n\n\n\n\n\n\ endDay: #{endDay}"            #####################
 
         # EXRACTS MONTH AND DAY FROM PARSED DATE STRING endDay FOR endDate
         dateMonthEndDate = endDay.strftime('%m').to_i
         dateDayEndDate = endDay.strftime('%d').to_i
         dateYearEndDate = endDay.strftime('%Y').to_i
-        endDate = (DateTime.new(dateYearEndDate, dateMonthEndDate, dateYearEndDate)) + x.totalDays
-        puts "endDate: #{endDate}"
+        endDate = (DateTime.new(dateYearEndDate, dateMonthEndDate, dateDayEndDate)) + x.totalDays.to_i
 
         # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
