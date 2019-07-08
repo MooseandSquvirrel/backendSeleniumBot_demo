@@ -52,23 +52,40 @@ def dates(bandsArray)
         puts "days:"
         # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING FOR startDate
         dateMonth = days.strftime('%m')
-        dateDayBeg = days.strftime('%d').to_i
+        dateDayBeg = days.strftime('%d')
         dateYear = days.strftime('%Y')
 
         endDay = Date.parse(x.startDate)
 
-        # EXRACTS MONTH AND DAY FROM PARSED DATE STRING endDay FOR endDate
+        # EXRACTS MONTH AND DAY FROM PARSED DATE STRING endDay FOR endDate (THIS ALLOWS FOR ADDITION OF TOTAL DAYS OF EVENT TO START DATE)
         dateMonthEndDate = endDay.strftime('%m').to_i
         dateDayEndDate = endDay.strftime('%d').to_i
         dateYearEndDate = endDay.strftime('%Y').to_i
         endDate = (DateTime.new(dateYearEndDate, dateMonthEndDate, dateDayEndDate)) + x.totalDays.to_i
+        puts "endDate for A2: #{endDate}" 
 
-        # GETS ENDING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
+        # EXTRACT MONTH AND DAY AND YEAR FOR ENDDATE (THIS EXTRACTS THE FINAL END MONTH YEAR AND DAY FOR A2 FUNCTION AFTER ABOVE ADDITION OF TOTAL DAYS OF EVENT)
+        # REMOVED .to_i TO KEEP THE LEADING '0' FOR INPUT INTO A2 ON DAYS AND MONTHS LESS THAN 10
+        dateMonthEndDate = endDate.strftime('%m')
+        dateDayEndDate = endDate.strftime('%d')
+        dateYearEndDate = endDate.strftime('%Y')
+
+        # GETS STARTING DATE OF EVENT ( -1 TO :total_days SO THE ARITHMATIC GETS THE CORRECT DAY)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
         x.campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
-        x.a2StartDate = "#{dateMonth}#{dateDayBeg.to_s}#{dateYear}"
+        
         # x.a2EndDate  = "#{dateMonth}#{dateDayEnd.to_s}#{dateYear}"
+
+        # GETS START DATE OF EVENT FOR A2
+        x.a2StartDate = "#{dateMonth}#{dateDayBeg.to_s}#{dateYear}"
+        puts "x.a2StartDate = #{x.a2StartDate}"
+
+        # GETS ENDING DATE OF EVENT FOR A2
+        puts "dateMonthEndDate: #{dateMonthEndDate}"
+        puts "dateDayEndDate: #{dateDayEndDate}"
+        puts "dateYearEndDate: #{dateYearEndDate}"
         x.a2EndDate  = "#{dateMonthEndDate}#{dateDayEndDate.to_s}#{dateYearEndDate}"
+        puts "x.a2EndDate = #{x.a2EndDate}"
 
 
         puts "dateMonth:"
