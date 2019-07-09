@@ -5,7 +5,8 @@ def timestampB71(bandsArray)
     puts "minutes1 #{minutes1}"
     minutes2 = ((minutes1.to_i) + 1).to_s
     puts "minutes2 #{minutes2}"
-    tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
+    hours = (DateTime.now - (8.0/24.0))
+    tmpHours = (hours.strftime '%H')
     puts "tmpHours : #{tmpHours}"
     band.hoursMinutesB71_backUp = "#{tmpHours}:#{minutes2}"
     hoursMinutesB71 = "#{tmpHours}:#{minutes1}"
@@ -18,7 +19,9 @@ def timestampB3(bandsArray)
     puts "minutes1 #{minutes1}"
     minutes2 = ((minutes1.to_i) + 1).to_s
     puts "minutes2 #{minutes2}"
-    tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
+    hours = (DateTime.now - (8.0/24.0))
+    tmpHours = (hours.strftime '%H')
+    #tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
     puts "tmpHours : #{tmpHours}"
     band.hoursMinutesB3_backUp = "#{tmpHours}:#{minutes2}"
     hoursMinutesB3 = "#{tmpHours}:#{minutes1}"
@@ -31,7 +34,9 @@ def timestampA2(bandsArray)
     puts "minutes1 #{minutes1}"
     minutes2 = ((minutes1.to_i) + 1).to_s
     puts "minutes2 #{minutes2}"
-    tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
+    hours = (DateTime.now - (8.0/24.0))
+    tmpHours = (hours.strftime '%H')
+    #tmpHours = ((Time.now.strftime '%H').to_i - 8).to_s
     puts "tmpHours : #{tmpHours}"
     band.hoursMinutesA2_backUp = "#{tmpHours}:#{minutes2}"
     hoursMinutesA2 = "#{tmpHours}:#{minutes1}"

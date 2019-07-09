@@ -54,8 +54,8 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 
-# bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
-def a2Parse(eventNumsArray, bandsArraywDates)
+# bandsArray PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
+def a2Parse(eventNumsArray, bandsArray)
 
     # MOVE TO TEMP_A2
     mvDirA2()
@@ -70,6 +70,7 @@ def a2Parse(eventNumsArray, bandsArraywDates)
     bandNum = 0
     while i < eventNumsArray.length
         puts "eventNumsArray.length = #{eventNumsArray.length}"
+        puts " i: #{i}"
 
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
 
@@ -77,7 +78,7 @@ def a2Parse(eventNumsArray, bandsArraywDates)
         worksheet = workbookB7first[0]
 
         #  ASSIGNS BAND OBJECT FROM ARRAY
-        band = bandsArraywDates[i]
+        band = bandsArray[i]
 
         bandNumber = eventNumsArray[bandNum]
 

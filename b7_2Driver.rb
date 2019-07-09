@@ -85,22 +85,22 @@ def b7_2Driver(eventNamesArray, bandsArray)
     puts "New Band Numbers entered into b7-2 text field for submission..."
 end
   
-def clickit()
-    $_form = $_wait.until {
-        element = $_browser.find_element(:id, "execute")
-        element if element.displayed?
-    }
-    $_form.click
-    sleep(5)
-    puts "Execute Clicked"
-end
+# def clickit()
+#     $_form = $_wait.until {
+#         element = $_browser.find_element(:id, "execute")
+#         element if element.displayed?
+#     }
+#     $_form.click
+#     sleep(5)
+#     puts "Execute Clicked"
+# end
 
-def alert_clickit()
-    # alert = $_browser.switch_to.alert
-    $_form = $_wait.until {
-        alert = $_browser.switch_to.alert
-    }
-    $_form.accept
-    sleep(5)
-    puts "Alert Clicked"
-end
+# def alert_clickit()
+#     # alert = $_browser.switch_to.alert
+#     $_form = $_wait.until {
+#         alert = $_browser.switch_to.alert
+#     }
+#     $_form.accept
+#     sleep(5)
+#     puts "Alert Clicked"
+# end

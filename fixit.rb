@@ -84,6 +84,8 @@ def go_B71_B3_A2(bandsArray)
 
     # COUNTER FOR LENGTH OF BANDS ARRAY FOR USE IN FUNCTIONS BELOW
     bandsLength = bandsArray.length
+
+    band = bandsArray[0]
     
     # PRINTOUTS OF VARIABLES ESTABLISHED
     puts "bandsArray:"
