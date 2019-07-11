@@ -4,10 +4,10 @@ def helloMessage()
     # print "                                            WELCOME TO Parser!                                          \n"
     # print "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n"
     # puts "\n"
-    puts "-- .xlsx files from your ~/Downloads Folder have been moved to OLD_XLSX_DATA Folder on your Desktop --"
+    puts "-- .xlsx files from your ~/Downloads Folder have been moved to \nOLD_XLSX_DATA Folder on your Desktop. --"
 
     print "\n\nThis program will continue until 'exit' is entered on the command line.\nIf exited, 'Up Arrow' then 'Enter' will restart.\n\n"
-    print "\n**** MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
+    print "\n**** AGAIN, MAKE SURE BEFORE YOU BEGIN TO CONNECT TO --VPN PULSE SECURE-- ****\n\n"
 end
 
 # TWILIO TEXT MESSAGE OPTION (COLLECT usrNumber)

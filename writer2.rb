@@ -39,7 +39,7 @@ def mvFinalRes()
         end 
     }
 end
-def writer2(bandsArray)
+def writer2(bandsArray, page, lenOuterArray)
 
     finalResultsDir()
     # EQUALS LENGTH OF ARRAY
@@ -47,7 +47,7 @@ def writer2(bandsArray)
 
   
     workbookFinal = RubyXL::Workbook.new
-    worksheet = workbookFinal[0]
+    worksheet = workbookFinal[page]
 
     worksheet.insert_row(0)
     # TITLE ROW CELL FILLING
@@ -118,7 +118,12 @@ def writer2(bandsArray)
         puts "Row NOW #{row}"
         bandsArrayCounter += 1
     end
-    workbookFinal.write("#{worksheet}.xlsx")
-    puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
-    mvFinalRes()
+    # workbookFinal.write("#{worksheet}.xlsx")
+    # puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
+    if page == lenOuterArray
+        puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
+        workbookFinal.write("#{worksheet}.xlsx")
+        mvFinalRes()
+    end
+    page += 1
 end
