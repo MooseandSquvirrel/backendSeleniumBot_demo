@@ -3,11 +3,16 @@
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 def b7_2Driver(eventNamesArray, bandsArray)
+
+    # $_browser = Selenium::WebDriver.for :chrome
+    # $_browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
     
+    # $_wait = Selenium::WebDriver::Wait.new(:timeout => 30)
+    
+    navigate($_userNameVar)
     # COUNTER FOR INNER LOOP OF NESTED UNTIL LOOP BELOW TO REACH ALL NEW BAND NUMBERS FROM GBLS INSIDE EACH EVENT IN EVENT ARRAY
     ap bandsArray
     #### bandsLength = bandsArray.newBandNumbsb7_2.length #this might not be necessary if collect works
-
 
 
     "I need a counter for conditional of until/while loop for how long the new numbs array is inside each event AND counter for events array itself"
