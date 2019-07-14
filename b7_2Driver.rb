@@ -2,13 +2,19 @@
 "                                  Function Entering Bands for Second B7                                 "
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
+def mvDirRoot()
+    puts "----- Moving Directories to reach Main Directory of Fixit -----"
+    puts "Directory before:"
+    puts Dir.pwd
+    mainDir = '~/fixit/backendSelenium'
+    Dir.chdir(File.expand_path(mainDir))
+    puts "Directory is now:"
+    puts Dir.pwd
+end
+
 def b7_2Driver(eventNamesArray, bandsArray)
 
-    # $_browser = Selenium::WebDriver.for :chrome
-    # $_browser.get "https://iims.navercorp.com/login?targetUrl=https://iims.navercorp.com/"
-    
-    # $_wait = Selenium::WebDriver::Wait.new(:timeout => 30)
-    
+    mvDirRoot()
     navigate($_userNameVar)
     # COUNTER FOR INNER LOOP OF NESTED UNTIL LOOP BELOW TO REACH ALL NEW BAND NUMBERS FROM GBLS INSIDE EACH EVENT IN EVENT ARRAY
     ap bandsArray
