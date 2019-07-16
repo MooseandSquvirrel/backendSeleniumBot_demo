@@ -75,6 +75,11 @@ def getEventNamesArray(bandsArray)
     eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
 end
 
+# FUNCTION RETURNS NEW BANDS FROM EVENTS COLLECTS FROM B3 PARSE FOR B7_2 DOWNLOADING CHECK (IF CELL CONTAINS ANY BANDNUMS FROM THIS ARRAY)
+def getB72bandNums(bandsArray)
+    b7_2bandNumsArray = bandsArray.collect {|x| x.newBandNumbsb7_2}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+end
+
 # FUNCTION TO MOVE TO NEXT ARRAY OF EVENTS WTIH SAME DATE OR BEGIN NAVIGATION/DRIVER/ANALYSIS
 def outerLoopOrGo()
     puts "\n"
@@ -152,22 +157,27 @@ def go_B71_B3_A2(bandsArray, outerBandsArray)
     puts "\n\nA2 Parsed\n\n"
     band.bandsArray = bandsArray
     band.eventNamesArray = eventNamesArray
+
+    # RESET GLOBAL ARRAY TO EMTPY FOR B7_2
+    $_files_href = []
 end
 
 # ALL FUNCTION FOR B7_2
 def go_B72(eventNamesArray, bandsArray)
     b7_2Driver(eventNamesArray, bandsArray)
     clickit()
+    b7_2CellTimeStamp = timestampB72(bandsArray)
     alert_clickit()
-    b7_2CellTimeStamp = timestamp()
     puts "\n\n\n\n\n\n\n\n b7_2CellTimeStamp: #{b7_2CellTimeStamp}"
     puts b7_2CellTimeStamp
 
+    b7_2bandNumsArray = getB72bandNums(bandsArray)
+
     b72StoreTable($_browser)
-    p $_table
+    b72CheckTableDownload(bandsArray, b7_2CellTimeStamp, b7_2bandNumsArray)
+    puts "(go_B72) $_files_href:"
     ap $_files_href
-    b72CheckTableDownload(bandsArray, b7_2CellTimeStamp)
-    b72DownloadFile($_browser, $_files_href)
+    b72DownloadFile($_browser, $_files_href, b7_2bandNumsArray)
 
     grabXlsxB72()
 

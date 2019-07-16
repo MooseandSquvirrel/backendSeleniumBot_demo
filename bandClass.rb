@@ -254,7 +254,7 @@ class Band
         :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount, :newGblPerc
 
     # hoursMinutes2 IS TO ACCOUNT FOR EXTRA MINUTE THAT MIGHT NEED TO BE ACCOUNTED FOR FOR CHECKING TIME SUBMITED FOR CELL CHECKING FOR DOWNLOAD LINKS
-    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ , :hoursMinutesA2_backUp, :hoursMinutesB71_backUp, :hoursMinutesB3_backUp, :hoursMinutes2 
+    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ , :hoursMinutesA2_backUp, :hoursMinutesB71_backUp, :hoursMinutesB3_backUp, :hoursMinutes2, :hoursMinutesB72_backUp
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
