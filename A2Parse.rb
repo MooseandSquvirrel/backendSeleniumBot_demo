@@ -79,6 +79,8 @@ def a2Parse(eventNumsArray, bandsArray)
 
         #  ASSIGNS BAND OBJECT FROM ARRAY
         band = bandsArray[i]
+        puts"(A2Parse) band:"
+        ap band
 
         bandNumber = eventNumsArray[bandNum]
 

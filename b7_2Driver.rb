@@ -12,7 +12,7 @@ def mvDirRoot()
     puts Dir.pwd
 end
 
-def b7_2Driver(eventNamesArray, bandsArray)
+def b7_2Driver(bandsArray)
 
     mvDirRoot()
     navigate($_userNameVar)
@@ -27,7 +27,7 @@ def b7_2Driver(eventNamesArray, bandsArray)
     #eventNewBandsArrayLength = band.newBandNumbsb7_2.bandsLength
     ap bandsArray
 
-    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE eventNamesArray ((JUST STORED THAT ARRAY INTO bandsArray)))
+    # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE (JUST STORED THAT ARRAY INTO bandsArray)))
     bandsInnerArray = bandsArray.collect {|x| x.newBandNumbsb7_2}
     puts "bandsInnerArray:"
     ap bandsInnerArray
@@ -70,7 +70,7 @@ def b7_2Driver(eventNamesArray, bandsArray)
     # i = 0
     # j = 0
     # eventNameCounter = 0
-    # until i == eventNamesArray.length
+    # until i == ength
     #     until bandNumbCounter == bandsLength
     #         $_form.send_keys("#{bandsArray[eventNameCounter].newBandNumbsb7_2[bandNumbCounter]}\n")
     #         bandNumCounter += 1

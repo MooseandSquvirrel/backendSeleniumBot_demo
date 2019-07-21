@@ -160,11 +160,12 @@ def go_B71_B3_A2(bandsArray, outerBandsArray)
 
     # RESET GLOBAL ARRAY TO EMTPY FOR B7_2
     $_files_href = []
+
 end
 
 # ALL FUNCTION FOR B7_2
-def go_B72(eventNamesArray, bandsArray)
-    b7_2Driver(eventNamesArray, bandsArray)
+def go_B72(events, bandsArray)
+    b7_2Driver(bandsArray)
     clickit()
     b7_2CellTimeStamp = timestampB72(bandsArray)
     alert_clickit()
@@ -177,14 +178,10 @@ def go_B72(eventNamesArray, bandsArray)
     b72CheckTableDownload(bandsArray, b7_2CellTimeStamp, b7_2bandNumsArray)
     puts "(go_B72) $_files_href:"
     ap $_files_href
-    b72DownloadFile($_browser, $_files_href, b7_2bandNumsArray)
+    b72DownloadFile($_browser, $_files_href)
 
     grabXlsxB72()
-
-    tempB7_2Dir()
-    ap bandsArray
-    b7_2Parse(eventNamesArray, bandsArray)
-    ap bandsArray
+    b7_2Parse(events, bandsArray)
 end
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -193,8 +190,9 @@ end
 
 def RUN
     #### fileMoveOldXlsx()
-    bannerOutPut("banner_Welcome.txt")
-    didYouLogin()
+    ####bannerOutPut("banner_Welcome.txt")
+    ####didYouLogin()
+    tempB7_2Dir() ####  Remove when figured out
     helloMessage()
     usrNumber = textMessage()
     userName()
@@ -272,7 +270,12 @@ def RUN
         
         go_B71_B3_A2(bandsArray, outerBandsArray) # TAKE OUT outerBandsArray
 
-        go_B72(outerBandsArray[0][0].eventNamesArray, outerBandsArray[0][0].bandsArray)
+        puts"\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n"
+        puts"outerBandsArray[0]:\n#{outerBandsArray[0]}"
+        puts"outerBandsArray[0][0].bandsArray:\n#{outerBandsArray[0][0].bandsArray}"
+
+        events = bandsArray.length
+        go_B72(events, outerBandsArray[0])
 
         writer2(bandsArray[i], page, lenOuterArray)
 

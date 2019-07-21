@@ -74,7 +74,7 @@ end
 
 
 # bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
-def b7_2Parse(eventNumsArray, bandsArraywDates)
+def b7_2Parse(events, bandsArraywDates)
 
     # MOVE TO TEMP_B7
     mvDirB7_2()
@@ -101,9 +101,9 @@ def b7_2Parse(eventNumsArray, bandsArraywDates)
 
     i = 0
     bandNum = 0
-    while i < eventNumsArray.length
+    while i < events
 
-        puts "eventNumsArray.length: #{eventNumsArray.length}"
+        # puts "eventNumsArray.length: #{eventNumsArray.length}"
 
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
 
