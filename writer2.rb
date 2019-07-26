@@ -41,6 +41,9 @@ def mvFinalRes()
 end
 def writer2(bandsArray, page, lenOuterArray)
 
+    puts "(writer2) bandsArray:"
+    ap bandsArray
+
     finalResultsDir()
     # EQUALS LENGTH OF ARRAY
     bandsLength = bandsArray.length

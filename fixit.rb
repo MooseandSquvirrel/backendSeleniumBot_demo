@@ -147,7 +147,7 @@ def go_B71_B3_A2(bandsArray, outerBandsArray)
     p $_table
     ap $_files_href
     checkTableDownload(bandsArray, initialCellTimeStampArray)
-    browswerDownloadFiles($_files_href)
+    browserDownloadFiles($_files_href)
     # downloadFile($_browser, $_files_href)
 
     grabXlsxB71()
@@ -182,6 +182,7 @@ def go_B72(events, bandsArray)
     b72CheckTableDownload(bandsArray, b7_2CellTimeStamp, b7_2bandNumsArray)
     puts "(go_B72) $_files_href:"
     ap $_files_href
+    browserDownloadFiles($_files_href)
     #### MAKE A VERSION OF browserDownloadFiles($_files_href) for b72 (unless I can just us this one without conflict
     ## b72DownloadFile($_browser, $_files_href)
 
@@ -286,10 +287,19 @@ def RUN
         go_B72(events, outerBandsArray[0])
         removeTEMPB7_2()
 
-        writer2(bandsArray[i], page, lenOuterArray)
+        # UNDO BELOW IF BANDSARRAY W/ OUT [i] doesn't work
+=begin
+        puts "(RUN) outside writer2, bandsArray[i]:\n#{bandsArray[i]}"
+        puts "p version printout of above:"
+        p bandsArray[i]
+        puts "ap version printout of above:"
+        puts ap
+        puts "Now firing writer2:"
+=end
+        writer2(bandsArray, page, lenOuterArray)
 
         # PRINTING OUT FINAL RESULTS BEFORE WRITING
-        finalResults()
+        finalResults(bandsArray)
         i += 1
         page += 1
         system('say "Analysis, completed. Moving to next, date, group"')
