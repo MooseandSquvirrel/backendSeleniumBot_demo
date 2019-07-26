@@ -44,10 +44,11 @@ def removeTEMPB7_2()
     puts "Moving to Delete TEMP_B7..."
     puts "Directory before:"
     puts Dir.pwd
-    fixitDir = '~/fixit/backendSelenium/TEMP_B7'
+    fixitDir = '~/fixit/backendSelenium'
     Dir.chdir(File.expand_path(fixitDir))
     puts "Directory is now:"
     puts Dir.pwd
     puts "Deleting TEMP_B7 Directory..."
-    FileUtils.remove_dir(File.expand_path(fixitDir))
+    thisDir = "~/fixit/backendSelenium/TEMP_B7_2"
+    FileUtils.remove_dir(File.expand_path(thisDir))
 end

@@ -8,6 +8,7 @@ require 'rubyXL/convenience_methods'
 require 'rubygems'
 require 'awesome_print'
 require 'date'
+require 'capybara'
 ####################################
 # TEST_CREEP REQUIRES
 ####################################
@@ -46,6 +47,8 @@ require './b7_2Parse.rb'
 require './writer2.rb'
 require './finalResultsToWrite.rb'
 require './send_sms.rb'
+require './headlessNavigate.rb'
+require './browserDownload.rb'
 ####################################
 
 # FUNCTION TO CHECK IF USER LOGGED INTO VPN AND BACKENDSYSTEM
@@ -144,7 +147,8 @@ def go_B71_B3_A2(bandsArray, outerBandsArray)
     p $_table
     ap $_files_href
     checkTableDownload(bandsArray, initialCellTimeStampArray)
-    downloadFile($_browser, $_files_href)
+    browswerDownloadFiles($_files_href)
+    # downloadFile($_browser, $_files_href)
 
     grabXlsxB71()
     b71Parse(eventNamesArray, bandsArray)
@@ -178,7 +182,8 @@ def go_B72(events, bandsArray)
     b72CheckTableDownload(bandsArray, b7_2CellTimeStamp, b7_2bandNumsArray)
     puts "(go_B72) $_files_href:"
     ap $_files_href
-    b72DownloadFile($_browser, $_files_href)
+    #### MAKE A VERSION OF browserDownloadFiles($_files_href) for b72 (unless I can just us this one without conflict
+    ## b72DownloadFile($_browser, $_files_href)
 
     grabXlsxB72()
     b7_2Parse(events, bandsArray)
@@ -189,15 +194,16 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 def RUN
-    #### fileMoveOldXlsx()
-    ####bannerOutPut("banner_Welcome.txt")
-    ####didYouLogin()
+    # system('say "Initiating Analysis"')
+    # system('curl -L "http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=20667&filetype=xlsx" >> b7.xlsx')
+    fileMoveOldXlsx()
+    #### bannerOutPut("banner_Welcome.txt")
+    #### didYouLogin()
     tempB7_2Dir() ####  Remove when figured out
     helloMessage()
     usrNumber = textMessage()
     userName()
     pwd()    
-
     eventTitleCounter = 0
     bandCounter = 0
     outerBandsArray = []
@@ -258,7 +264,6 @@ def RUN
     end
     lenOuterArray = outerBandsArray.length
 
-
     i = 0
     page = 0
     until i == lenOuterArray
@@ -269,6 +274,9 @@ def RUN
         puts "outerBandsArray[i] = #{outerBandsArray[i]}" ##
         
         go_B71_B3_A2(bandsArray, outerBandsArray) # TAKE OUT outerBandsArray
+        removeTEMPB7()
+        removeTEMPB3()
+        removeTEMPA2()
 
         puts"\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n"
         puts"outerBandsArray[0]:\n#{outerBandsArray[0]}"
@@ -276,19 +284,18 @@ def RUN
 
         events = bandsArray.length
         go_B72(events, outerBandsArray[0])
+        removeTEMPB7_2()
 
         writer2(bandsArray[i], page, lenOuterArray)
-
-        # CLEAN/CLEAR OUT DIRECTORIES AND THEIR FILES
-        removeTEMPB7()
-        removeTEMPB3()
-        removeTEMPB7_2()
 
         # PRINTING OUT FINAL RESULTS BEFORE WRITING
         finalResults()
         i += 1
         page += 1
+        system('say "Analysis, completed. Moving to next, date, group"')
     end
+
+    system('say "Program, Finished."')
 
     # i = 0 
     # until i == lenOuterArray
@@ -300,6 +307,7 @@ def RUN
     puts "usrNumber:"
     puts usrNumber
     twilio(usrNumber)
+
 end
 
 RUN()
