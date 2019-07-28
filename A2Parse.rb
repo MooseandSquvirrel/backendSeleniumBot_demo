@@ -16,7 +16,7 @@ def parserA2(bandNumber, band, worksheet)
     nruCounter = 0
     counter = 0
     while counter < worksheet.sheet_data.rows.size - 1
-        puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
+        # puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
         cellBandNum = worksheet.sheet_data[index][0].value
         cellCurrentMember = worksheet.sheet_data[index][3].value
         cellActivitySum_Cnt = worksheet.sheet_data[index][14].value

@@ -14,9 +14,8 @@ def b3(eventNumsArray, bandsLength)
         # STORING ALL FUNCTION OPTIONS AND SELECTING B7
         # INTERACTING WITH DROPDOWN BOX
         select_list = $_wait.until {
-            if element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
-                element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
-            end
+            element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
+            element if element.displayed?
         }
         puts "Function collected from dropdown function options. (into select_list):"
         pp select_list
