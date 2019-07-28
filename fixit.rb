@@ -171,15 +171,18 @@ end
 def go_B72(events, bandsArray)
     b7_2Driver(bandsArray)
     clickit()
-    b7_2CellTimeStamp = timestampB72(bandsArray)
+    band = bandsArray[0]
+    b7_2CellTimeStamp1 = timestampB72(bandsArray)
+    b7_2CellTimeStamp2 = band.hoursMinutesB72_backUp
     alert_clickit()
-    puts "\n\n\n\n\n\n\n\n b7_2CellTimeStamp: #{b7_2CellTimeStamp}"
-    puts b7_2CellTimeStamp
+    puts "\n\n\n\nb7_2CellTimeStamp1: #{b7_2CellTimeStamp1}\nband.hoursMinutesB72_backUp: #{band.hoursMinutesB72_backUp}"
+    puts b7_2CellTimeStamp1
+    puts band.hoursMinutesB72_backUp
 
     b7_2bandNumsArray = getB72bandNums(bandsArray)
 
     b72StoreTable($_browser)
-    b72CheckTableDownload(bandsArray, b7_2CellTimeStamp, b7_2bandNumsArray)
+    b72CheckTableDownload(bandsArray, b7_2CellTimeStamp1, band.hoursMinutesB72_backUp, b7_2bandNumsArray)
     puts "(go_B72) $_files_href:"
     ap $_files_href
     browserDownloadFiles($_files_href)
@@ -281,7 +284,6 @@ def RUN
 
         puts"\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n"
         puts"outerBandsArray[0]:\n#{outerBandsArray[0]}"
-        puts"outerBandsArray[0][0].bandsArray:\n#{outerBandsArray[0][0].bandsArray}"
 
         events = bandsArray.length
         go_B72(events, outerBandsArray[0])

@@ -3,7 +3,7 @@ def mvDirA2()
     puts "----- Moving Directories to reach TEMP_A2 Directory -----"
     puts "Directory before:"
     puts Dir.pwd
-    a2Dir = '~/fixit/backendSelenium/TEMP_A2'
+    a2Dir = '~/fixit/TEMP_A2'
     Dir.chdir(File.expand_path(a2Dir))
     puts "Directory is now:"
     puts Dir.pwd
@@ -11,6 +11,10 @@ end
 
 def parserA2(bandNumber, band, worksheet)
     # CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
+    puts "worksheet\n"
+    p worksheet
+    puts "worksheet\n"
+    ap worksheet
     index = 1
     totalMemberCounter = 0
     nruCounter = 0
@@ -19,8 +23,16 @@ def parserA2(bandNumber, band, worksheet)
         # puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
         cellBandNum = worksheet.sheet_data[index][0].value
         cellCurrentMember = worksheet.sheet_data[index][3].value
-        cellActivitySum_Cnt = worksheet.sheet_data[index][14].value
-        cellUniqueUsers_Uccu = worksheet.sheet_data[index][15].value
+        if cellActivitySum_Cnt = worksheet.sheet_data[index][14].nil?
+            cellActivitySum_Cnt = 0
+        else
+            cellActivitySum_Cnt = worksheet.sheet_data[index][14].value
+        end
+        if cellUniqueUsers_Uccu = worksheet.sheet_data[index][15].nil?
+            cellUniqueUsers_Uccu = 0
+        else
+            cellUniqueUsers_Uccu = worksheet.sheet_data[index][15].value
+        end
         # IF USER ENTERED BANDNUMBER MATCHES BAND NUMBER FIRST ROW (IDENTIFY CORRECT BAND TO PARSE IN DOCUMENT)
         if bandNumber == cellBandNum
             # **FINAL RESULTS FOR USER ACTIVITY** 

@@ -6,7 +6,7 @@ def mvDirRoot()
     puts "----- Moving Directories to reach Main Directory of Fixit -----"
     puts "Directory before:"
     puts Dir.pwd
-    mainDir = '~/fixit/backendSelenium'
+    mainDir = '~/fixit'
     Dir.chdir(File.expand_path(mainDir))
     puts "Directory is now:"
     puts Dir.pwd

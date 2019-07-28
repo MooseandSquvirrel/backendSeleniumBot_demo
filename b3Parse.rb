@@ -28,7 +28,7 @@ def mvDirB3()
     puts "----- Moving Directories to reach TEMP_B3 Directory -----"
     puts "Directory before:"
     puts Dir.pwd
-    b3Dir = '~/fixit/backendSelenium/TEMP_B3'
+    b3Dir = '~/fixit/TEMP_B3'
     Dir.chdir(File.expand_path(b3Dir))
     puts "Directory is now:"
     puts Dir.pwd

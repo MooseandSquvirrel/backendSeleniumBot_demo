@@ -21,7 +21,7 @@ def finalResultsDir()
     end
     puts "Dirctory before:"
     puts Dir.pwd
-    seleniumDir = '~/fixit/backendSelenium'
+    seleniumDir = '~/fixit'
     Dir.chdir(File.expand_path(seleniumDir))
     puts "Directory is now:"
     puts Dir.pwd
@@ -73,7 +73,8 @@ def writer2(bandsArray, page, lenOuterArray)
         worksheet.sheet_data[0][i].change_border(:bottom, 'medium')
         worksheet.change_row_border_color(0, :bottom, 'ed553b')
         # FILL TITLE ROW WITH GREY
-        worksheet.change_row_fill(0, '00FF00')   
+        worksheet.change_row_fill(0, '00FF00')
+        puts "sheet TITLE row added: #{i}"   
         i += 1
     end
 
@@ -114,6 +115,7 @@ def writer2(bandsArray, page, lenOuterArray)
             else
                 worksheet.change_row_fill(row, 'ffffff')
             end
+            puts "DATA row added: #{i}"
             i += 1
         end
         puts "EXIT LOOP Row #{row}"
@@ -121,12 +123,13 @@ def writer2(bandsArray, page, lenOuterArray)
         puts "Row NOW #{row}"
         bandsArrayCounter += 1
     end
-    # workbookFinal.write("#{worksheet}.xlsx")
-    # puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
-    if page == lenOuterArray
-        puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
-        workbookFinal.write("#{worksheet}.xlsx")
-        mvFinalRes()
-    end
+    workbookFinal.write("#{worksheet}.xlsx")
+    mvFinalRes()
+    puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
+    # if page == lenOuterArray
+    #     puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
+    #     workbookFinal.write("#{worksheet}.xlsx")
+    #     mvFinalRes()
+    # end
     page += 1
 end

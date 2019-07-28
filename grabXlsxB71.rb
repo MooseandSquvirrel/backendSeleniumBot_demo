@@ -4,7 +4,7 @@ def tempB7Dir()
     puts "Checking for TEMP_B7 Directory..."
     puts "Dirctory before:"
     puts Dir.pwd
-    desktopDir = '~/fixit/backendSelenium'
+    desktopDir = '~/fixit'
     Dir.chdir(File.expand_path(desktopDir))
     puts "Directory is now:"
     puts Dir.pwd
@@ -32,7 +32,7 @@ def grabXlsxB71()
     Dir.glob("*B-7*.xlsx") {|file|
         if file
             puts "Moving file '#{file}' into TEMP_B7 Directory, in the working Directory inside Fixit..."
-            temp_data_path = '~/fixit/backendSelenium/TEMP_B7'
+            temp_data_path = '~/fixit/TEMP_B7'
             FileUtils.mv("#{file}", File.expand_path(temp_data_path))
         else
             puts "No B-7 file found in ~/Downloads..."
@@ -44,11 +44,11 @@ def removeTEMPB7()
     puts "Moving to Delete TEMP_B7..."
     puts "Directory before:"
     puts Dir.pwd
-    fixitDir = '~/fixit/backendSelenium'
+    fixitDir = '~/fixit'
     Dir.chdir(File.expand_path(fixitDir))
     puts "Directory is now:"
     puts Dir.pwd
     puts "Deleting TEMP_B7 Directory..."
-    thisDir = "~/fixit/backendSelenium/TEMP_B7"
+    thisDir = "~/fixit/TEMP_B7"
     FileUtils.remove_dir(File.expand_path(thisDir))
 end

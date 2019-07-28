@@ -1,6 +1,6 @@
 # SETTING UP ARRAY OF ADMINS NAMES FROM ADMINS EXCEL SPREADSHEET -- FOR USE IN B3 (AND B7.1?) TO REMOVE ADMINS WHO CREATED BANDS
 def adminsList()
-    rightDir = '~/fixit/backendSelenium'
+    rightDir = '~/fixit'
     Dir.chdir(File.expand_path(rightDir))
     adminsListWorkBook = RubyXL::Parser.parse("Admin List.xlsx")
     adminsWorksheet = adminsListWorkBook[0]
@@ -17,7 +17,7 @@ def adminsList()
         i += 1
     end
     adminsArray = adminsArray.push("Vinny Guglietta")
-    rightDir = '~/fixit/backendSelenium/TEMP_B3'
+    rightDir = '~/fixit/TEMP_B3'
     Dir.chdir(File.expand_path(rightDir))
     return adminsArray
 end

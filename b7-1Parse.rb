@@ -3,7 +3,7 @@ def mvDirB7()
     puts "----- Moving Directories to reach TEMP_B7 Directory -----"
     puts "Directory before:"
     puts Dir.pwd
-    b7Dir = '~/fixit/backendSelenium/TEMP_B7'
+    b7Dir = '~/fixit/TEMP_B7'
     Dir.chdir(File.expand_path(b7Dir))
     puts "Directory is now:"
     puts Dir.pwd

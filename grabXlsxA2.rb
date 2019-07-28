@@ -4,7 +4,7 @@ def tempA2_2Dir()
     puts "Checking for TEMP_A2 Directory..."
     puts "Dirctory before:"
     puts Dir.pwd
-    desktopDir = '~/fixit/backendSelenium'
+    desktopDir = '~/fixit'
     Dir.chdir(File.expand_path(desktopDir))
     puts "Directory is now:"
     puts Dir.pwd
@@ -32,7 +32,7 @@ def grabXlsxA2()
     Dir.glob("*A-2*.xlsx") {|file|
         if file
             puts "Moving file '#{file}' into TEMP_A2 Directory, in the working Directory inside Fixit..."
-            temp_data_path = '~/fixit/backendSelenium/TEMP_A2'
+            temp_data_path = '~/fixit/TEMP_A2'
             FileUtils.mv("#{file}", File.expand_path(temp_data_path))
         else
             puts "No A-2 file found in ~/Downloads..."
@@ -44,11 +44,11 @@ def removeTEMPA2()
     puts "Moving to Delete TEMP_A2..."
     puts "Directory before:"
     puts Dir.pwd
-    fixitDir = '~/fixit/backendSelenium'
+    fixitDir = '~/fixit'
     Dir.chdir(File.expand_path(fixitDir))
     puts "Directory is now:"
     puts Dir.pwd
     puts "Deleting TEMP_A2 Directory..."
-    thisDir = "~/fixit/backendSelenium/TEMP_A2"
+    thisDir = "~/fixit/TEMP_A2"
     FileUtils.remove_dir(File.expand_path(thisDir))
 end
