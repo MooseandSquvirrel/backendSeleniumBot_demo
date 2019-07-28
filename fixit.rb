@@ -298,12 +298,15 @@ def RUN
         puts ap
         puts "Now firing writer2:"
 =end
-        writer2(bandsArray, page, lenOuterArray)
+        # writer2(bandsArray, page, lenOuterArray)
+        writer2(bandsArray, lenOuterArray)
+
 
         # PRINTING OUT FINAL RESULTS BEFORE WRITING
         finalResults(bandsArray)
         i += 1
         page += 1
+        puts "page: #{page}"
         system('say "Analysis, completed. Moving to next, date, group"')
     end
 

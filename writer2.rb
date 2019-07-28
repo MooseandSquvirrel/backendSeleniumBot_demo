@@ -39,7 +39,9 @@ def mvFinalRes()
         end 
     }
 end
-def writer2(bandsArray, page, lenOuterArray)
+
+# def writer2(bandsArray, page, lenOuterArray)
+def writer2(bandsArray, lenOuterArray)
 
     puts "(writer2) bandsArray:"
     ap bandsArray
@@ -50,7 +52,12 @@ def writer2(bandsArray, page, lenOuterArray)
 
   
     workbookFinal = RubyXL::Workbook.new
-    worksheet = workbookFinal[page]
+    #worksheet = workbookFinal[page]
+    worksheet = workbookFinal[0]
+
+
+    puts "\n\n-- worksheet = \n"
+    p worksheet
 
     worksheet.insert_row(0)
     # TITLE ROW CELL FILLING
@@ -131,5 +138,6 @@ def writer2(bandsArray, page, lenOuterArray)
     #     workbookFinal.write("#{worksheet}.xlsx")
     #     mvFinalRes()
     # end
-    page += 1
+    
+    #### page += 1
 end
