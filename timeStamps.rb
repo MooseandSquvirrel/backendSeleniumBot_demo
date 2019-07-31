@@ -49,10 +49,13 @@ def timestampB72(bandsArray)
     minutes1 = Time.now.strftime '%M'
     puts "minutes1 #{minutes1}"
     minutes2 = ((minutes1.to_i) + 1).to_s
+    minutes3 = ((minutes1.to_i) - 1).to_s
     puts "minutes2 #{minutes2}"
     hours = (DateTime.now - (8.0/24.0))
     tmpHours = (hours.strftime '%H')
     puts "tmpHours : #{tmpHours}"
-    band.hoursMinutesB72_backUp = "#{tmpHours}:#{minutes2}"
+    # band.hoursMinutesB72_backUp = "#{tmpHours}:#{minutes2}"
+    $_hoursMinutesB72_backUp = "#{tmpHours}:#{minutes2}"
+    $_hoursMinutesB72_backUp2 = "#{tmpHours}:#{minutes3}"
     hoursMinutesB72 = "#{tmpHours}:#{minutes1}"
 end

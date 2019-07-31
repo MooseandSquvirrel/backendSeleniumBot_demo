@@ -29,6 +29,10 @@ def b7_2Driver(bandsArray)
 
     # GETTING ALL BAND NUMBS WITH .collect (ALREADY PERFORMED ABOVE TO GET THE (JUST STORED THAT ARRAY INTO bandsArray)))
     bandsInnerArray = bandsArray.collect {|x| x.newBandNumbsb7_2}
+
+    # .compact REMOVES ANY POTENTIAL NIL VALUES OF NO GBLS/BAND NUMBERS FOR NEW BANDS CREATED FROM B3 -- POTENTIAL EDGE CASE
+    bandsInnerArray = bandsInnerArray.compact
+
     puts "bandsInnerArray:"
     ap bandsInnerArray
 
@@ -77,22 +81,43 @@ def b7_2Driver(bandsArray)
     #     eventNameCounter += 1
     #     i += 1
     # end
+    system('say "Second, B, 7, Bands, in, 10, seconds."')
+    sleep(10)
+    system('say "Beginning input."')
 
+    ########   IT MIGHT WORK TO TRY '\n' LIKE IN b7_1Driver.rb INSTEAD OF COMMA BELOW INSIDE IF STATEMENT INTERPOLATION
+    $_keys = false
     lengthCounter = bandsInnerArray.length
     eventNameCounter = 1
         bandsInnerArray.each do |bandNum|
-            bandNum = bandNum.join(",")
-            if eventNameCounter < lengthCounter
-                $_form.send_keys("#{bandNum}, ")
+            if bandNum.nil?
+                next
             else
-                $_form.send_keys("#{bandNum} ")
+                sleep (5)
+                puts "\n\n\n\n\n\n\n\n(b7_2Driver) bandNum 'ap' before .join(','):"
+                ap bandNum
+                bandNum = bandNum.join(",")
+                puts "\n(b7_2Driver) bandNum 'ap' before .join(','):"
+                if eventNameCounter < lengthCounter
+                    $_form.send_keys("#{bandNum}\n")
+                    #   CREATE A GLOBAL BOOLEAN HERE TO CHECK IF ANY KEYS ENTERED FOR ANY ARRAY, THAT IS FOR WHETHER TO SUBMIT/CLICK THIS SECOND B7 (IF NO GBLS FROM B3 AT ALL GO TO 'next')
+                    $_keys = true
+                else
+                    $_form.send_keys("#{bandNum} ")
+                    $_keys = true
+                end
             end
+            sleep(1)
             eventNameCounter += 1
             puts "bandNum: #{bandNum}"
         end
         puts "bandArray: #{bandsArray}"
-    sleep(2)
+    sleep(5)
+    puts"\n\n\n\n\nSCREEN SHOT SAVED 'wtf.png'"
+    $_browser.save_screenshot('wtf8.png')
     puts "New Band Numbers entered into b7-2 text field for submission..."
+    puts "\n\nSCREEN SHOT SAVED 'wtf.png'"
+    $_browser.save_screenshot('wtf9.png')
 end
   
 # def clickit()

@@ -107,7 +107,7 @@ def loadingMessage()
 end
 
 # ALL FUNCTIONS FOR B7_1 B3 A2
-def go_B71_B3_A2(bandsArray, outerBandsArray)
+def go_B71_B3_A2(bandsArray)
     # CALLING eventNamesArray FUNCTION TO EXTRACT FROM bandsArray ALL EVENT NAMES INTO ARRAY eventNamesArray
     eventNamesArray = []
     eventNamesArray = getEventNamesArray(bandsArray)
@@ -170,27 +170,34 @@ end
 # ALL FUNCTION FOR B7_2
 def go_B72(events, bandsArray)
     b7_2Driver(bandsArray)
-    clickit()
-    band = bandsArray[0]
-    b7_2CellTimeStamp1 = timestampB72(bandsArray)
-    b7_2CellTimeStamp2 = band.hoursMinutesB72_backUp
-    alert_clickit()
-    puts "\n\n\n\nb7_2CellTimeStamp1: #{b7_2CellTimeStamp1}\nband.hoursMinutesB72_backUp: #{band.hoursMinutesB72_backUp}"
-    puts b7_2CellTimeStamp1
-    puts band.hoursMinutesB72_backUp
+    # $_keys IS GLOBAL VARIABLE THAT DECIDES WHETHER ANY GBL WAS ENTERED INTO TEXT AREA (WHETHER TO RUN DATA)
+    if $_keys == true
+        clickit()
+        band = bandsArray[0]
+        b7_2CellTimeStamp1 = timestampB72(bandsArray)
+        # b7_2CellTimeStamp2 = band.hoursMinutesB72_backUp
+        b7_2CellTimeStamp2 = $_hoursMinutesB72_backUp
+        b7_2CellTimeStamp3 = $_hoursMinutesB72_backUp2
+        alert_clickit()
+        puts "\n\n\n\nb7_2CellTimeStamp1: #{b7_2CellTimeStamp1}\nband.hoursMinutesB72_backUp: #{band.hoursMinutesB72_backUp}"
+        puts b7_2CellTimeStamp1
 
-    b7_2bandNumsArray = getB72bandNums(bandsArray)
+        b7_2bandNumsArray = getB72bandNums(bandsArray)
 
-    b72StoreTable($_browser)
-    b72CheckTableDownload(bandsArray, b7_2CellTimeStamp1, band.hoursMinutesB72_backUp, b7_2bandNumsArray)
-    puts "(go_B72) $_files_href:"
-    ap $_files_href
-    browserDownloadFiles($_files_href)
-    #### MAKE A VERSION OF browserDownloadFiles($_files_href) for b72 (unless I can just us this one without conflict
-    ## b72DownloadFile($_browser, $_files_href)
+        b72StoreTable($_browser)
+        b72CheckTableDownload(bandsArray, b7_2CellTimeStamp1, b7_2CellTimeStamp2, b7_2CellTimeStamp3, b7_2bandNumsArray)
+        puts "(go_B72) $_files_href:"
+        ap $_files_href
+        browserDownloadFiles($_files_href)
+        #### MAKE A VERSION OF browserDownloadFiles($_files_href) for b72 (unless I can just us this one without conflict
+        ## b72DownloadFile($_browser, $_files_href)
 
-    grabXlsxB72()
-    b7_2Parse(events, bandsArray)
+        grabXlsxB72()
+        b7_2Parse(events, bandsArray)
+        removeTEMPB7_2()
+    else
+        $_browser.quit
+    end
 end
 
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
@@ -277,7 +284,7 @@ def RUN
         bandsArray = outerBandsArray[i]
         puts "outerBandsArray[i] = #{outerBandsArray[i]}" ##
         
-        go_B71_B3_A2(bandsArray, outerBandsArray) # TAKE OUT outerBandsArray
+        go_B71_B3_A2(bandsArray)
         removeTEMPB7()
         removeTEMPB3()
         removeTEMPA2()
@@ -286,8 +293,7 @@ def RUN
         puts"outerBandsArray[0]:\n#{outerBandsArray[0]}"
 
         events = bandsArray.length
-        go_B72(events, outerBandsArray[0])
-        removeTEMPB7_2()
+        go_B72(events, bandsArray)
 
         # UNDO BELOW IF BANDSARRAY W/ OUT [i] doesn't work
 =begin

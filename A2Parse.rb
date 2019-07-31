@@ -11,10 +11,7 @@ end
 
 def parserA2(bandNumber, band, worksheet)
     # CLEANS USERS THAT DIDN'T JOIN FROM THIS SPECIFIC EVENT
-    puts "worksheet\n"
-    p worksheet
-    puts "worksheet\n"
-    ap worksheet
+   
     index = 1
     totalMemberCounter = 0
     nruCounter = 0
