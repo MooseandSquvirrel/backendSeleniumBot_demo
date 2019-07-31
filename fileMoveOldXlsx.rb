@@ -41,8 +41,6 @@ def fileMoveOldXlsx()
       }
 end
 
-
-"THIS IS REDUNDANT CODE -- FOR USE IF DELETING .XLSX FILES FROM ~/DOWNLOADS DIR. IS PREFERRED TO MOVING."
 # REMOVES THE .XLSX FILES FROM USERS ~/Downloads DIRECTORY SO fixit CAN FIND THE ONLY XLSX FOLDERS DOWNLOADED.
 def initialDownloadsClean()
     puts "\n"
@@ -59,20 +57,7 @@ def initialDownloadsClean()
             puts "file #{file} cleaned from Downloads..."
             File.delete(file)
         else
-            puts "nope"
+            puts "Nothing to clean from Downloads."
         end
     end
 end
-
-"REFERENCE FOR ACCESSING 'B-7'/'B-3' FILE NAMES IN DIR."
-=begin
-     Dir.glob("*B-7*") {|file|
-        if file
-            puts "Storing file name '#{file}' with .xlsx extension into OLD_XLSX_DATA on Desktop..."
-            temp_data_path = '~/Desktop/TEMP_DATA'
-            FileUtils.mv("#{file}", File.expand_path(temp_data_path))
-        else
-            puts "No B-7 files found in ~/Downloads..."
-        end
-      }
-=end

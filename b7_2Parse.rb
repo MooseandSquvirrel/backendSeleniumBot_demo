@@ -26,11 +26,9 @@ def parserb72(band, worksheet, adminNumbArray)
     
     while counter < worksheet.sheet_data.rows.size - 1
         cellOriginalBandNum = worksheet.sheet_data[index][7].value
-        puts "cellOringalBandNum now #{cellOriginalBandNum}"
         if band.newBandNumbsb7_2.include?("#{cellOriginalBandNum}")
             nruArray << cellOriginalBandNum
             nruCounter += 1
-            puts "cellOringalBandNum: #{cellOriginalBandNum} counted as NRU !!!! \nnruCounter: #{nruCounter}"
             index += 1
         else
             index += 1
@@ -38,18 +36,11 @@ def parserb72(band, worksheet, adminNumbArray)
         counter += 1
     end
 
-    puts "nruArray.length #{nruArray.length}"
     finalNruArray = nruArray - adminNumbArray
-    puts "band.adminCOunt: #{band.adminCount}"
     gblNru= finalNruArray.length - band.adminCount
 
-    puts "nruCounter for b7_2 parse: #{nruCounter}"
-    #puts "adminNumbs subtracted from nruCounter (to equal band.gblNru): #{adminNumbs}"
-    puts "gblNru: #{gblNru}"
     # **FINAL RESULT** gblNru, nruPerGbl, totalNru
-   # gblNru = (nruCounter - adminNumbs).to_f
     band.gblNru = gblNru.to_f
-    puts "band.newGblCount: #{band.newGblCount}"
     band.nruPerGbl = (gblNru / band.newGblCount)
     band.totalNru = (band.nruCount + gblNru).to_f
    
@@ -75,116 +66,24 @@ end
 
 # bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
 def b7_2Parse(events, bandsArraywDates)
-
-    # MOVE TO TEMP_B7
     mvDirB7_2()
 
     # COLLECTS FILE(S) WITH .XLSX FORMAT (SHOULD ONLY BE ONE) IN ORDER TO PARSE IT
     fileNamesArray = []
     fileNamesArray = Dir["./*.xlsx"]
-    puts "fileNamesArray:"
-    ap fileNamesArray
-=begin
-    # CREATE ARRAY OF ALL BAND NUMBS FOR ALL NEW GBLS LISTED IN THE SHEET
-    workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-    worksheet = workbookB7first[0]
-    cellBandNumArray = []
-    index = 1
-    while index < worksheet.sheet_data.rows.size - 1
-        cellBandNum = worksheet.sheet_data[index][0].value
-        cellBandNumArray << cellBandNum
-        index += 1
-    end
-    gblBandNumArray = cellBandNumArray.uniq
-    gblbandNumArrayLength = gblBandNumArray.length
-=end
-
+  
     i = 0
     bandNum = 0
     while i < events
-
-        # puts "eventNumsArray.length: #{eventNumsArray.length}"
-
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-
         # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
         worksheet = workbookB7first[0]
-
-        #  ASSIGNS BAND OBJECT FROM ARRAY
+        # ASSIGNS BAND OBJECT FROM ARRAY
         band = bandsArraywDates[i]
-
-        #  GETTING COUNT OF ADMIN NUMBS IN SPREADSHEET TO ME SUBTRACTED FROM TOTAL NRU COUNTS IN PARSERB72 (MIGHT BE NO ADMINS IN B7_2, THIS IS JUST FOR EDGE CASE POTENTIALLY)
+        # GETTING COUNT OF ADMIN NUMBS IN SPREADSHEET TO ME SUBTRACTED FROM TOTAL NRU COUNTS IN PARSERB72 (MIGHT BE NO ADMINS IN B7_2, THIS IS JUST FOR EDGE CASE POTENTIALLY)
         adminNumbArray = adminCounterB72(band, worksheet)
-
-
-=begin
-        # ASSIGNING GBLS FROM ARRAY OF GBLS ONE AT A TIME
-        bandNum = gblBandNumArray[bandNum]
-=end
-
         parserb72(band, worksheet, adminNumbArray)
-
-        #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsB7_2(band.eventName, band, worksheet)
-    
         i += 1 
     end
 end
-
-
-=begin
-
-# bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
-def b7_2Parse(eventNumsArray, bandsArraywDates)
-
-    # MOVE TO TEMP_B7
-    mvDirB7_2()
-
-    # COLLECTS FILE(S) WITH .XLSX FORMAT (SHOULD ONLY BE ONE) IN ORDER TO PARSE IT
-    fileNamesArray = []
-    fileNamesArray = Dir["./*.xlsx"]
-    puts "fileNamesArray:"
-    ap fileNamesArray
-
-    # CREATE ARRAY OF ALL BAND NUMBS FOR ALL NEW GBLS LISTED IN THE SHEET
-    workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-    worksheet = workbookB7first[0]
-    cellBandNumArray = []
-    index = 0
-    while index < worksheet.sheet_data.rows.size - 1
-        cellBandNum = worksheet.sheet_data.[index][0]
-        cellBandNumArray << cellBandNum
-        index += 1
-    end
-    gblBandNumArray = cellBandNumArray.uniq
-    gblbandNumArrayLength = gblBandNumArray.length
-
-    i = 0
-    bandNum = 0
-    while i < gblbandNumArrayLength
-        puts "gblbandNumArrayLength = #{gblbandNumArrayLength}"
-
-        workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-
-        # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
-        worksheet = workbookB7first[0]
-
-        #  ASSIGNS BAND OBJECT FROM ARRAY
-        band = bandsArraywDates[i]
-
-        bandNum = gblBandNumArray[bandNum]
-
-        adminNumbs = adminCounterB72(band, worksheet)
-
-        parser(band, worksheet, adminNumbs)
-
-        #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
-        resultsB7_2(band.eventName, band, worksheet)
-    
-        i += 1
-        bandNum += 1
-    end
-end
-
-
-=end

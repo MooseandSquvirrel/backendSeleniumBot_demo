@@ -5,10 +5,6 @@ class Band
         :start_date => "\nEnter starting date of event:\n(ex: for June 21, 2019 enter: 21/06/2019)\n",
         :total_days => "\nEnter number of days for the event: (ex: 4)", :band_num => "\nEnter BAND number:", :brand_name => "\nEnter bRand Name (ex. UCA):"}
 
-    # OLD CODE FOR REFERENCE ONLY
-    # puts stringsHash[:total_days]
-    # stringsHash[:total_days] = gets.strip
-
     # COUNTER TO IGNORE THE 'puts stringsHash[:band_name]' THE SECOND TIME THROUGH IF 'n' IS SELECTED BY USER
     def getEventName()
         counter = 0
@@ -254,11 +250,10 @@ class Band
         :gblAvg, :gblNru, :nruPerGbl, :totalNru, :activitySum, :uniqueUserActivity, :sumTotalMemberAvg, :uniqueMemberavg, :testCoachesCount, :newGblPerc
 
     # hoursMinutes2 IS TO ACCOUNT FOR EXTRA MINUTE THAT MIGHT NEED TO BE ACCOUNTED FOR FOR CHECKING TIME SUBMITED FOR CELL CHECKING FOR DOWNLOAD LINKS
-    attr_accessor :a2_ , :a2_ , :a2_ , :a2_ , :hoursMinutesA2_backUp, :hoursMinutesB71_backUp, :hoursMinutesB3_backUp, :hoursMinutes2, :hoursMinutesB72_backUp
+    attr_accessor :hoursMinutesA2_backUp, :hoursMinutesB71_backUp, :hoursMinutesB3_backUp, :hoursMinutes2, :hoursMinutesB72_backUp
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
     "-----------------------------------------------------------------------------------------------------------------------------------------------------"
 
-    # puts "bandsArray << stringsHash (Before hitting 'go')"
     # bandsArray << stringsHash
     def loopOrGo()
         puts "\n"
@@ -267,4 +262,4 @@ class Band
         puts "Otherwise, hit 'Enter' to begin submitting another Summer Camp BAND's info."
         gets.strip != "go"
     end
-end ### END OF BAND CLASS ###
+end 

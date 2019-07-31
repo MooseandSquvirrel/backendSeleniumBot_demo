@@ -4,25 +4,17 @@
 
 def dates(bandsArray)
     bandsArray.each do |x|
-        puts "print x:"
-        ap x
         # COVER THE 3 DATES AFTER event.startDate
-        puts "event.startDate:"
-        puts x.startDate
         daysParsed = Date.parse(x.startDate)
         datesArray = []
         i = 0
-        # EVENT DATE RANGE PLUS 3 DAYS AFTER --------- MIGHT BE ABLE TO REMOVE 3 DAYS AFTER EVENT OR USE FOR MAIN BANDS (NOT SUMMER CAMPS)
+        # EVENT DATE RANGE PLUS 3 DAYS AFTER
         while i < 3
             datesArray << daysParsed.to_s
             if x.totalDays == 1
                 break
             else
                 daysParsed += 1
-                puts "Dates Array:"
-                puts "========"
-                puts datesArray
-                puts "\n"
                 i += 1
             end
         end
@@ -41,15 +33,10 @@ def dates(bandsArray)
         datesArray = datesArray.sort
         # SETTING datesArray INSIDE EVENT INSTANCE VARIABLE
         x.datesArray = datesArray
-        puts "p x.datesArray"
-        p x.datesArray
-        puts "ap x.datesArray"
-        ap x.datesArray
 
         # CREATING DATE RANGE FOR FINAL RESULTS TABLE (EX. "6/23 - 6/26")
         days = Date.parse(x.startDate)
        
-        puts "days:"
         # EXTRACTS MONTH AND DAY FROM PARSED DATE STRING FOR startDate
         dateMonth = days.strftime('%m')
         dateDayBeg = days.strftime('%d')
@@ -62,8 +49,7 @@ def dates(bandsArray)
         dateDayEndDate = endDay.strftime('%d').to_i
         dateYearEndDate = endDay.strftime('%Y').to_i
         endDate = (DateTime.new(dateYearEndDate, dateMonthEndDate, dateDayEndDate)) + x.totalDays.to_i
-        puts "endDate for A2: #{endDate}" 
-
+    
         # EXTRACT MONTH AND DAY AND YEAR FOR ENDDATE (THIS EXTRACTS THE FINAL END MONTH YEAR AND DAY FOR A2 FUNCTION AFTER ABOVE ADDITION OF TOTAL DAYS OF EVENT)
         # REMOVED .to_i TO KEEP THE LEADING '0' FOR INPUT INTO A2 ON DAYS AND MONTHS LESS THAN 10
         dateMonthEndDate = endDate.strftime('%m')
@@ -74,30 +60,10 @@ def dates(bandsArray)
         dateDayEnd = days.strftime('%d').to_i + (x.totalDays.to_i - 1)
         x.campDates = "#{dateMonth}/#{dateDayBeg} - #{dateMonth}/#{dateDayEnd}"
         
-        # x.a2EndDate  = "#{dateMonth}#{dateDayEnd.to_s}#{dateYear}"
-
         # GETS START DATE OF EVENT FOR A2
         x.a2StartDate = "#{dateMonth}#{dateDayBeg.to_s}#{dateYear}"
-        puts "x.a2StartDate = #{x.a2StartDate}"
 
         # GETS ENDING DATE OF EVENT FOR A2
-        puts "dateMonthEndDate: #{dateMonthEndDate}"
-        puts "dateDayEndDate: #{dateDayEndDate}"
-        puts "dateYearEndDate: #{dateYearEndDate}"
         x.a2EndDate  = "#{dateMonthEndDate}#{dateDayEndDate.to_s}#{dateYearEndDate}"
-        puts "x.a2EndDate = #{x.a2EndDate}"
-
-
-        puts "dateMonth:"
-        puts dateMonth
-        puts "dateDayBeg:"
-        puts dateDayBeg
-        puts "dateDayEnd:"
-        puts dateDayEnd
-        puts "campDates stored in event.campDates as:"
-        puts x.campDates
-        puts "x.datesArray:"
-        print x.datesArray
-        ap x.datesArray
     end
 end

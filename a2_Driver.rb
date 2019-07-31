@@ -4,18 +4,14 @@
 
 def a2_Driver(eventNamesArray, bandsLength, band)
     bandsNamesArray = eventNamesArray
-
     bandNameCounter = 0
     
-    bandsNamesArray[bandNameCounter]
     # STORING ALL FUNCTION OPTIONS AND SELECTING B7
     # INTERACTING WITH DROPDOWN BOX
     select_list = $_wait.until {
         element = $_browser.find_element(:xpath, "//*[@id='templateNo']")
         element if element.displayed?
     }
-    puts "Function collected from dropdown function options. (into select_list):"
-    pp select_list
     
     # EXTRACTING ALL OPTIONS FROM THE DROPDOWN BOX
     options = select_list.find_elements(:tag_name => "option")
@@ -48,8 +44,8 @@ def a2_Driver(eventNamesArray, bandsLength, band)
 
     puts "Band numbers entered into A2 Text Field..."
 
-        # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
-        $_form = $_wait.until {
+    # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
+    $_form = $_wait.until {
         if element = $_browser.find_element(:id, "startedAt")
             puts "Inputing BAND event start date into data field for A2."
             element = $_browser.find_element(:id, "startedAt")
@@ -60,8 +56,8 @@ def a2_Driver(eventNamesArray, bandsLength, band)
     }
     $_form.send_keys("#{band.a2StartDate}\n")
 
-        # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
-        $_form = $_wait.until {
+    # USING BAND PARAMETERS FROM COMMANDLINE GETS AT START OF CREEPER (ARRAY?)
+    $_form = $_wait.until {
         if element = $_browser.find_element(:id, "endedAt")
             puts "Inputing BAND event end date into data field for A2."
             element = $_browser.find_element(:id, "endedAt")

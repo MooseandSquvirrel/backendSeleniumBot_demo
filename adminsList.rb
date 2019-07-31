@@ -21,12 +21,3 @@ def adminsList()
     Dir.chdir(File.expand_path(rightDir))
     return adminsArray
 end
-
-=begin
-puts "adminsArray"
-ap adminsArray
-
-data_file = "~/Downloads/#{sdf}.xlsx"
-file = File.open(File.expand_path(data_file), 'r')
-=end
-

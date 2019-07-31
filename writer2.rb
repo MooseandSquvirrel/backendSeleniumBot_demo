@@ -42,22 +42,11 @@ end
 
 # def writer2(bandsArray, page, lenOuterArray)
 def writer2(bandsArray, lenOuterArray)
-
-    puts "(writer2) bandsArray:"
-    ap bandsArray
-
     finalResultsDir()
     # EQUALS LENGTH OF ARRAY
     bandsLength = bandsArray.length
-
-  
     workbookFinal = RubyXL::Workbook.new
-    #worksheet = workbookFinal[page]
     worksheet = workbookFinal[0]
-
-
-    puts "\n\n-- worksheet = \n"
-    p worksheet
 
     worksheet.insert_row(0)
     # TITLE ROW CELL FILLING
@@ -68,11 +57,10 @@ def writer2(bandsArray, lenOuterArray)
 
         worksheet.add_cell(0, i, "#{titlesArray[i]}")
         worksheet.change_column_width(i, 25)
-        worksheet.change_row_height(0, 40)  # Sets first row height to 30
-        # worksheet[0][i].change_font_bold(true)
+        worksheet.change_row_height(0, 40) 
         worksheet.change_column_font_name(i, 'Calibri')
         worksheet.change_column_font_size(i, 14)
-        worksheet.sheet_data[0][i].change_font_bold(true)        # HOZONTALLY CENTERS TEXT
+        worksheet.sheet_data[0][i].change_font_bold(true)        
         worksheet.sheet_data[0][i].change_horizontal_alignment('center')
         # VERTICALLY CENTERS TEXT
         worksheet.change_row_vertical_alignment(0, 'distributed')
@@ -81,7 +69,6 @@ def writer2(bandsArray, lenOuterArray)
         worksheet.change_row_border_color(0, :bottom, 'ed553b')
         # FILL TITLE ROW WITH GREY
         worksheet.change_row_fill(0, '00FF00')
-        puts "sheet TITLE row added: #{i}"   
         i += 1
     end
 
@@ -91,9 +78,6 @@ def writer2(bandsArray, lenOuterArray)
     until bandsArrayCounter == bandsLength
         worksheet.insert_row(row)
         band = bandsArray[bandsArrayCounter]
-        "inside UNTIL LOOP IN WRITER band 'ap' :"
-        ap band
-
         contentArray = []
         contentArray = [band.eventName, band.brandName, band.campDates, band.bandNum, band.totalMemberCount, band.coachesCount, band.nruCount, band.nruPercentage, band.totalLeaderCount, band.newLeaderCount, band.newLeaderPerc, band.newGblCount, band.newGblPerc, band.gblNru, band.nruPerGbl, band.totalNru]
         i = 0
@@ -102,11 +86,9 @@ def writer2(bandsArray, lenOuterArray)
         # DATA ROW FILING
         i = 0
         while i < 15
-            # worksheet.add_cell(0, i, "#{bandArray[i][j]}")
             worksheet.add_cell(row, i, "#{contentArray[i]}")
             worksheet.change_column_width(i, 25)
             worksheet.change_row_height(row, 40)  # Sets first row height to 30
-            # worksheet[0][i].change_font_bold(true)
             worksheet.change_column_font_name(i, 'Calibri')
             worksheet.change_column_font_size(i, 14)
             # HOZONTALLY CENTERS TEXT
@@ -122,22 +104,12 @@ def writer2(bandsArray, lenOuterArray)
             else
                 worksheet.change_row_fill(row, 'ffffff')
             end
-            puts "DATA row added: #{i}"
             i += 1
         end
-        puts "EXIT LOOP Row #{row}"
         row += 1
-        puts "Row NOW #{row}"
         bandsArrayCounter += 1
     end
     workbookFinal.write("#{worksheet}.xlsx")
     mvFinalRes()
     puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
-    # if page == lenOuterArray
-    #     puts "Writing: #{worksheet}.xlsx to Final_Results on Desktop..."
-    #     workbookFinal.write("#{worksheet}.xlsx")
-    #     mvFinalRes()
-    # end
-    
-    #### page += 1
 end

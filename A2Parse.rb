@@ -17,7 +17,6 @@ def parserA2(bandNumber, band, worksheet)
     nruCounter = 0
     counter = 0
     while counter < worksheet.sheet_data.rows.size - 1
-        # puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
         cellBandNum = worksheet.sheet_data[index][0].value
         cellCurrentMember = worksheet.sheet_data[index][3].value
         if cellActivitySum_Cnt = worksheet.sheet_data[index][14].nil?
@@ -72,32 +71,21 @@ def a2Parse(eventNumsArray, bandsArray)
     # COLLECTS FILE(S) WITH .XLSX FORMAT (SHOULD ONLY BE ONE) IN ORDER TO PARSE IT
     fileNamesArray = []
     fileNamesArray = Dir["./*.xlsx"]
-    puts "fileNamesArray:"
-    ap fileNamesArray
 
     i = 0
     bandNum = 0
     while i < eventNumsArray.length
-        puts "eventNumsArray.length = #{eventNumsArray.length}"
-        puts " i: #{i}"
-
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-
+        
         # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
         worksheet = workbookB7first[0]
-
-        #  ASSIGNS BAND OBJECT FROM ARRAY
+        
+        # ASSIGNS BAND OBJECT FROM ARRAY OF BANDS
         band = bandsArray[i]
-        puts"(A2Parse) band:"
-        ap band
-
+        
         bandNumber = eventNumsArray[bandNum]
-
         parserA2(bandNumber, band, worksheet)
-
-        #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsA2(band.eventName, band, worksheet)
-    
         i += 1
         bandNum += 1
     end

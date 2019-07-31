@@ -53,7 +53,6 @@ require './browserDownload.rb'
 
 # FUNCTION TO CHECK IF USER LOGGED INTO VPN AND BACKENDSYSTEM
 def didYouLogin()
- 
     puts "\n\nDID YOU LOG INTO -- VPN PULSE SECURE-- YET?! \n\n "
     sleep (3)
     puts "IF NOT, DO SO *** NOW *** OR THIS PROGRAM WILL CRASH AND INPUT WILL BE LOST :)...FOREVER.\n\n"
@@ -112,22 +111,11 @@ def go_B71_B3_A2(bandsArray)
     eventNamesArray = []
     eventNamesArray = getEventNamesArray(bandsArray)
 
-
     # COUNTER FOR LENGTH OF BANDS ARRAY FOR USE IN FUNCTIONS BELOW
     bandsLength = bandsArray.length
-
-    band = bandsArray[0]
-    
-    # PRINTOUTS OF VARIABLES ESTABLISHED
-    puts "bandsArray:"
-    ap bandsArray
-    puts "bandsLength (bandsArrayLength):"                                        
-    puts bandsLength
-    puts "eventNamesArray Test:"
-    ap eventNamesArray
-
+    band = bandsArray[0]    
     loadingMessage()
-
+    
     # STORES INSTANCE VARIABLE datesArrays FOR EACH BAND, RETURNS NEW OBJS OF BANDS WITH ARRAY OF DATES STORED (ARRAY USED TO PARSE OUT INCORRECT DATES IN B7/B3)
     dates(bandsArray)
 
@@ -139,17 +127,9 @@ def go_B71_B3_A2(bandsArray)
     initialCellTimeStampArray = []
 
     b71_b3_a2_Drivers(eventNamesArray, bandsLength, bandsArray, initialCellTimeStampArray)
-
-    puts "initialCellTimeStampArray Array:"
-    ap initialCellTimeStampArray
-    
     storeTable($_browser)
-    p $_table
-    ap $_files_href
     checkTableDownload(bandsArray, initialCellTimeStampArray)
     browserDownloadFiles($_files_href)
-    # downloadFile($_browser, $_files_href)
-
     grabXlsxB71()
     b71Parse(eventNamesArray, bandsArray)
     puts "\n\nB71 Parsed\n\n"
@@ -161,10 +141,8 @@ def go_B71_B3_A2(bandsArray)
     puts "\n\nA2 Parsed\n\n"
     band.bandsArray = bandsArray
     band.eventNamesArray = eventNamesArray
-
     # RESET GLOBAL ARRAY TO EMTPY FOR B7_2
     $_files_href = []
-
 end
 
 # ALL FUNCTION FOR B7_2
@@ -175,23 +153,13 @@ def go_B72(events, bandsArray)
         clickit()
         band = bandsArray[0]
         b7_2CellTimeStamp1 = timestampB72(bandsArray)
-        # b7_2CellTimeStamp2 = band.hoursMinutesB72_backUp
         b7_2CellTimeStamp2 = $_hoursMinutesB72_backUp
         b7_2CellTimeStamp3 = $_hoursMinutesB72_backUp2
         alert_clickit()
-        puts "\n\n\n\nb7_2CellTimeStamp1: #{b7_2CellTimeStamp1}\nband.hoursMinutesB72_backUp: #{band.hoursMinutesB72_backUp}"
-        puts b7_2CellTimeStamp1
-
         b7_2bandNumsArray = getB72bandNums(bandsArray)
-
         b72StoreTable($_browser)
         b72CheckTableDownload(bandsArray, b7_2CellTimeStamp1, b7_2CellTimeStamp2, b7_2CellTimeStamp3, b7_2bandNumsArray)
-        puts "(go_B72) $_files_href:"
-        ap $_files_href
         browserDownloadFiles($_files_href)
-        #### MAKE A VERSION OF browserDownloadFiles($_files_href) for b72 (unless I can just us this one without conflict
-        ## b72DownloadFile($_browser, $_files_href)
-
         grabXlsxB72()
         b7_2Parse(events, bandsArray)
         removeTEMPB7_2()
@@ -205,12 +173,9 @@ end
 "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
 
 def RUN
-    # system('say "Initiating Analysis"')
-    # system('curl -L "http://dev-stats.admin.band.us/extractResult/downloadResult.nhn?no=20667&filetype=xlsx" >> b7.xlsx')
     fileMoveOldXlsx()
-    #### bannerOutPut("banner_Welcome.txt")
-    #### didYouLogin()
-    tempB7_2Dir() ####  Remove when figured out
+    bannerOutPut("banner_Welcome.txt")
+    didYouLogin()
     helloMessage()
     usrNumber = textMessage()
     userName()
@@ -221,10 +186,8 @@ def RUN
     a = 0 ##
     b = 0 ##
     loop do
-        puts "a: #{a}" ##
         bandsArray = []
         loop do 
-            puts "b: #{b}" ##
             eventTitleCounter += 1
             event = Band.new
             event.getEventName()
@@ -237,38 +200,18 @@ def RUN
             event.getTotalDays(event.eventName)
             event.getBandNum(event.eventName)
             if event.loopOrGo() == false
-                # event.bandName = event    HOW DO I RENAME THE OBJECT WITH THE NAME OF THE EVENT ITSELF (WHICH IS STORED IN Band.eventName (event.eventName))
-                puts "event added: bandsArray << event (if):" ##
-                ap event ##
                 bandsArray << event
-                puts "innerloop bandsArray now (if):" ##
-                ap bandsArray ##
-                puts "break innerloop" ##
                 break
             else 
-                puts "event added: bandsArray << event(else)" ##
-                ap event ##
                 bandsArray << event
-                puts "innerloop bandsArray now (else):" ##
-                ap bandsArray ##
             end
             b += 1 ##
         end
         if outerLoopOrGo() == false
-            puts "adding bandsArray to outerLoop Array (outerloop << bandsArray (if)):" ## (2 ## = removable code)
-            puts "bandsArray being added to outerloop:" ##
-            ap bandsArray ##
             outerBandsArray << bandsArray
-            puts "outerBandsArray now (if): " ##
-            ap outerBandsArray ##
             break
         else
-            puts "adding bandsArray to outerLoop Array (outerloop << bandsArray (else)):" ##
-            puts "outerloop << bandsArray (else):" ##
-            ap bandsArray ##
             outerBandsArray << bandsArray
-            puts "outerBandsArray now (if): " ##
-            ap outerBandsArray ##
         end
         a += 1
         eventTitleCounter = 0
@@ -278,59 +221,23 @@ def RUN
     i = 0
     page = 0
     until i == lenOuterArray
-        puts "----------" ##
-        puts "outerBandsArray" ##
-        ap outerBandsArray ##
         bandsArray = outerBandsArray[i]
-        puts "outerBandsArray[i] = #{outerBandsArray[i]}" ##
-        
         go_B71_B3_A2(bandsArray)
         removeTEMPB7()
         removeTEMPB3()
         removeTEMPA2()
-
-        puts"\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n\n"
-        puts"outerBandsArray[0]:\n#{outerBandsArray[0]}"
-
         events = bandsArray.length
         go_B72(events, bandsArray)
-
-        # UNDO BELOW IF BANDSARRAY W/ OUT [i] doesn't work
-=begin
-        puts "(RUN) outside writer2, bandsArray[i]:\n#{bandsArray[i]}"
-        puts "p version printout of above:"
-        p bandsArray[i]
-        puts "ap version printout of above:"
-        puts ap
-        puts "Now firing writer2:"
-=end
-        # writer2(bandsArray, page, lenOuterArray)
         writer2(bandsArray, lenOuterArray)
-
-
         # PRINTING OUT FINAL RESULTS BEFORE WRITING
         finalResults(bandsArray)
         i += 1
         page += 1
-        puts "page: #{page}"
         system('say "Analysis, completed. Moving to next, date, group"')
     end
-
     system('say "Program, Finished."')
-
-    # i = 0 
-    # until i == lenOuterArray
-    #     writer2(bandsArray[i])
-    #     i += 1
-    # end
-
-    "FINAL IF STATEMENT FOR TWILIO -- IF usrNumber not .nil?, call twilio(usrNumber)"
-    puts "usrNumber:"
-    puts usrNumber
     twilio(usrNumber)
-
 end
 
 RUN()
 puts "Successful run completed."
-

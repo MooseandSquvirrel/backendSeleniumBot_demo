@@ -18,14 +18,12 @@ def adminCounterb71(bandNumber, band, worksheet)
     adminCounter = 0
     counter = 0
     while counter < worksheet.sheet_data.rows.size - 1
-        puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
         cellDate = worksheet.sheet_data[index][3].value
         lastCell = worksheet.sheet_data[index][7].value
         userNum = worksheet.sheet_data[index][1].value
         # IF USER ENTERED BANDNUMBER MATCHES BAND NUMBER FIRST ROW (IDENTIFY CORRECT BAND TO PARSE IN DOCUMENT)
         if bandNumber == worksheet.sheet_data[index][0].value
             totalMemberCounter += 1
-            # COULD EVENTUALLY INCLUDE BANDS SHARED ACCOUNT USERNUMS IN userNum ARRAY INSIDE stringToArrayCsv.rb ARRAY
             if adminNumbArray.include?("#{userNum}")
                 adminCounter += 1
             # IF USER ENTERED BANDNUMBER MATCHES THE 'DATE JOINED BAND' LASTCELL AND ALSO IN THE DATE RANGE OF EVENT -  MEANS PERSON IS NRU
@@ -50,7 +48,6 @@ def parserb71(bandNumber, band, worksheet, adminCount)
     nruCounter = 0
     counter = 0
     while counter < worksheet.sheet_data.rows.size - 1
-        puts "worksheet.sheet_data[index][7].value : #{worksheet.sheet_data[index][7].value}"
         cellDate = worksheet.sheet_data[index][3].value
         lastCell = worksheet.sheet_data[index][7].value
         # IF USER ENTERED BANDNUMBER MATCHES BAND NUMBER FIRST ROW (IDENTIFY CORRECT BAND TO PARSE IN DOCUMENT)
@@ -94,38 +91,23 @@ end
 
 # bandsArraywDates PARAMETER IN ORDER TO STORE INSTANCE VARIABLES FOR RESULTS, eventNumsArray TO ACCESS BANDS.NUMS
 def b71Parse(eventNumsArray, bandsArraywDates)
-
     # MOVE TO TEMP_B7
     mvDirB7()
-
     # COLLECTS FILE(S) WITH .XLSX FORMAT (SHOULD ONLY BE ONE) IN ORDER TO PARSE IT
     fileNamesArray = []
     fileNamesArray = Dir["./*.xlsx"]
-    puts "fileNamesArray:"
-    ap fileNamesArray
-
     i = 0
     bandNum = 0
     while i < eventNumsArray.length
-        puts "eventNumsArray.length = #{eventNumsArray.length}"
-
         workbookB7first = RubyXL::Parser.parse("#{fileNamesArray[0]}")
-
         # DEFINES WORKBOOK AS WORKSHEET (DONT DELETE)
         worksheet = workbookB7first[0]
-
         #  ASSIGNS BAND OBJECT FROM ARRAY
         band = bandsArraywDates[i]
-
         bandNumber = eventNumsArray[bandNum]
-
         adminCount = adminCounterb71(bandNumber, band, worksheet)
-
         parserb71(bandNumber, band, worksheet, adminCount)
-
-        #nruCount = dateRangeAndRowCount(worksheet, band.datesArray)
         resultsB7(band.eventName, band, worksheet)
-    
         i += 1
         bandNum += 1
     end
