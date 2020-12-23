@@ -25,28 +25,24 @@ def textMessage()
             puts "-------------------------------------------------------------------"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "-------------------------------------------------------------------"
-            puts "\n"
+            puts "-------------------------------------------------------------------\n"
             redo
         end
-        puts "\n"
-        puts "Is '#{usrNumber}' the correct number?"
+        puts "\nIs '#{usrNumber}' the correct number?"
         answer_check = gets.strip
         if answer_check == "exit"
             return
         elsif answer_check == 'y' 
             return usrNumber
         elsif answer_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
+            puts "\n-------------------------------------------------------"
             puts "Re-Enter the correct cell number and press 'Enter':"
             redo
         else
             puts "-------------------------------------------------------------------"
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "-------------------------------------------------------------------"
-            puts "\n"
+            puts "-------------------------------------------------------------------\n"
             redo
         end
     end
@@ -62,8 +58,7 @@ def userName()
         if userName == 'exit'
             return
         end
-        puts "\n"
-        puts "Is '#{userName}' the correct user name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "\nIs '#{userName}' the correct user name?\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         userName_check = gets.strip
         if userName_check == "exit"
             return
@@ -73,16 +68,14 @@ def userName()
             break
         end
         if userName_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
+            puts "\n-------------------------------------------------------"
             puts "Re-Enter the correct user name and press 'Enter':"
             redo
         end
         if userName_check != 'y' || userName_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the correct user name and hit 'Enter'. ****"
+            puts "\n**** Now Re-Enter the correct user name and hit 'Enter'. ****"
             redo
         end
     end
@@ -97,8 +90,7 @@ def pwd()
         if pwd == 'exit'
             return
         end
-        puts "\n"
-        puts "Did you enter the correct password? (Even though it is invisible :) ....)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
+        puts "\nDid you enter the correct password? (Even though it is invisible :) ....)\nPress 'y' for 'Yes' or 'n' for 'No' and press 'Enter'."
         pwd_check = gets.strip
         if pwd_check == "exit"
             return
@@ -108,16 +100,14 @@ def pwd()
             break
         end
         if pwd_check == 'n'
-            puts "\n"
-            puts "-------------------------------------------------------"
+            puts "\n-------------------------------------------------------"
             puts "Re-Enter the correct password and press 'Enter':"
             redo
         end
         if pwd_check != 'y' || pwd_check != 'n'
             puts "Please press 'y' for 'Yes' or 'n' for 'No' and hit the 'Enter' Key."
             puts "If you'd like to exit the program, type 'exit' and hit the 'Enter' Key."
-            puts "\n"
-            puts "**** Now Re-Enter the correct password and hit 'Enter'. ****"
+            puts "\n**** Now Re-Enter the correct password and hit 'Enter'. ****"
             redo
         end
     end

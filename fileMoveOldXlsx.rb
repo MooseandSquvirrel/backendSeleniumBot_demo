@@ -1,7 +1,6 @@
 # FUNCTION TO MOVE OLD .XLSX FILES FROM ~/DOWNLOADS DIRECTORY TO NEWLY CREATED DIRECTORY ON DESKTOP OLD_XLSX_DATA (CREATES IF NON-EXISTENT)
 def oldXlsx()
-    puts "\n"
-    puts "+++++++++++++++++++++++++++++"
+    puts "\n+++++++++++++++++++++++++++++"
     puts "Dirctory before:"
     puts Dir.pwd
     desktopDir = '~/Desktop'
@@ -19,8 +18,7 @@ end
 
 # FUNCTION TO MOVE THE OLD .XLSX FILES (WITH THE OLD_XLSX_DATA FUNCTION TO CHECK/CREATE FOLDER FOR IT)
 def fileMoveOldXlsx()
-    puts "\n"
-    puts "+++++++++++++++++++++++++++++"
+    puts "\n+++++++++++++++++++++++++++++"
     puts "Checking ~/Desktop for OLD_XLSX_DATA Directory..."
     oldXlsx()
     puts "Directory before:"
@@ -43,8 +41,7 @@ end
 
 # REMOVES THE .XLSX FILES FROM USERS ~/Downloads DIRECTORY SO fixit CAN FIND THE ONLY XLSX FOLDERS DOWNLOADED.
 def initialDownloadsClean()
-    puts "\n"
-    puts "+++++++++++++++++++++++++++++"
+    puts "\n+++++++++++++++++++++++++++++"
     puts "Directory before:"
     puts Dir.pwd
     downloadDir = '~/Downloads'
