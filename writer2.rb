@@ -4,8 +4,7 @@
 
 # MAKE A TEMP DIRECTORY FOR HOUSING THE FINAL RESULTS 
 def finalResultsDir()
-    puts "\n"
-    puts "Checking for finalResults Directory..."
+    puts "\nChecking for finalResults Directory..."
     puts "Dirctory before:"
     puts Dir.pwd
     desktopDir = '~/Desktop'
