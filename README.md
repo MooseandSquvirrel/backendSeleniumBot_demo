@@ -78,11 +78,11 @@ This command-line program was created with Selenium Webdriver inorder to automat
 a very time consuming and tedious task for a partnership team. They were asked to track data for a summer campaign of 1000 events using their app. The team had a manual process for using the app's backend tool that was very slow. Often it would take hours to run requests across the globe to servers in Korea just to receive unformated data for just a few events. The solution was to automate this process.
 
 Using Selenium's Ruby version, I created a command-line tool that asked for: 
-* employee info for the backend tool authentication login
-* a phone number, not required, for twilio API text confirmation that the program finished
-* each events info that eventually needed to be written for formatting in a master spreadsheet
+* Employee info for the backend tool authentication login.
+* Each events info that eventually needed to be written for formatting in a master spreadsheet.
+* A phone number, not required, for twilio API text confirmation that the program finished if desired.
 
-The program would then run numerous checks on the events in question, if the dates were within a particular time frame and more. It then did the entire manual process with Selenium WebDriver running headless in a terminal. 
+The program would then run numerous checks on the events in question, if the dates of the events stats were within a particular time frame to be counted and more. It then did the entire manual process with Selenium WebDriver running headless in a terminal. 
 
 The final output was a parsed, formated, RubyXL spreadsheet with organization and color coding.
 
