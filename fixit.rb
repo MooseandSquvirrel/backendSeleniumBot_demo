@@ -74,12 +74,12 @@ end
 
 # FUNCTION RETURNS ARRAY OF EVENT NAMES FROM EACH EVENT
 def getEventNamesArray(bandsArray)
-    eventNamesArray = bandsArray.collect {|x| x.bandNum}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+    eventNamesArray = bandsArray.collect {|x| x.bandNum}         
 end
 
 # FUNCTION RETURNS NEW BANDS FROM EVENTS COLLECTS FROM B3 PARSE FOR B7_2 DOWNLOADING CHECK (IF CELL CONTAINS ANY BANDNUMS FROM THIS ARRAY)
 def getB72bandNums(bandsArray)
-    b7_2bandNumsArray = bandsArray.collect {|x| x.newBandNumbsb7_2}         #" I NEED TO FIGURE OUT HOW TO COLLECT ALL THE BAND NUMBERS INTO AN ARRAY FROM THEIR OBJECTS"
+    b7_2bandNumsArray = bandsArray.collect {|x| x.newBandNumbsb7_2}         
 end
 
 # FUNCTION TO MOVE TO NEXT ARRAY OF EVENTS WTIH SAME DATE OR BEGIN NAVIGATION/DRIVER/ANALYSIS
@@ -120,8 +120,8 @@ def go_B71_B3_A2(bandsArray)
     dates(bandsArray)
 
     # DRIVERLOGIN.RB FUNCTION TO LOG INTO BACKEND AND FIND PROPER PAGE/IFRAME
-    navigate($_userNameVar)                                                           ########################################
-    sleep (7) ###"CHANGE THIS TO form = wait.until"
+    navigate($_userNameVar)                                                           
+    sleep (7) ## "CHANGE THIS TO form = wait.until" ##
 
     # ARRAY FOR TIME STAMPS FOR TABLE TO IDENTIFY BY MINUTE AND HOUR WHICH EXCEL SHEETS TO DOWNLOAD WHEN READY
     initialCellTimeStampArray = []
